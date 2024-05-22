@@ -98,6 +98,7 @@ CREATE TABLE `cohort_question` (
   `question_id` int(11) DEFAULT NULL,
   `open_datetime` datetime DEFAULT NULL,
   `close_datetime` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -108,7 +109,7 @@ CREATE TABLE `cohort_question` (
 
 LOCK TABLES `cohort_question` WRITE;
 /*!40000 ALTER TABLE `cohort_question` DISABLE KEYS */;
-INSERT INTO `cohort_question` VALUES (1,1,1,'2024-05-21 07:40:00','2024-05-21 07:40:00');
+INSERT INTO `cohort_question` VALUES (1,1,1,'2024-05-21 07:40:00','2024-05-21 07:40:00',1);
 /*!40000 ALTER TABLE `cohort_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +322,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'sheldon','$2a$10$rUlRWTlKujIKTufFuSjg6.DIlybEZtNr0m5Tct2kl2YU6XJu5gcGq',1,_binary '','2024-05-21 07:31:00','admin');
+INSERT INTO `user` VALUES (1,'ashley','$2a$10$rUlRWTlKujIKTufFuSjg6.DIlybEZtNr0m5Tct2kl2YU6XJu5gcGq',1,_binary '','2024-05-21 07:31:00','admin'),(2,'sheldon','$2a$10$rUlRWTlKujIKTufFuSjg6.DIlybEZtNr0m5Tct2kl2YU6XJu5gcGq',1,_binary '','2024-05-21 07:31:00','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -334,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-22  9:28:19
+-- Dump completed on 2024-05-22 16:35:47
