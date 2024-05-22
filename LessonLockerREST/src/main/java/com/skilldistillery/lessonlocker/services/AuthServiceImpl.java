@@ -23,12 +23,12 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public User register(User user) {
 		// encrypt and set password for user
-//		String encryptedPassword = encoder.encode(user.getPassword());
-//		user.setPassword(encryptedPassword);
+		String encryptedPassword = encoder.encode(user.getPassword());
+		user.setPassword(encryptedPassword);
 		
 		//other business logic related to registering a new account
-//		user.setEnabled(true);
-//		user.setRole("standard");
+		user.setEnabled(true);
+		user.setRole("standard"); // standard // default // student // instructor // admin
 
 		//persist new user to db
 		userRepo.saveAndFlush(user);
