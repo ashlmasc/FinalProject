@@ -228,7 +228,77 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lldb`;
-INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (DEFAULT, 'sheldon', 'test', 'c43', 1, NULL, 'admin', 'sheldon', 'pasciak', NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (1, 'sheldon', 'test', 'c43', 1, NULL, 'admin', 'sheldon', 'pasciak', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `question`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `question` (`id`, `question`, `created_at`, `updated_at`, `enabled`, `hint`, `explanation`, `user_id`) VALUES (1, 'Question', NULL, NULL, 1, 'Hint', 'Explanation', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `choice`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `choice` (`id`, `content`, `position`, `correct`, `explanation`, `question_id`) VALUES (1, 'Choice', 1, 1, 'Explanation', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `quiz`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `quiz` (`id`, `title`, `enabled`, `created_at`, `updated_at`, `instructor_user_id`) VALUES (1, 'Quiz', 1, NULL, NULL, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `quiz_question`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `quiz_question` (`id`, `quiz_id`, `question_id`) VALUES (1, 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `tag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `tag` (`id`, `title`) VALUES (1, 'jfop');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `question_has_tag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `question_has_tag` (`question_id`, `tag_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `quiz_answer`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lldb`;
+INSERT INTO `quiz_answer` (`user_id`, `quiz_question_id`, `created_at`, `choice_id`) VALUES (1, 1, NULL, 1);
 
 COMMIT;
 

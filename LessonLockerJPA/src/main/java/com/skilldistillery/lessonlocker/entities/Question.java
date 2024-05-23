@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Question {
@@ -35,8 +37,9 @@ public class Question {
 	
 	private String explanation;
 	
-	// fk user_id
-	// User student
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	public Question() {
 		super();
@@ -48,6 +51,14 @@ public class Question {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.skilldistillery.lessonlocker.entities;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -44,7 +44,7 @@ class TagTest {
 	
 	@Test
 	void test_tag_entity_mapping() {
-		assertNull(tag);
+		assertNotNull(tag);
 	}
 
 }

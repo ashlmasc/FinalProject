@@ -1,6 +1,8 @@
 package com.skilldistillery.lessonlocker.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -47,6 +50,9 @@ public class User {
 	
 	@Column(name="role")	
 	private String role;
+	
+	@OneToMany(mappedBy="user")
+	List<Question> questions;
 	
 	public User() {
 		super();
@@ -130,6 +136,33 @@ public class User {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public void addQuestion(Question question) {
+	    if (questions == null) {
+	       questions = new ArrayList<>();
+	    }
+	    if (!questions.contains(question)) {
+	        questions.add(question);
+	        if (question.getUser() != null && !question.getUser().equals(this)) {
+	            question.getUser().removeQuestion(question);
+	        }
+	        question.setUser(this);
+	    }
+	}
+	public void removeQuestion(Question question) {
+	    if (questions != null && questions.contains(question)) {
+	        questions.remove(question);
+	        question.setUser(null);
+	    }
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 	@Override

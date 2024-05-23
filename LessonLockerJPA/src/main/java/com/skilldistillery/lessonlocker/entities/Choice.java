@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Choice {
@@ -22,8 +24,17 @@ public class Choice {
 	
 	private String explanation;
 	
-	// fk question_id
-	// private Question question
+    public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "question_id")
+	private Question question;
 	
 	public Choice() {
 		super();
@@ -36,8 +47,6 @@ public class Choice {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	@Override
 	public String toString() {

@@ -1,6 +1,7 @@
 package com.skilldistillery.lessonlocker.entities;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -44,7 +45,19 @@ class ChoiceTest {
 	
 	@Test
 	void test_choice_entity_mapping() {
-		assertNull(choice);
+		assertNotNull(choice);
+		System.out.println(choice.getId());
+		assertEquals(1, choice.getId());
+		System.out.println(choice.getContent());
+		assertEquals("Choice", choice.getContent());
+		System.out.println(choice.getPosition());
+		assertEquals(1, choice.getPosition());
+		System.out.println(choice.isCorrect());
+		assertEquals(true, choice.isCorrect());
+		System.out.println(choice.getExplanation());
+		assertEquals("Explanation", choice.getExplanation());
+		System.out.println(choice.getQuestion().getId());
+		assertEquals(1, choice.getQuestion().getId());
 	}
 
 }

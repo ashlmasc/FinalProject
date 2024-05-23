@@ -34,7 +34,7 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 3);
+		user = em.find(User.class, 1);
 	}
 
 	@AfterEach
@@ -46,7 +46,7 @@ class UserTest {
 	@Test
 	void test_user_entity_mapping() {
 		assertNotNull(user);
-		assertEquals(3, user.getId());
+		assertEquals(1, user.getId());
 		System.out.println(user.getUsername());
 		System.out.println(user.getPassword());
 		System.out.println(user.getCohort());

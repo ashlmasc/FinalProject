@@ -1,6 +1,6 @@
 package com.skilldistillery.lessonlocker.entities;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -34,6 +34,8 @@ class QuestionTest {
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
 		question = em.find(Question.class, 1);
+		System.out.println(question.getId());
+		System.out.println(question.getUser().getUsername());
 	}
 
 	@AfterEach
@@ -44,7 +46,7 @@ class QuestionTest {
 	
 	@Test
 	void test_question_entity_mapping() {
-		assertNull(question);
+		assertNotNull(question);
 	}
 
 }
