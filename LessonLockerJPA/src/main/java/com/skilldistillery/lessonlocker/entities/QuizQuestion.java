@@ -1,11 +1,15 @@
 package com.skilldistillery.lessonlocker.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +20,16 @@ public class QuizQuestion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	// fk quiz_id
-	// private Quiz quiz;
+	@ManyToOne
+	@JoinColumn(name = "quiz_id")
+	private Quiz quiz;
 	
-	// fk question_id
-	// private Question question;
+	@ManyToOne
+	@JoinColumn(name = "question_id")
+	private Question question;
+	
+	@OneToMany(mappedBy = "quizQuestion")
+	private List<QuizAnswer> quizAnswers;
 	
 	public QuizQuestion() {
 		super();
@@ -32,6 +41,30 @@ public class QuizQuestion {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public List<QuizAnswer> getQuizAnswers() {
+		return quizAnswers;
+	}
+
+	public void setQuizAnswers(List<QuizAnswer> quizAnswers) {
+		this.quizAnswers = quizAnswers;
 	}
 
 	@Override

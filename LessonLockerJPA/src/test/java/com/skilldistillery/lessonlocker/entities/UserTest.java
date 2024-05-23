@@ -57,5 +57,20 @@ class UserTest {
 		System.out.println(user.getLastName());
 		System.out.println(user.getUpdatedAt());
 	}
+	
+	@Test
+	void test_user_has_question_mapping() {
+		assertNotNull(user.getQuestions().size());
+	}
+	
+	@Test
+	void test_user_has_quizzes_mapping() {
+		assertNotNull(user.getQuizzes().size());
+	}
+	
+	@Test
+	void test_user_has_quizAnswers_mapping() {
+		assertNotNull(user.getQuizAnswers().size());
+	}
 
 }

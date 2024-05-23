@@ -1,6 +1,7 @@
 package com.skilldistillery.lessonlocker.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -36,6 +39,13 @@ public class Question {
 	private String hint;
 	
 	private String explanation;
+	
+	@ManyToMany
+	@JoinTable(name="question_has_tag",
+	joinColumns=@JoinColumn(name="question_id"),
+	inverseJoinColumns=@JoinColumn(name="tag_id"))
+	
+	private List<Tag> tags;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -113,6 +123,14 @@ public class Question {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@Override

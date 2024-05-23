@@ -33,12 +33,71 @@ public class QuizAnswer {
 	@MapsId(value = "userId")     // Field in ID class
 	private User user;
 	
-	// fk choice_id
-	// private Choice choice;
+	@ManyToOne
+	@JoinColumn(name = "choice_id")
+	private Choice choice;
 	
 	public QuizAnswer() {
 		super();
 	}
+	
+	public QuizAnswerId getId() {
+		return id;
+	}
+
+	public void setId(QuizAnswerId id) {
+		this.id = id;
+	}
+
+
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+
+
+	public QuizQuestion getQuizQuestion() {
+		return quizQuestion;
+	}
+
+
+
+	public void setQuizQuestion(QuizQuestion quizQuestion) {
+		this.quizQuestion = quizQuestion;
+	}
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+
+	public Choice getChoice() {
+		return choice;
+	}
+
+
+
+	public void setChoice(Choice choice) {
+		this.choice = choice;
+	}
+
+
 
 	@Override
 	public String toString() {

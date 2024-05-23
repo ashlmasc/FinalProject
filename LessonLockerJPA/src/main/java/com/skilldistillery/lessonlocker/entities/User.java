@@ -54,6 +54,12 @@ public class User {
 	@OneToMany(mappedBy="user")
 	List<Question> questions;
 	
+	@OneToMany(mappedBy="user")
+	List<Quiz> quizzes;
+	
+	@OneToMany(mappedBy = "user")
+	private List<QuizAnswer> quizAnswers;
+	
 	public User() {
 		super();
 	}
@@ -163,6 +169,22 @@ public class User {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public List<Quiz> getQuizzes() {
+		return quizzes;
+	}
+
+	public void setQuizzes(List<Quiz> quizzes) {
+		this.quizzes = quizzes;
+	}
+
+	public List<QuizAnswer> getQuizAnswers() {
+		return quizAnswers;
+	}
+
+	public void setQuizAnswers(List<QuizAnswer> quizAnswers) {
+		this.quizAnswers = quizAnswers;
 	}
 
 	@Override

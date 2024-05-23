@@ -48,5 +48,11 @@ class QuestionTest {
 	void test_question_entity_mapping() {
 		assertNotNull(question);
 	}
+	
+	@Test
+	void test_question_has_tags_mapping() {
+		assertNotNull(question);
+		assertNotNull(question.getTags());
+	}
 
 }

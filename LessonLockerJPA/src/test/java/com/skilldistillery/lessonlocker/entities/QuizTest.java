@@ -46,5 +46,20 @@ class QuizTest {
 	void test_quiz_entity_mapping() {
 		assertNotNull(quiz);
 	}
+	
+	@Test
+	void test_quiz_has_user_mapping() {
+		assertNotNull(quiz);
+		System.out.println(quiz.getUser().getUsername());
+		assertNotNull(quiz.getUser());
+	}
+	
+	@Test
+	void test_quiz_has_quizQuestion_mapping() {
+		assertNotNull(quiz);
+		System.out.println(quiz.getQuizQuestions().size());
+		
+	
+	}
 
 }

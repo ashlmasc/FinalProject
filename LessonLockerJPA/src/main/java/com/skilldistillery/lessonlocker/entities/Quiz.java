@@ -1,6 +1,8 @@
 package com.skilldistillery.lessonlocker.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Quiz {
@@ -30,8 +35,12 @@ public class Quiz {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
-	// fk_instructor_user_id
-	// private User instructor 
+	@JoinColumn(name = "instructor_user_id")
+	@ManyToOne
+	private User user;
+	
+	@OneToMany(mappedBy = "quiz")
+	List<QuizQuestion> quizQuestions;
 	
 	public Quiz() {
 		super();
@@ -75,6 +84,44 @@ public class Quiz {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	// NOTE: These are use for list mapping in the 'Quiz' class
+
+//	public void addQuizQuestion(QuizQuestion quizquestion) {
+//	    if (quizQuestions == null) {
+//	       quizQuestions = new ArrayList<>();
+//	    }
+//	    if (!quizQuestions.contains(quizquestion)) {
+//	        quizQuestions.add(quizquestion);
+//	        if (quizquestion.getQuiz() != null && !quizquestion.getQuiz().equals(this)) {
+//	            quizquestion.getQuiz().removeQuizQuestion(quizquestion);
+//	        }
+//	        quizquestion.setQuiz(this);
+//	    }
+//	}
+	
+//	public void removeQuizQuestion(QuizQuestion quizquestion) {
+//	    if (quizQuestions != null && quizQuestions.contains(quizquestion)) {
+//	        quizQuestions.remove(quizquestion);
+//	        quizquestion.setQuiz(null);
+//	    }
+//	}
+
+	public List<QuizQuestion> getQuizQuestions() {
+		return quizQuestions;
+	}
+
+	public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
+		this.quizQuestions = quizQuestions;
 	}
 
 	@Override

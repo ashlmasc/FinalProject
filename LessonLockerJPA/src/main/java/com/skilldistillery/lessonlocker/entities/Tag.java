@@ -1,11 +1,13 @@
 package com.skilldistillery.lessonlocker.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Tag {
@@ -15,6 +17,9 @@ public class Tag {
 	private int id;
 	
 	private String title;
+	
+	@ManyToMany(mappedBy="tags")
+	private List<Question> questions;
 	
 	public Tag() {
 		super();
@@ -34,6 +39,16 @@ public class Tag {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 	@Override

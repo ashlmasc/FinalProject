@@ -46,5 +46,13 @@ class TagTest {
 	void test_tag_entity_mapping() {
 		assertNotNull(tag);
 	}
+	
+	@Test
+	void test_tag_has_questions_mapping() {
+		assertNotNull(tag);
+		assertNotNull(tag.getQuestions());
+        System.out.println(tag.getQuestions().size());
+		
+	}
 
 }
