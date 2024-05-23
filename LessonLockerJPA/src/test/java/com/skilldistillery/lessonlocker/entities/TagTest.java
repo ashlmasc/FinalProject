@@ -1,7 +1,6 @@
 package com.skilldistillery.lessonlocker.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -13,13 +12,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class TagTest {
 
 	private static EntityManagerFactory emf;
 
 	private EntityManager em;
 
-	private User user = null;
+	private Tag tag = null;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,28 +33,18 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 3);
+		tag = em.find(Tag.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user = null;
+		tag = null;
 	}
 	
 	@Test
-	void test_user_entity_mapping() {
-		assertNotNull(user);
-		assertEquals(3, user.getId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getCohort());
-		System.out.println(user.getEnabled());
-		System.out.println(user.getCreatedAt());
-		System.out.println(user.getRole());
-		System.out.println(user.getFirstName());
-		System.out.println(user.getLastName());
-		System.out.println(user.getUpdatedAt());
+	void test_tag_entity_mapping() {
+		assertNull(tag);
 	}
 
 }

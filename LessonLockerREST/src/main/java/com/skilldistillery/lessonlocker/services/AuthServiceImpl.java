@@ -12,8 +12,6 @@ public class AuthServiceImpl implements AuthService {
 	private PasswordEncoder encoder;
 	private UserRepository userRepo;
 	
-	
-
 	public AuthServiceImpl(PasswordEncoder encoder, UserRepository userRepo) {
 		super();
 		this.encoder = encoder;
@@ -29,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
 		//other business logic related to registering a new account
 		user.setEnabled(true);
 		user.setRole("standard"); // standard // default // student // instructor // admin
+		user.setCohort("default");
 
 		//persist new user to db
 		userRepo.saveAndFlush(user);

@@ -6,6 +6,7 @@
     
     <!-- start entities -->
     
+	<class>com.skilldistillery.lessonlocker.entities.Tag</class>
 	<class>com.skilldistillery.lessonlocker.entities.User</class>
 	
 	<!-- end entities -->
