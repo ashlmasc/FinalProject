@@ -13,13 +13,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class ChoiceTest {
 
 	private static EntityManagerFactory emf;
 
 	private EntityManager em;
 
-	private User user = null;
+	private Choice choice = null;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,43 +34,30 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
+		choice = em.find(Choice.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user = null;
+		choice = null;
 	}
 	
 	@Test
-	void test_user_entity_mapping() {
-		assertNotNull(user);
-		assertEquals(1, user.getId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getCohort());
-		System.out.println(user.getEnabled());
-		System.out.println(user.getCreatedAt());
-		System.out.println(user.getRole());
-		System.out.println(user.getFirstName());
-		System.out.println(user.getLastName());
-		System.out.println(user.getUpdatedAt());
-	}
-	
-	@Test
-	void test_user_has_question_mapping() {
-		assertNotNull(user.getQuestions().size());
-	}
-	
-	@Test
-	void test_user_has_quizzes_mapping() {
-		assertNotNull(user.getQuizzes().size());
-	}
-	
-	@Test
-	void test_user_has_quizAnswers_mapping() {
-		assertNotNull(user.getQuizAnswers().size());
+	void test_choice_entity_mapping() {
+		assertNotNull(choice);
+		System.out.println(choice.getId());
+		assertEquals(1, choice.getId());
+		System.out.println(choice.getContent());
+		assertEquals("Choice", choice.getContent());
+		System.out.println(choice.getPosition());
+		assertEquals(1, choice.getPosition());
+		System.out.println(choice.isCorrect());
+		assertEquals(true, choice.isCorrect());
+		System.out.println(choice.getExplanation());
+		assertEquals("Explanation", choice.getExplanation());
+		System.out.println(choice.getQuestion().getId());
+		assertEquals(1, choice.getQuestion().getId());
 	}
 
 }

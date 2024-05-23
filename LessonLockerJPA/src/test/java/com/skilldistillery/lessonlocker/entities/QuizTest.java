@@ -1,6 +1,5 @@
 package com.skilldistillery.lessonlocker.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
@@ -13,13 +12,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class QuizTest {
 
 	private static EntityManagerFactory emf;
 
 	private EntityManager em;
 
-	private User user = null;
+	private Quiz quiz = null;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,43 +33,33 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
+		quiz = em.find(Quiz.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user = null;
+		quiz = null;
 	}
 	
 	@Test
-	void test_user_entity_mapping() {
-		assertNotNull(user);
-		assertEquals(1, user.getId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getCohort());
-		System.out.println(user.getEnabled());
-		System.out.println(user.getCreatedAt());
-		System.out.println(user.getRole());
-		System.out.println(user.getFirstName());
-		System.out.println(user.getLastName());
-		System.out.println(user.getUpdatedAt());
+	void test_quiz_entity_mapping() {
+		assertNotNull(quiz);
 	}
 	
 	@Test
-	void test_user_has_question_mapping() {
-		assertNotNull(user.getQuestions().size());
+	void test_quiz_has_user_mapping() {
+		assertNotNull(quiz);
+		System.out.println(quiz.getUser().getUsername());
+		assertNotNull(quiz.getUser());
 	}
 	
 	@Test
-	void test_user_has_quizzes_mapping() {
-		assertNotNull(user.getQuizzes().size());
-	}
+	void test_quiz_has_quizQuestion_mapping() {
+		assertNotNull(quiz);
+		System.out.println(quiz.getQuizQuestions().size());
+		
 	
-	@Test
-	void test_user_has_quizAnswers_mapping() {
-		assertNotNull(user.getQuizAnswers().size());
 	}
 
 }
