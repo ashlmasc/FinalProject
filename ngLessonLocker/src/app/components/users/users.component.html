@@ -13,9 +13,9 @@
     <tbody>
         <tr *ngFor="let user of users">
         <td (click)="displayUser(user)">{{ user.username }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.cohort }}</td>
+        <td (click)="displayUser(user)">{{ user.firstName }}</td>
+        <td (click)="displayUser(user)">{{ user.lastName }}</td>
+        <td (click)="displayUser(user)">{{ user.cohort }}</td>
         <td><input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser()"></td>
         <td>
           <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
