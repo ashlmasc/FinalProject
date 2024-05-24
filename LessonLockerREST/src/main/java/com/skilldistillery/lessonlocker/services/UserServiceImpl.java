@@ -34,9 +34,6 @@ public class UserServiceImpl implements UserService {
 	public User show(String username, int id) {
 		User loggedInUser = userRepo.findByUsername(username);
         if (loggedInUser != null) {
-        	if (!loggedInUser.getRole().equals("admin")) {
-        		throw new EntityNotFoundException("Only ADMIN can see user with: " + id);
-        	}
             User existingUser = userRepo.findById(id);
             if (existingUser != null) {
                 return existingUser;
