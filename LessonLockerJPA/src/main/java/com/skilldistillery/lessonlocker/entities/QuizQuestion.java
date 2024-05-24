@@ -3,6 +3,8 @@ package com.skilldistillery.lessonlocker.entities;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class QuizQuestion {
 	private int id;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "quiz_id")
 	private Quiz quiz;
 	
@@ -28,6 +31,7 @@ public class QuizQuestion {
 	@JoinColumn(name = "question_id")
 	private Question question;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "quizQuestion")
 	private List<QuizAnswer> quizAnswers;
 	

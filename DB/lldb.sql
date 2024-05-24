@@ -228,7 +228,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lldb`;
-INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (1, 'sheldon', 'test', 'c43', 1, NULL, 'admin', 'sheldon', 'pasciak', NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (1, 'ta43', '$2a$10$Vp1jZC2n0dVOfkYPA5SsJu4G3bgMtWPxBCfSA5rJOjRs..DtHWine', 'C43', 1, '2024-05-24 07:00:00', 'instructor', 'ta', '43', '2024-05-24 07:00:00');
+INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (2, 'admin', '$2a$10$ASJl4wxvGXVGfmvn.xZG/uj65ZwFOuO.O.hfv4oAHp9tSuy2vOR/a', 'C43', 1, '2024-05-24 07:00:00', 'admin', 'admin', 'admin', '2024-05-24 07:00:00');
+INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (3, 'instructor', '$2a$10$yajrDfJLuCTO9qMKD9jnPOQTc46.oG1CW.CNqGSarhE1kYloEq6ui', 'C43', 1, '2024-05-24 07:00:00', 'instructor', 'instructor', 'instructor', '2024-05-24 07:00:00');
+INSERT INTO `user` (`id`, `username`, `password`, `cohort`, `enabled`, `created_at`, `role`, `first_name`, `last_name`, `updated_at`) VALUES (4, 'student', '$2a$10$IlF2gWONilSXORAJPck2JOzXUjGnrVma8klBdReVd.9qlsRmjV/ki', 'C43', 1, '2024-05-24 07:00:00', 'student', 'student', 'student', '2024-05-24 07:00:00');
 
 COMMIT;
 
@@ -238,7 +241,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lldb`;
-INSERT INTO `question` (`id`, `question`, `created_at`, `updated_at`, `enabled`, `hint`, `explanation`, `user_id`) VALUES (1, 'Question', NULL, NULL, 1, 'Hint', 'Explanation', 1);
+INSERT INTO `question` (`id`, `question`, `created_at`, `updated_at`, `enabled`, `hint`, `explanation`, `user_id`) VALUES (1, 'Question 1', '2024-05-24 07:00:00', '2024-05-24 07:00:00', 1, 'Hint', 'Explanation 1', 1);
+INSERT INTO `question` (`id`, `question`, `created_at`, `updated_at`, `enabled`, `hint`, `explanation`, `user_id`) VALUES (2, 'Question 2', '2024-05-24 07:00:00', '2024-05-24 07:00:00', 1, 'Hint 2', 'Explanation 2', 1);
 
 COMMIT;
 
@@ -269,6 +273,7 @@ COMMIT;
 START TRANSACTION;
 USE `lldb`;
 INSERT INTO `quiz_question` (`id`, `quiz_id`, `question_id`) VALUES (1, 1, 1);
+INSERT INTO `quiz_question` (`id`, `quiz_id`, `question_id`) VALUES (2, 1, 2);
 
 COMMIT;
 
@@ -279,6 +284,11 @@ COMMIT;
 START TRANSACTION;
 USE `lldb`;
 INSERT INTO `tag` (`id`, `title`) VALUES (1, 'jfop');
+INSERT INTO `tag` (`id`, `title`) VALUES (2, 'javascript');
+INSERT INTO `tag` (`id`, `title`) VALUES (3, 'bootstrap');
+INSERT INTO `tag` (`id`, `title`) VALUES (4, 'jpa');
+INSERT INTO `tag` (`id`, `title`) VALUES (5, 'spring');
+INSERT INTO `tag` (`id`, `title`) VALUES (6, 'bootstrap');
 
 COMMIT;
 

@@ -7,6 +7,8 @@ import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,9 +38,11 @@ public class Quiz {
 	private LocalDateTime updatedAt;
 	
 	@JoinColumn(name = "instructor_user_id")
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "quiz")
 	List<QuizQuestion> quizQuestions;
 	
