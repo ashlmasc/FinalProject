@@ -15,21 +15,5 @@ export class AppComponent {
 
   constructor(private auth: AuthService) {}
 
-  ngOnInit() {
-    this.tempTestDeleteMeLater(); // DELETE LATER!!!
-  }
 
-  tempTestDeleteMeLater() {
-    this.auth.login('ta43', 'ta43').subscribe({
-      // change username to match DB
-      next: (data) => {
-        console.log('Logged in:');
-        console.log(data);
-      },
-      error: (fail) => {
-        console.error('Error authenticating:');
-        console.error(fail);
-      },
-    });
-  }
 }
