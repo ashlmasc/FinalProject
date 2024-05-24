@@ -32,28 +32,14 @@ export class UserService {
     );
   }
 
-  // create(newTodo: Todo): Observable<Todo> {
-  //   return this.http.post<Todo>(this.url, newTodo, this.getHttpOptions()).pipe(
-  //     catchError((err: any) => {
-  //       console.error('Error creating todo:', err);
-  //       return throwError(() => new Error('TodoService.create(): error creating todo: ' + err.message));
-  //     })
-  //   );
-  // }
-
-  // update(todo: Todo): Observable<Todo> {
-  //   if (todo.completed) {
-  //     todo.completeDate = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-  //   } else {
-  //     todo.completeDate = null;
-  //   }
-  //   return this.http.put<Todo>(`${this.url}/${todo.id}`, todo, this.getHttpOptions()).pipe(
-  //     catchError((err: any) => {
-  //       console.error('Error updating todo:', err);
-  //       return throwError(() => new Error('TodoService.update(): error updating todo: ' + err.message));
-  //     })
-  //   );
-  // }
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.url}api/users/${user.id}`, user, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.error('Error updating user:', err);
+        return throwError(() => new Error('UserService.update(): error updating user: ' + err.message));
+      })
+    );
+  }
 
   // delete(id: number): Observable<void> {
   //   return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(

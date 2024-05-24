@@ -10,14 +10,17 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
 })
 export class UsersComponent implements OnInit {
-
- users: User[] = [];
+  users: User[] = [];
   selected: User | null = null;
 
-  constructor (private activatedRoute: ActivatedRoute, private router: Router, private userService: UserService ){}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -33,51 +36,50 @@ export class UsersComponent implements OnInit {
     });
   }
 
-   //functions
+  //functions
 
-   displayUser(user: User): void {
-    console.log(user)
+  displayUser(user: User): void {
+    console.log(user);
     this.selected = user;
   }
 
-  updateUser(): void {
-    // if (this.selected) {
-    //   const todo = { ...this.selected };
-    //   if (todo.completed) {
-    //     todo.completeDate = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    //   } else {
-    //     todo.completeDate = null;
-    //   }
-      
-    //   console.log('Updating todo:', todo); // Log payload for debugging
-      
-    //   this.todoService.update(todo).subscribe({
-    //     next: (updatedTodo) => {
-    //       const index = this.todos.findIndex(t => t.id === updatedTodo.id);
-    //       if (index !== -1) {
-    //         this.todos[index] = updatedTodo; // Update the todo in the list
-    //       }
-    //       this.selected = null;
-    //       this.editTodo = null;
-    //       console.log('Todos after update:', this.todos); // Log todos after update
-    //     },
-    //     error: (err) => {
-    //       console.error('Error updating todo:', err);
-    //     }
-    //   });
-    // }
+  updateUser(id: number): void {
+    let user: User = new User();
+    let foundUser: boolean = false;
+
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].id === id) {
+        user = this.users[i];
+        foundUser = true;
+        break;
+      }
+    }
+    if (!foundUser) {
+      alert('DANGER!!');
+      return;
+    }
+    this.userService.update(user).subscribe({
+      next: (updatedUser) => {
+        const index = this.users.findIndex((t) => t.id === updatedUser.id);
+        if (index !== -1) {
+          this.users[index] = updatedUser;
+        }
+        this.selected = null;
+
+        console.log('Users after update:', this.users);
+      },
+      error: (err) => {
+        console.error('Error updating user:', err);
+      },
+    });
   }
 
-  deleteUser(id: number): void {
-    // this.todoService.delete(id).subscribe(() => {
-    //   this.todos = this.todos.filter(todo => todo.id !== id);
-    // }, error => {
-    //   console.error('Error deleting todo', error);
-    // });
+  deleteUser(user: User): void {
+    user.enabled = false;
+    this.updateUser(user.id);
   }
 
   displayTable(): void {
     this.selected = null;
   }
-  
 }

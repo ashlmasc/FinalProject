@@ -13,12 +13,12 @@
     <tbody>
         <tr *ngFor="let user of users">
         <td (click)="displayUser(user)">{{ user.username }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.cohort }}</td>
-        <td><input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser()"></td>
+        <td (click)="displayUser(user)">{{ user.firstName }}</td>
+        <td (click)="displayUser(user)">{{ user.lastName }}</td>
+        <td (click)="displayUser(user)">{{ user.cohort }}</td>
+        <td><input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser(user.id)"></td>
         <td>
-          <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+          <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -32,7 +32,12 @@
     <p>First Name: {{ selected.firstName }}</p>
     <p>Last Name: {{ selected.lastName }}</p>
     <p>Cohort: {{ selected.cohort }}</p>
+    <div class="form-group">
+        <label for="cohort">Cohort</label>
+        <input type="text" class="form-control" id="cohort" [(ngModel)]="selected.cohort" name="cohort" placeholder="Ex. SD43" required>
+    </div>
     <p>Enabled: {{ selected.enabled ? 'Yes' : 'No'  }}</p>
     <button class="btn btn-warning" (click)="displayTable()">Display All Users</button>
+    <button class="btn btn-primary" (click)="updateUser(selected.id)">Update</button>
     
   </div>
