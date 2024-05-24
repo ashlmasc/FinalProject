@@ -4,17 +4,18 @@ import { tap, catchError, throwError, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Buffer } from 'buffer';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   // Set port number to server's port
-  // private baseUrl = 'http://localhost:8082/';
+  // private baseUrl = 'http://localhost:8088/';
   private baseUrl = environment.baseUrl;
   private url = this.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(user: User): Observable<User> {
     // Create POST request to register a new account
@@ -57,9 +58,8 @@ export class AuthService {
   }
 
   logout(): void {
-    // do additional clean up as needed
-    // e.g. log user logged out date/time if user record has it, etc...
     localStorage.removeItem('credentials');
+    this.router.navigateByUrl('login');
   }
 
   getLoggedInUser(): Observable<User> {

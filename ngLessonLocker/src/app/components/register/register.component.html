@@ -1,1 +1,11 @@
-<p>register works!</p>
+<form>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" [(ngModel)]="newUser.username" name="username" placeholder="Choose a username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" [(ngModel)]="newUser.password" name="password" placeholder="Create a password" required>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="register(newUser)">Register</button>
+  </form>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,12 +12,17 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class NavigationComponent {
 
-  isLoggedIn () {
-    return true;
+  constructor(private authService: AuthService, private router: Router) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.checkLogin();
   }
 
-  logout (){
-    
+  logout():void{
+    console.log("Logged Out");
+
+    this.authService.logout();
+    this.router.navigateByUrl('home');
   }
 
 }
