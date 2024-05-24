@@ -26,8 +26,8 @@ export class UserService {
   index(): Observable<User[]> {
     return this.http.get<User[]>(this.url + "api/users", this.getHttpOptions()).pipe(
       catchError((err: any) => {
-        console.error('Error retrieving todos:', err);
-        return throwError(() => new Error('TodoService.index(): error retrieving todos: ' + err));
+        console.error('Error retrieving users:', err);
+        return throwError(() => new Error('UserService.index(): error retrieving users: ' + err));
       })
     );
   }
