@@ -6,11 +6,13 @@ import { QuestionComponent } from './components/question/question.component';
 import { QuestionEditComponent } from './components/question-edit/question-edit.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { UsersComponent } from './components/users/users.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'users', component: UsersComponent },
   { path: 'question', component: QuestionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
