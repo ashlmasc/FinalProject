@@ -3,6 +3,8 @@ package com.skilldistillery.lessonlocker.entities;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class Tag {
 	
 	private String title;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="tags")
 	private List<Question> questions;
 	

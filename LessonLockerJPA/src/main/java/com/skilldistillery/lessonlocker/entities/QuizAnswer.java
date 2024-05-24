@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -24,11 +26,13 @@ public class QuizAnswer {
 	private LocalDateTime createdAt;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "quiz_question_id") // DB column name
 	@MapsId(value = "quizQuestionId")     // Field in ID class
 	private QuizQuestion quizQuestion;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "user_id") // DB column
 	@MapsId(value = "userId")     // Field in ID class
 	private User user;

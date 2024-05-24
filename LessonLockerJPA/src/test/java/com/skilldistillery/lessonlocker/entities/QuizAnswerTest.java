@@ -66,7 +66,7 @@ class QuizAnswerTest {
 	void test_quizAnswer_has_has_user_entity_mapping() {
 		System.out.println(quizAnswer);
 		System.out.println(quizAnswer.getUser().getUsername());
-		assertEquals("sheldon",quizAnswer.getUser().getUsername());
+		assertEquals("ta43",quizAnswer.getUser().getUsername());
 	}
 	
 	@Test
