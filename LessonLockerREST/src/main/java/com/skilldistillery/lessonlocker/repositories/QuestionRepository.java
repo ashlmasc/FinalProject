@@ -10,4 +10,6 @@ public interface QuestionRepository extends JpaRepository <Question, Integer>  {
 
 	List<Question> getAllQuestionsByUserUsername(String username);
 	
+	Question getQuestionByUserUsernameAndId(String username, int id);
+	
 }

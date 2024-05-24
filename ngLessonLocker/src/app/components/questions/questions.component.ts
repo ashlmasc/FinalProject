@@ -38,7 +38,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   showQuestionDetail(question: Question){
-    console.log(question);
+    this.router.navigateByUrl(`question/${question.id}`);
   }
 
 }

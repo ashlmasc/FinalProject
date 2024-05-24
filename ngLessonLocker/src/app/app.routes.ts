@@ -14,10 +14,10 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'users', component: UsersComponent },
+  { path: 'question/:id', component: QuestionEditComponent },
   { path: 'question', component: QuestionComponent },
   { path: 'questions', component: QuestionsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'question-edit/:id', component: QuestionEditComponent },
   { path: '**', component: NotFoundComponent },
 ];

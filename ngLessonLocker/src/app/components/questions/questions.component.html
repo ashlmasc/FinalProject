@@ -6,6 +6,7 @@
         <th scope="col">Question</th>
         <th scope="col">Hint</th>
         <th scope="col">Explanation</th>
+        <th scope="col">Enabled</th>
         <th scope="col">Updated At</th>
         <th scope="col">Created At</th>
 
@@ -17,6 +18,7 @@
         <td (click)="showQuestionDetail(question)">{{ question.question }}</td>
         <td (click)="showQuestionDetail(question)">{{ question.hint }}</td>
         <td (click)="showQuestionDetail(question)">{{ question.explanation }}</td>
+        <td (click)="showQuestionDetail(question)">{{ question.enabled ? "has been approved" : "not yet approved"}} </td>
         <td (click)="showQuestionDetail(question)">{{ question.updatedAt }}</td>
         <td (click)="showQuestionDetail(question)">{{ question.createdAt }}</td>
       </tr>

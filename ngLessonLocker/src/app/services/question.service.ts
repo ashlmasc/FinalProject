@@ -23,6 +23,15 @@ export class QuestionService {
     );
   }
 
+  show(id: number): Observable<Question> {
+    return this.http.get<Question>(this.url + "api/questions/" + id, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.error('Error retrieving questions:', err);
+        return throwError(() => new Error('QuestionService.index(): error retrieving questions: ' + err));
+      })
+    );
+  }
+
   getHttpOptions() {
     let options = {
       headers: {

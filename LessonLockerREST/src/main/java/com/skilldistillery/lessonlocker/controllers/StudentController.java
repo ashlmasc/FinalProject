@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +41,11 @@ public class StudentController {
 			e.printStackTrace();
 		}
 		return questions;
+	}
+	
+	@GetMapping("questions/{id}")
+	public Question show(HttpServletRequest req, HttpServletResponse res, @PathVariable("id") int id, Principal principal) {
+		return studentService.show(principal.getName(), id);
 	}
 
 }
