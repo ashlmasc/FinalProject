@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.lessonlocker.entities.Question;
 import com.skilldistillery.lessonlocker.entities.Quiz;
 import com.skilldistillery.lessonlocker.entities.QuizAnswer;
+import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 import com.skilldistillery.lessonlocker.services.AuthService;
 import com.skilldistillery.lessonlocker.services.QuizAnswerService;
 import com.skilldistillery.lessonlocker.services.QuizQuestionService;
@@ -77,11 +78,11 @@ public class QuizController {
 
 	// TODO: Implement this method
 	@GetMapping("quizzes/{id}/questions")
-	public List<Question> getAllQuestionsByQuizId(@PathVariable("id") int id, HttpServletRequest req,
+	public List<QuizQuestion> getAllQuestionsByQuizId(@PathVariable("id") int id, HttpServletRequest req,
 			HttpServletResponse res, Principal principal) {
-		List<Question> questions = null;
+		List<QuizQuestion> questions = null;
 		try {
-			// questions = quizQuestionService.getAllQuestionsByQuizId(principal.getName(), id);
+			questions = quizQuestionService.questionsForQuizId(principal.getName(), id);
 		} catch (Exception e) {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			e.printStackTrace();
