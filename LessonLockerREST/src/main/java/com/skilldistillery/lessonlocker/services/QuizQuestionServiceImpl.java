@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.skilldistillery.lessonlocker.entities.Question;
 import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 import com.skilldistillery.lessonlocker.repositories.QuizQuestionRepository;
 
