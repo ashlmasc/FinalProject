@@ -42,7 +42,7 @@ public class Quiz {
 	@ManyToOne
 	private User user;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToMany(mappedBy = "quiz")
 	List<QuizQuestion> quizQuestions;
 	

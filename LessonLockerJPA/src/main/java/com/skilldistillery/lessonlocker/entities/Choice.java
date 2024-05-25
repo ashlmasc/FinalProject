@@ -2,6 +2,8 @@ package com.skilldistillery.lessonlocker.entities;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +34,7 @@ public class Choice {
 		this.question = question;
 	}
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	private Question question;

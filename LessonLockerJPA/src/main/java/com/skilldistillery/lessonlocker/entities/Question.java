@@ -1,6 +1,7 @@
 package com.skilldistillery.lessonlocker.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Question {
@@ -46,13 +48,15 @@ public class Question {
 	@JoinTable(name="question_has_tag",
 	joinColumns=@JoinColumn(name="question_id"),
 	inverseJoinColumns=@JoinColumn(name="tag_id"))
-	
 	private List<Tag> tags;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	@JsonIgnore
 	private User user;
+		
+	@OneToMany(mappedBy = "question")
+	List<Choice> choices;
 	
 	public Question() {
 		super();
@@ -134,6 +138,33 @@ public class Question {
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public List<Choice> getChoices() {
+		return choices;
+	}
+
+	public void setChoices(List<Choice> choices) {
+		this.choices = choices;
+	}
+	
+	public void addChoice(Choice choice) {
+	    if (choices == null) {
+	       choices = new ArrayList<>();
+	    }
+	    if (!choices.contains(choice)) {
+	        choices.add(choice);
+	        if (choice.getQuestion() != null && !choice.getQuestion().equals(this)) {
+	            choice.getQuestion().removeChoice(choice);
+	        }
+	        choice.setQuestion(this);
+	    }
+	}
+	public void removeChoice(Choice choice) {
+	    if (choices != null && choices.contains(choice)) {
+	        choices.remove(choice);
+	        choice.setQuestion(null);
+	    }
 	}
 
 	@Override

@@ -1,5 +1,66 @@
-<!-- <form>
-    <input type="text" [(ngModel)]="user.username" name="username" placeholder="Username" required>
-    <input type="password" [(ngModel)]="user.password" name="password" placeholder="Password" required>
-    <button type="button" (click)="login(user)">Login</button>
-  </form> -->
+<div *ngIf="selected">
+<form>
+    <div class="form-group">
+        <label for="question">Question</label>
+        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.question" name="question" placeholder="Question" required></textarea> 
+    </div>
+
+    <div class="form-group">
+        <label for="enabled">Is Enabled</label>
+        <input name="enabled" type="checkbox" class="form-check-input" [(ngModel)]="selected.enabled">
+    </div>
+
+    <div class="form-group">
+        <label for="hint">Hint</label>
+        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.hint" name="hint" placeholder="Hint"></textarea> 
+    </div>
+
+    <div class="form-group">
+        <label for="explanation">Explanation</label>
+        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.explanation" name="explanation" placeholder="Explanation"></textarea>
+    </div>
+
+    <!-- <div *ngIf="selected.choices.length > 0">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let choice of selected.choices">
+            <td>{{ choice }}</td>
+
+              
+            </tr>
+          </tbody>
+        </table>
+    </div> -->
+
+  </form>
+</div>
+
+  <!-- {
+    "id": 1,
+    "question": "Question 1",
+    "createdAt": "2024-05-24T07:00:00",
+    "updatedAt": "2024-05-24T07:00:00",
+    "enabled": true,
+    "hint": "Hint",
+    "explanation": "Explanation 1",
+    "tags": [
+        {
+            "id": 1,
+            "title": "jfop"
+        }
+    ],
+    "choices": [
+        {
+            "id": 1,
+            "content": "Choice",
+            "position": 1,
+            "correct": true,
+            "explanation": "Explanation"
+        }
+    ]
+} -->
