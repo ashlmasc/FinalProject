@@ -34,8 +34,8 @@ class QuestionTest {
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
 		question = em.find(Question.class, 1);
-		System.out.println(question.getId());
-		System.out.println(question.getUser().getUsername());
+		//System.out.println(question.getId());
+		//System.out.println(question.getUser().getUsername());
 	}
 
 	@AfterEach
@@ -53,6 +53,13 @@ class QuestionTest {
 	void test_question_has_tags_mapping() {
 		assertNotNull(question);
 		assertNotNull(question.getTags());
+	}
+	
+	@Test
+	void test_question_has_choices_mapping() {
+		assertNotNull(question);
+		assertNotNull(question.getChoices());
+		System.out.println(question.getChoices().size());
 	}
 
 }

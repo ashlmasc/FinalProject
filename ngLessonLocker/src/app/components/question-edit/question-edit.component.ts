@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { QuestionService } from '../../services/question.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../models/question';
+import { Choice } from '../../models/choice';
 
 @Component({
   selector: 'app-question-edit',
@@ -17,6 +18,7 @@ import { Question } from '../../models/question';
 export class QuestionEditComponent implements OnInit {
 
   selected: Question | null = null;
+
 
   constructor(private http: HttpClient, private authService: AuthService, private questionService: QuestionService, private activatedRoute: ActivatedRoute, private router: Router) { }
   
