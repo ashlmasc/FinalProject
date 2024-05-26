@@ -1,6 +1,7 @@
 package com.skilldistillery.lessonlocker.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -63,20 +64,24 @@ public class QuizController {
 		return answers;
 	}
 
-	// TODO: Implement this method
 	@GetMapping("quiz-answers/{quizId}")
 	public List<QuizAnswer> getAllQuizAnswersByUserUsernameAndQuizId( @PathVariable("quizId") int quizId,HttpServletRequest req, HttpServletResponse res, Principal principal) {
 		List<QuizAnswer> answers = null;
+		List<QuizAnswer> filteredAnswers = new ArrayList<>();
 		try {
-			// answers = quizAnswerService.getAllQuizAnswersByUserUsernameAndQuizId(principal.getName(), quizId);
+			answers = quizAnswerService.getAllQuizAnswersByUserUsername(principal.getName());
 		} catch (Exception e) {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			e.printStackTrace();
 		}
-		return answers;
+		for (QuizAnswer quizAnswer : answers) {
+			if (quizAnswer.getQuizQuestion().getQuiz().getId() == quizId) {
+				filteredAnswers.add(quizAnswer);
+			}
+		}
+		return filteredAnswers;
 	}
 
-	// TODO: Implement this method
 	@GetMapping("quizzes/{id}/questions")
 	public List<QuizQuestion> getAllQuestionsByQuizId(@PathVariable("id") int id, HttpServletRequest req,
 			HttpServletResponse res, Principal principal) {
