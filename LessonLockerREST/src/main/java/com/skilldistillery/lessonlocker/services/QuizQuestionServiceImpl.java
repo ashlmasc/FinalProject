@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 import com.skilldistillery.lessonlocker.repositories.QuizQuestionRepository;
 
-
 @Service
 public class QuizQuestionServiceImpl implements QuizQuestionService {
 	
@@ -22,6 +21,11 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 	@Override
 	public List<QuizQuestion> questionsForQuizId(String username, int id) {
 		return quizQuestionRepo.getAllQuestionsByQuizUserUsernameAndQuizId(username, id);
+	}
+
+	@Override
+	public QuizQuestion create(QuizQuestion question) {
+		return quizQuestionRepo.saveAndFlush(question);
 	}
 
 

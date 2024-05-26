@@ -11,5 +11,7 @@ public interface QuizQuestionService {
 	
 	List<QuizQuestion> questionsForQuizId(String username, int id);
 	
+	QuizQuestion create(QuizQuestion question);
+	
 
 }
