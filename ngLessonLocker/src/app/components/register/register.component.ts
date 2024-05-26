@@ -9,20 +9,17 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-
   //FIELDS
-  newUser:  User = new User();
+  newUser: User = new User();
 
   //CONSTRUCTOR
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService, private router: Router) {}
 
   //LFECYCLE HOOKS
-  ngOnInit(): void{
-
-  }
+  ngOnInit(): void {}
 
   //OTHER METHODS
   register(newUser: User): void {
@@ -31,12 +28,21 @@ export class RegisterComponent implements OnInit {
       next: (user) => {
         console.log('Registration successful', user);
         this.authService.login(newUser.username, newUser.password).subscribe({
-          next: () => this.router.navigateByUrl('home'),
-          error: (error) => console.error('Login failed', error)
+          next: () => {
+            return this.router.navigateByUrl('welcome');
+          },
+          error: (error) => {
+            alert('Immediate Login after Registration failed');
+            console.error('Login failed', error);
+            return;
+          },
         });
       },
-      error: (error) => console.error('Registration failed', error)
+      error: (error) => {
+        alert('Registration failed');
+        console.error('Registration failed', error);
+        return;
+      },
     });
   }
-
 }
