@@ -10,9 +10,12 @@ import { UsersComponent } from './components/users/users.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { ReviewComponent } from './components/review/review.component';
+import { RootComponent } from './components/root/root.component';
 
 export const routes: Routes = [
-  { path: '', component: WelcomeComponent },
+  { path: '', component: RootComponent },
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'users', component: UsersComponent },
@@ -21,6 +24,7 @@ export const routes: Routes = [
   { path: 'questions', component: QuestionsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'reviews', component: ReviewsComponent },
+  { path: 'review/:id', component: ReviewComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent },
 ];

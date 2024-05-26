@@ -28,7 +28,7 @@ export class ReviewsComponent implements OnInit {
   ) {}
 
   showQuestionDetail(question: Question) {
-    this.router.navigateByUrl(`question/${question.id}`);
+    this.router.navigateByUrl(`review/${question.id}`);
   }
 
   ngOnInit(): void {

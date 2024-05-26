@@ -14,6 +14,22 @@ export class InstructorService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  show(id: number): Observable<Question> {
+    return this.http
+      .get<Question>(
+        this.url + 'api/students/questions/reviews/' + id,
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
   findAll(): Observable<Question[]> {
     return this.http
       .get<Question[]>(

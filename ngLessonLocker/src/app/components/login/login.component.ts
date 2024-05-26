@@ -9,30 +9,38 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-
   //FIELDS
-  user:  User = new User();
+  user: User = new User();
 
   //CONSTRUCTOR
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService, private router: Router) {}
 
   //LFECYCLE HOOKS
-  ngOnInit(): void{
-
-  }
+  ngOnInit(): void {}
 
   //OTHER METHODS
   login(user: User): void {
-   // console.log(user); //data binding confirmation
+    // console.log(user); //data binding confirmation
     this.authService.login(this.user.username, this.user.password).subscribe({
-      next: () => {
+      next: (user: User) => {
         console.log('Login successful');
-        this.router.navigateByUrl('home');
+        if (user.role === 'admin') {
+          return this.router.navigateByUrl('users');
+        } else if (user.role === 'instructor') {
+          return this.router.navigateByUrl('reviews');
+        } else if (user.role === 'student') {
+          return this.router.navigateByUrl('questions');
+        } else {
+          return this.router.navigateByUrl('home');
+        }
       },
-      error: (error) => console.error('Login failed', error)
+      error: (error) => {
+        alert('Login failed');
+        return console.error('Login failed', error);
+      },
     });
   }
 }
