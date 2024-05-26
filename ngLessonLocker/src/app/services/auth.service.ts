@@ -46,6 +46,8 @@ export class AuthService {
         // While credentials are stored in browser localStorage, we consider
         // ourselves logged in.
         localStorage.setItem('credentials', credentials);
+        localStorage.setItem('loggedInUser', JSON.stringify(newUser));
+        console.log(newUser);
         return newUser;
       }),
       catchError((err: any) => {
@@ -59,6 +61,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('credentials');
+    localStorage.removeItem('loggedInUser');
     this.router.navigateByUrl('login');
   }
 
@@ -100,5 +103,13 @@ export class AuthService {
 
   getCredentials(): string | null {
     return localStorage.getItem('credentials');
+  }
+
+  getLoggedInUserFromLocalStorage(): User | null {
+    let loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser === null) {
+      return null;
+    }
+    return JSON.parse(loggedInUser);
   }
 }

@@ -1,12 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Question } from '../../models/question';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InstructorService } from '../../services/instructor.service';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.css'
+  styleUrl: './reviews.component.css',
 })
-export class ReviewsComponent {
+export class ReviewsComponent implements OnInit {
+  questions: Question[] = [];
+  selected: Question | null = null;
+  isLoaded: boolean = false;
 
+  username: string = '';
+  cohort: string = '';
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private instructorService: InstructorService
+  ) {}
+
+  showQuestionDetail(question: Question) {
+    this.router.navigateByUrl(`question/${question.id}`);
+  }
+
+  ngOnInit(): void {
+    this.getAllQuestions();
+  }
+
+  getAllQuestions() {
+    this.isLoaded = false;
+    this.instructorService.findAll().subscribe({
+      next: (questions: Question[]) => {
+        this.questions = questions;
+        console.log(this.questions);
+        this.isLoaded = true;
+      },
+      error: (err: Error) => console.error('Observer got an error: ' + err),
+    });
+  }
+
+  getAllQuestionsByUserUsername(username: string) {
+    this.isLoaded = false;
+    this.instructorService.findAllByUserUsername(username).subscribe({
+      next: (questions: Question[]) => {
+        this.questions = questions;
+        console.log(this.questions);
+        this.isLoaded = true;
+      },
+      error: (err: Error) => console.error('Observer got an error: ' + err),
+    });
+  }
+
+  getAllQuestionsByUserCohort(cohort: string) {
+    this.isLoaded = false;
+    this.instructorService.findAllByUserCohort(cohort).subscribe({
+      next: (questions: Question[]) => {
+        this.questions = questions;
+        console.log(this.questions);
+        this.isLoaded = true;
+      },
+      error: (err: Error) => console.error('Observer got an error: ' + err),
+    });
+  }
 }

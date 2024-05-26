@@ -1,0 +1,12 @@
+tr,td,th {
+    border: 1px solid grey;
+    padding:2px;
+    cursor:pointer;
+
+}
+
+tr:hover {
+    background-color: lightblue;
+    border-radius: 5px;
+    color:black;
+}

@@ -8,9 +8,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'users', component: UsersComponent },
@@ -18,6 +20,7 @@ export const routes: Routes = [
   { path: 'question', component: QuestionComponent },
   { path: 'questions', component: QuestionsComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'reviews', component: ReviewsComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent },
 ];

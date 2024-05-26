@@ -1,1 +1,64 @@
-<p>reviews works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Instructor Question Reviews</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" (click)="getAllQuestions()">Get All Questions</button>
+        </div>
+        <div class="col">
+            <input class="form-control" type="text" [(ngModel)]="username" name="username" placeholder="">
+            <button class="btn btn-primary" (click)="getAllQuestionsByUserUsername(username)">Get All Questions By User
+                Username</button>
+        </div>
+        <div class="col">
+            <input class="form-control" type="text" [(ngModel)]="cohort" name="cohort" placeholder="">
+            <button class="btn btn-primary" (click)="getAllQuestionsByUserCohort(cohort)">Get All Questions By User
+                Cohort</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div *ngIf="this.isLoaded===false">
+        <p>Loading....</p>
+    </div>
+
+    <div *ngIf="this.isLoaded === true">
+
+        <div class="alert alert-danger" *ngIf="this.questions === null || this.questions.length < 1" type="info"
+            dismissible="true">
+            <div class="alert-heading">No Questions Found</div>
+            <p>There are no questions to display.</p>
+        </div>
+
+        <div>
+            <table class="table table-hover" *ngIf="this.questions !== null && this.questions.length > 0">
+                <thead>
+                    <th>Id</th>
+                    <th>Question</th>
+                    <th>Hint</th>
+                    <th>Explanation</th>
+                    <th>Updated At</th>
+                    <th>Created At</th>
+                    <th>Enabled</th>
+                    <!-- <th>User Id</th> -->
+                </thead>
+                <tr *ngFor="let question of questions" (click)="showQuestionDetail(question)">
+                    <td>{{question.id}}</td>
+                    <td>{{question.question}}</td>
+                    <td>{{question.hint}}</td>
+                    <td>{{question.explanation}}</td>
+                    <td>{{question.updatedAt}}</td>
+                    <td>{{question.createdAt}}</td>
+                    <td>{{question.enabled}}</td>
+                    <!-- <td>{{question | json}}</td> -->
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
