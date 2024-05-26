@@ -17,6 +17,7 @@ export class ReviewsComponent implements OnInit {
   selected: Question | null = null;
   isLoaded: boolean = false;
 
+  tag: string = '';
   username: string = '';
   cohort: string = '';
 
@@ -34,15 +35,34 @@ export class ReviewsComponent implements OnInit {
     this.getAllQuestions();
   }
 
+  filterQuestionsKeepWithTag(tag: string): Question[] {
+    // tags: [ {id: 1, title: 'jfop' }];
+    return this.questions.filter((question) => {
+      let found = false;
+      question.tags.forEach((t: any) => {
+        if (t.title.indexOf(tag) > -1) {
+          found = true;
+        }
+      });
+      return found;
+    });
+  }
+
   getAllQuestions() {
     this.isLoaded = false;
     this.instructorService.findAll().subscribe({
       next: (questions: Question[]) => {
         this.questions = questions;
+        if (this.tag !== '') {
+          this.questions = this.filterQuestionsKeepWithTag(this.tag);
+        }
         console.log(this.questions);
         this.isLoaded = true;
       },
-      error: (err: Error) => console.error('Observer got an error: ' + err),
+      error: () => {
+        this.isLoaded = true;
+        return (err: Error) => console.error('Observer got an error: ' + err);
+      },
     });
   }
 
@@ -54,7 +74,10 @@ export class ReviewsComponent implements OnInit {
         console.log(this.questions);
         this.isLoaded = true;
       },
-      error: (err: Error) => console.error('Observer got an error: ' + err),
+      error: () => {
+        this.isLoaded = true;
+        return (err: Error) => console.error('Observer got an error: ' + err);
+      },
     });
   }
 
@@ -66,7 +89,10 @@ export class ReviewsComponent implements OnInit {
         console.log(this.questions);
         this.isLoaded = true;
       },
-      error: (err: Error) => console.error('Observer got an error: ' + err),
+      error: () => {
+        this.isLoaded = true;
+        return (err: Error) => console.error('Observer got an error: ' + err);
+      },
     });
   }
 }

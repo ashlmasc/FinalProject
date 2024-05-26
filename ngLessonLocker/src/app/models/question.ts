@@ -7,6 +7,8 @@ export class Question {
   hint: string | null;
   explanation: string | null;
   userId: number;
+  tags: any;
+  user: any;
 
   constructor(
     id: number = 0,
@@ -16,7 +18,9 @@ export class Question {
     enabled: boolean = true,
     hint: string | null = null,
     explanation: string | null = null,
-    userId: number = 0
+    userId: number = 0,
+    tags: any = [],
+    user: any = null
   ) {
     this.id = id;
     this.question = question;
@@ -26,5 +30,7 @@ export class Question {
     this.hint = hint;
     this.explanation = explanation;
     this.userId = userId;
+    this.tags = tags;
+    this.user = user;
   }
 }
