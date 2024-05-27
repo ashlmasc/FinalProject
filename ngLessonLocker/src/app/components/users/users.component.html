@@ -5,6 +5,7 @@
         <th scope="col">Username</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
+        <th scope="col">Role</th>
         <th scope="col">Cohort</th>
         <th scope="col">Enabled</th>
         <th scope="col">Actions</th>
@@ -15,18 +16,14 @@
         <td (click)="displayUser(user)">{{ user.username }}</td>
         <td (click)="displayUser(user)">{{ user.firstName }}</td>
         <td (click)="displayUser(user)">{{ user.lastName }}</td>
+        <td (click)="displayUser(user)">{{ user.role }}</td>
         <td (click)="displayUser(user)">{{ user.cohort }}</td>
         <td>
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [(ngModel)]="user.enabled"
-            (change)="updateUser(user.id)"
-          />
+          <input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser(user.id)" />
         </td>
         <td>
-          <button class="btn btn-danger" (click)="deleteUser(user)">
-            Delete
+          <button title="Delete this user" class="btn btn-danger" (click)="deleteUser(user)">
+            X
           </button>
         </td>
       </tr>
@@ -35,29 +32,67 @@
 </div>
 
 <div *ngIf="selected">
-  <h2>User Details:</h2>
-  <p>ID: {{ selected.id }}</p>
-  <p>Username: {{ selected.username }}</p>
-  <p>First Name: {{ selected.firstName }}</p>
-  <p>Last Name: {{ selected.lastName }}</p>
-  <p>Cohort: {{ selected.cohort }}</p>
-  <div class="form-group">
-    <label for="cohort">Cohort</label>
-    <input
-      type="text"
-      class="form-control"
-      id="cohort"
-      [(ngModel)]="selected.cohort"
-      name="cohort"
-      placeholder="Ex. SD43"
-      required
-    />
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 class="text-center">Selected User Details</h2>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>ID: {{ selected.id }}</p>
+        <p>Username: {{ selected.username }}</p>
+        <p>First Name: {{ selected.firstName }}</p>
+        <p>Last Name: {{ selected.lastName }}</p>
+        <p>Role: {{ selected.role }}</p>
+        <p>Cohort: {{ selected.cohort }}</p>
+        <p>Enabled: {{ selected.enabled ? "Yes" : "No" }}</p>
+      </div>
+      <div class="col">
+        <br>
+        <div class="form-group">
+          <label for="username">Username: &nbsp;</label>
+          <input type="text" class="" id="username" [(ngModel)]="selected.username" name="username" placeholder=""
+            required />
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="firstName">First Name: &nbsp;</label>
+          <input type="text" class="" id="firstName" [(ngModel)]="selected.firstName" name="firstName" placeholder=""
+            required />
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="lastName">Last Name: &nbsp;</label>
+          <input type="text" class="" id="lastName" [(ngModel)]="selected.lastName" name="lastName" placeholder=""
+            required />
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="role">Role: &nbsp;</label>
+          <input type="text" class="" id="role" [(ngModel)]="selected.role" name="role" placeholder="Ex. student"
+            required />
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="cohort">Cohort: &nbsp;</label>
+          <input type="text" class="" id="cohort" [(ngModel)]="selected.cohort" name="cohort" placeholder="Ex. SD43"
+            required />
+        </div>
+
+
+        <button class="btn btn-primary m-2" (click)="updateUser(selected.id)">
+          Update
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-warning m-2 w-100" (click)="displayTable()">
+          Display All Users
+        </button>
+      </div>
+    </div>
   </div>
-  <p>Enabled: {{ selected.enabled ? "Yes" : "No" }}</p>
-  <button class="btn btn-warning" (click)="displayTable()">
-    Display All Users
-  </button>
-  <button class="btn btn-primary" (click)="updateUser(selected.id)">
-    Update
-  </button>
 </div>

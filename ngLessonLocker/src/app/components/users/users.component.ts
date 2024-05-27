@@ -44,6 +44,19 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(id: number): void {
+    if (!this.selected) {
+      alert('You must have a user selected to update the user.');
+      return;
+    }
+
+    if (this?.selected?.cohort !== null) {
+      this.selected.cohort = this.selected.cohort.toUpperCase();
+    }
+
+    if (this?.selected?.role !== null) {
+      this.selected.role = this.selected.role.toLowerCase();
+    }
+
     let user: User = new User();
     let foundUser: boolean = false;
 

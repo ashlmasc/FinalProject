@@ -17,11 +17,15 @@ export class QuestionComponent implements OnInit {
     console.log(this.selectedQuestion);
   }
 
-  editQuestion() {
-    alert('TODO - Edit question');
+  enableQuestion() {
+    alert('TODO - Enable question');
   }
 
-  deleteQuestion() {
-    alert('TODO - Delete question');
+  disableQuestion() {
+    alert('TODO - Disable question');
+  }
+
+  editQuestion() {
+    alert('TODO - Edit question');
   }
 }
