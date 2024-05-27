@@ -5,6 +5,7 @@ export class Quiz {
   createdAt: Date | null;
   updatedAt: Date | null;
   instructorUserId: number;
+  quizQuestions: any;
 
   constructor(
     id: number = 0,
@@ -12,7 +13,8 @@ export class Quiz {
     enabled: boolean | null = null,
     createdAt: Date | null = null,
     updatedAt: Date | null = null,
-    instructorUserId: number = 0
+    instructorUserId: number = 0,
+    quizQuestions: any = []
   ) {
     this.id = id;
     this.title = title;
@@ -20,5 +22,6 @@ export class Quiz {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.instructorUserId = instructorUserId;
+    this.quizQuestions = quizQuestions;
   }
 }

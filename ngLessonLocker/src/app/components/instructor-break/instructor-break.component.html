@@ -1,1 +1,78 @@
-<p>instructor-break works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Instructor Break Question</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>( {{this?.selectedQuizId}} ) Quiz Id: {{this?.selectedQuiz?.id}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="isFound===true">
+
+    <h1 class="text-center bg-success text-white">{{this.selectedQuiz?.title}}</h1>
+
+    <div *ngIf="this.quizQuestions.length>0" class="container">
+        <div *ngFor="let question of quizQuestions" class="row">
+            <div class="col">
+                <p><span>Question:</span>{{question.question?.question}}</p>
+                <p><span>Hint:</span>{{question.question?.hint}}</p>
+                <p><span>Explanation:</span>{{question.question?.explanation}}</p>
+                <!-- <p>Tags:{{question.question?.tags | json}}</p> -->
+                <br>
+                <hr>
+                <h3>Tags</h3>
+                <div *ngFor="let tag of question.question?.tags || []" class="row">
+                    <div class="col">
+                        {{tag?.title}}
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <h3>Choices</h3>
+                <!-- <p>Choices:{{question.question?.choices| json}}</p> -->
+                <div *ngFor="let choice of question.question?.choices || []" class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <p>Id:{{choice?.id}}</p>
+                            </div>
+                            <div class="col">
+                                <p>Content:{{choice?.content}}</p>
+                            </div>
+                            <div class="col">
+                                <p>Explanation:{{choice?.explanation}}</p>
+                            </div>
+                            <div class="col">
+                                <p>Is correct choice?:{{choice?.correct}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <p>Enabled:{{question.question?.enabled}}</p>
+                    </div>
+                    <div class="col">
+                        <p>Question Creator (User):{{question.question?.user?.username}}</p>
+                    </div>
+                    <div class="col">
+                        <p>Created At:{{question.question?.createdAt | date: 'dd/MM/yyyy HH:MM:ss'}}</p>
+                    </div>
+                    <div class="col">
+                        <p>Updated At:{{question.question?.updatedAt | date: 'dd/MM/yyyy HH:MM:ss'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

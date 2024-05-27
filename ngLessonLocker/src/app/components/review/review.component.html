@@ -1,1 +1,28 @@
-<p>review works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p class="text-center">Selected Question Id: {{this.selectedQuestionId}}</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <app-question [selectedQuestion]="this.selected"></app-question>
+        </div>
+        <div class="col">
+            <form name="createHostQuestionForm" class="bg-light p-5 rounded">
+                <h1 class="text-center">Instructor Create Hosted Question</h1>
+                <div class="form-group m-2">
+                    <label for="quizTitle">Quiz Title: &nbsp;</label>
+                    <input type="text" class="form-control" id="quizTitle" [(ngModel)]="quizTitle" name="quizTitle"
+                        placeholder="Choose a quiz Title" required>
+                </div>
+                <hr>
+                <button *ngIf="this?.selected?.enabled === true" type="submit" class="btn btn-success"
+                    (click)="createHostedQuizQuestion()">Create Breakout Room
+                    Quiz Question</button>
+            </form>
+        </div>
+    </div>
+</div>
