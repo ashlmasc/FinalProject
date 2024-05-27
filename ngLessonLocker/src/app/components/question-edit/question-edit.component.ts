@@ -13,43 +13,73 @@ import { Choice } from '../../models/choice';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './question-edit.component.html',
-  styleUrl: './question-edit.component.css'
+  styleUrl: './question-edit.component.css',
 })
 export class QuestionEditComponent implements OnInit {
-
   selected: Question | null = null;
+  newChoice: Choice = new Choice();
 
 
-  constructor(private http: HttpClient, private authService: AuthService, private questionService: QuestionService, private activatedRoute: ActivatedRoute, private router: Router) { }
-  
-  
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private questionService: QuestionService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe({
-      next: (params) => {
-        let questionIdStr = params.get("id");
-        console.log(questionIdStr);
-        if (questionIdStr) {
-          let questionId = parseInt(questionIdStr);
-          if (isNaN(questionId)) {
-            console.log(questionId);
-            this.router.navigateByUrl('/not-found');
-          } else {
-            this.questionService.show(questionId).subscribe({
-              next: (question) => {
-                console.log(question);
-                if (question) {
-                  this.selected = question;
-                  console.log(this.selected);
-                } else {
-                  this.router.navigateByUrl('/not-found');
-                }
-              },
-              error: () => this.router.navigateByUrl('/not-found')
-            });
-          }
+    this.activatedRoute.paramMap.subscribe(params => {
+      const questionIdStr = params.get("id");
+      if (questionIdStr) {
+        const questionId = parseInt(questionIdStr);
+        if (!isNaN(questionId)) {
+          this.questionService.show(questionId).subscribe({
+            next: (question) => this.selected = question,
+            error: () => this.router.navigateByUrl('/not-found')
+          });
+        } else {
+          this.router.navigateByUrl('/not-found');
         }
+      } else {
+        this.selected = new Question(); // Prepare for creating a new question
       }
     });
+  }
 
-}
+  saveQuestion(): void {
+    if (this.selected && this.selected.id) {
+      this.questionService.update(this.selected.id, this.selected).subscribe({
+        next: (updatedQuestion) => this.router.navigateByUrl(`/questions/${updatedQuestion.id}`),
+        error: (err) => console.error('Error updating question:', err)
+      });
+    } else if (this.selected) {
+      this.questionService.create(this.selected).subscribe({
+        next: (createdQuestion) => this.router.navigateByUrl(`/questions/${createdQuestion.id}`),
+        error: (err) => console.error('Error creating question:', err)
+      });
+    }
+  }
+
+  addChoice(): void {
+    if (this.selected) {
+      this.selected.choices.push({ ...this.newChoice });
+      this.newChoice = new Choice();
+    }
+  }
+
+  removeChoice(index: number): void {
+    if (this.selected) {
+      this.selected.choices.splice(index, 1);
+    }
+  }
+
+  deleteQuestion(): void {
+    if (this.selected && this.selected.id) {
+      this.questionService.delete(this.selected.id).subscribe({
+        next: () => this.router.navigateByUrl('/questions'),
+        error: (err) => console.error('Error deleting question:', err)
+      });
+    }
+  }
 }

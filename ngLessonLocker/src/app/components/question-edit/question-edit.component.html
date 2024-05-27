@@ -1,66 +1,45 @@
-<div *ngIf="selected">
-<form>
-    <div class="form-group">
+<div *ngIf="selected" class="container mt-4">
+    <form (ngSubmit)="saveQuestion()">
+      <div class="form-group">
         <label for="question">Question</label>
-        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.question" name="question" placeholder="Question" required></textarea> 
-    </div>
-
-    <div class="form-group">
-        <label for="enabled">Is Enabled</label>
-        <input name="enabled" type="checkbox" class="form-check-input" [(ngModel)]="selected.enabled">
-    </div>
-
-    <div class="form-group">
+        <textarea class="form-control" id="question" rows="4" [(ngModel)]="selected.question" name="question" placeholder="Question" required></textarea>
+      </div>
+  
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="enabled" [(ngModel)]="selected.enabled" name="enabled">
+        <label class="form-check-label" for="enabled">Is Enabled</label>
+      </div>
+  
+      <div class="form-group">
         <label for="hint">Hint</label>
-        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.hint" name="hint" placeholder="Hint"></textarea> 
-    </div>
-
-    <div class="form-group">
+        <textarea class="form-control" id="hint" rows="4" [(ngModel)]="selected.hint" name="hint" placeholder="Hint"></textarea>
+      </div>
+  
+      <div class="form-group">
         <label for="explanation">Explanation</label>
-        <textarea ng-model="myTextarea" rows="4" cols="50" [(ngModel)]="selected.explanation" name="explanation" placeholder="Explanation"></textarea>
-    </div>
-
-    <!-- <div *ngIf="selected.choices.length > 0">
-        <table class="table table-striped table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Content</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let choice of selected.choices">
-            <td>{{ choice }}</td>
-
-              
-            </tr>
-          </tbody>
-        </table>
-    </div> -->
-
-  </form>
-</div>
-
-  <!-- {
-    "id": 1,
-    "question": "Question 1",
-    "createdAt": "2024-05-24T07:00:00",
-    "updatedAt": "2024-05-24T07:00:00",
-    "enabled": true,
-    "hint": "Hint",
-    "explanation": "Explanation 1",
-    "tags": [
-        {
-            "id": 1,
-            "title": "jfop"
-        }
-    ],
-    "choices": [
-        {
-            "id": 1,
-            "content": "Choice",
-            "position": 1,
-            "correct": true,
-            "explanation": "Explanation"
-        }
-    ]
-} -->
+        <textarea class="form-control" id="explanation" rows="4" [(ngModel)]="selected.explanation" name="explanation" placeholder="Explanation"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="newChoice">New Choice</label>
+        <input type="text" class="form-control" id="newChoice" [(ngModel)]="newChoice.content" name="newChoice" placeholder="Choice content">
+        <button type="button" class="btn btn-primary mt-2" (click)="addChoice()">Add Choice</button>
+      </div>
+  
+      <div *ngIf="selected.choices.length > 0">
+        <h5 class="mt-4">Choices</h5>
+        <ul class="list-group">
+          <li *ngFor="let choice of selected.choices; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ choice.content }}</span>
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeChoice(i)">Remove</button>
+          </li>
+        </ul>
+      </div>
+  
+      <button type="submit" class="btn btn-success mt-4">Save</button>
+    </form>
+  </div>
+  
+  <div *ngIf="!selected" class="container mt-4">
+    <p>Loading...</p>
+  </div>

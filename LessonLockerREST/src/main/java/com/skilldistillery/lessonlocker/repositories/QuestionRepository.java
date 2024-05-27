@@ -11,7 +11,6 @@ public interface QuestionRepository extends JpaRepository <Question, Integer>  {
 	List<Question> getAllQuestionsByEnabled(Boolean isEnabled);
 
 	List<Question> getAllQuestionsByUserUsername(String username);
-	
 	Question getQuestionByUserUsernameAndId(String username, int id);
-	
+    
 }
