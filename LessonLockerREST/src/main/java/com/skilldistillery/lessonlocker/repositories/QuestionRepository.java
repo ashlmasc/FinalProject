@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.skilldistillery.lessonlocker.entities.Question;
 
 public interface QuestionRepository extends JpaRepository <Question, Integer>  {
+	
+	List<Question> getAllQuestionsByEnabled(Boolean isEnabled);
 
 	List<Question> getAllQuestionsByUserUsername(String username);
 	

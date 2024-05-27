@@ -35,6 +35,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()     // will hit the OPTIONS on the route
             .requestMatchers("/api/users/**").hasAuthority("admin") // added code for Final Project
             .requestMatchers("/api/students/questions/**").hasAuthority("instructor") // added code for Final Project
+            .requestMatchers("/api/instructors/**").hasAuthority("instructor") // added code for Final Project
             .requestMatchers("/api/**").authenticated() // Requests for our REST API must be authorized.
             .anyRequest().permitAll());                 // All other requests are allowed without authentication.
 

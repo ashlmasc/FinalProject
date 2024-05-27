@@ -12,7 +12,7 @@ import { InstructorService } from '../../services/instructor.service';
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css',
 })
@@ -21,6 +21,8 @@ export class ReviewComponent implements OnInit {
 
   selectedQuestionId: number = 0;
 
+  quizTitle: string = '';
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -28,6 +30,28 @@ export class ReviewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
+
+  createHostedQuizQuestion() {
+    let title = this.quizTitle;
+    let questionId = this.selectedQuestionId;
+
+    if (!title) {
+      alert('Please enter a title for the quiz.');
+      return;
+    }
+
+    if (!questionId) {
+      alert('Please select a question from question reviews page first.');
+      return;
+    }
+
+    alert(
+      'TODO - Create hosted quiz with title: ' +
+        title +
+        ' and questionId: ' +
+        questionId
+    );
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe({

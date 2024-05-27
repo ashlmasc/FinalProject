@@ -12,10 +12,5 @@ public interface QuizService {
 	
 	Quiz create(Quiz quiz);
 	
-	// QuizQuestion addQuestionToQuiz(int quizId, int questionId);
-	
-//	Question getById(int questionId);
-	
-//	QuizQuestion createQuizQuestion(QuizQuestion quizQuestion, String username);
 
 }

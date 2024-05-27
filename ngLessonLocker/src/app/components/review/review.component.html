@@ -6,3 +6,21 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <form name="createHostQuestionForm" class="bg-light p-5 rounded">
+                <div class="form-group m-2">
+                    <label for="quizTitle">Quiz Title: &nbsp;</label>
+                    <input type="text" class="form-control" id="quizTitle" [(ngModel)]="quizTitle" name="quizTitle"
+                        placeholder="Choose a quiz Title" required>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-success" (click)="createHostedQuizQuestion()">Create Breakout Room
+                    Quiz Question</button>
+            </form>
+        </div>
+    </div>
+</div>
