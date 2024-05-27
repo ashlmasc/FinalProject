@@ -6,14 +6,15 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.lessonlocker.entities.Question;
 import com.skilldistillery.lessonlocker.services.AuthService;
 import com.skilldistillery.lessonlocker.services.InstructorService;
 import com.skilldistillery.lessonlocker.services.QuestionService;
-import com.skilldistillery.lessonlocker.services.StudentService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -66,6 +67,20 @@ public class InstructorController {
 		Question question = null;
 		try {
 			question = questionService.findById(id);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return question;
+	}
+	
+	// enable or disable question
+	@PostMapping("students/questions/reviews/{id}") // ?enabled=true
+	public Question enableOrDisableQuestion(@PathVariable("id") int id, @RequestParam(value = "enabled", required = true) boolean isEnabled, HttpServletRequest req, HttpServletResponse res,
+			Principal principal) {
+		Question question = null;
+		try {
+			question = questionService.enableOrDisableQuestion(id, isEnabled);
 		} catch (Exception e) {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			e.printStackTrace();

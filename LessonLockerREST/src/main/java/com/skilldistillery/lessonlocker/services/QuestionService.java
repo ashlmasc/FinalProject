@@ -9,5 +9,7 @@ public interface QuestionService {
 	List<Question> getAllQuestionsByIsEnabled(Boolean isEnabled);
 	
 	Question findById(int id);
+	
+	Question enableOrDisableQuestion(int id, boolean isEnabled);
 
 }

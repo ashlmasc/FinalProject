@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Question } from '../models/question';
 import { Observable, catchError, throwError } from 'rxjs';
+import { Quiz } from '../models/quiz';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,69 @@ export class InstructorService {
     return this.http
       .get<Question>(
         this.url + 'api/students/questions/reviews/' + id,
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  loadQuiz(id: number): Observable<Quiz> {
+    return this.http
+      .get<Quiz>(this.url + 'api/quizzes/' + id, this.getHttpOptions())
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  // http://localhost:8088/api/quizzes
+  //        "title": "Instructor Quiz",
+  //        "questionId": 1
+
+  createHostedQuestionQuiz(
+    title: string,
+    questionId: number
+  ): Observable<Quiz> {
+    return this.http
+      .post<Quiz>(
+        this.url + 'api/quizzes',
+        {
+          title: title,
+          questionId: questionId,
+        },
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  enableOrDisableQuestion(
+    id: number,
+    isEnabled: boolean
+  ): Observable<Question> {
+    return this.http
+      .post<Question>(
+        this.url +
+          'api/students/questions/reviews/' +
+          id +
+          `?enabled=${isEnabled}`,
+        {},
         this.getHttpOptions()
       )
       .pipe(

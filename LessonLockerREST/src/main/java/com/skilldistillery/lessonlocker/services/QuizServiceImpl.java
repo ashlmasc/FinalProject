@@ -7,19 +7,23 @@ import org.springframework.stereotype.Service;
 import com.skilldistillery.lessonlocker.entities.Question;
 import com.skilldistillery.lessonlocker.entities.Quiz;
 import com.skilldistillery.lessonlocker.entities.QuizQuestion;
+import com.skilldistillery.lessonlocker.entities.User;
 import com.skilldistillery.lessonlocker.repositories.QuizQuestionRepository;
 import com.skilldistillery.lessonlocker.repositories.QuizRepository;
+import com.skilldistillery.lessonlocker.repositories.UserRepository;
 
 @Service
 public class QuizServiceImpl implements QuizService {
 	
 	private QuizRepository quizRepo;
 	private QuizQuestionRepository quizQuestionRepo;
+	private UserRepository userRepo;
 	
-	public QuizServiceImpl(QuizRepository quizRepo, QuizQuestionRepository quizQuestionRepo) {
+	public QuizServiceImpl(QuizRepository quizRepo, QuizQuestionRepository quizQuestionRepo, UserRepository userRepo) {
         super();
         this.quizRepo = quizRepo;
         this.quizQuestionRepo = quizQuestionRepo;
+        this.userRepo = userRepo;
     }
 
 	@Override
@@ -35,11 +39,24 @@ public class QuizServiceImpl implements QuizService {
 		return newQuiz;
 	}
 
-//	@Override
-//	public Question getById(int questionId) {
-//		Question question = quizRepo.getById(questionId);
-//		return question;
-//	}
+	@Override
+	public Quiz getQuizById(String username, int id) {
+		
+		User user = userRepo.findByUsername(username);
+		
+		if (user == null) {
+			return null;
+		}
+		
+		Quiz quiz = quizRepo.getQuizById(id);
+        return quiz;
+	}
+
+	@Override
+	public Question getQuestionById(int questionId) {
+		Question question = quizRepo.getQuestionById(questionId);
+		return question;
+	}
 
 //	@Override
 //	public QuizQuestion createQuizQuestion(QuizQuestion quizQuestion, String username) {
