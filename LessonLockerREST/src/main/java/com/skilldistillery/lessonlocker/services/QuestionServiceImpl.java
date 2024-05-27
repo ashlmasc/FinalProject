@@ -22,4 +22,9 @@ public class QuestionServiceImpl implements QuestionService {
 		return allQuestions;
 	}
 
+	@Override
+	public Question findById(int id) {
+		return questionRepo.findById(id).get();
+	}
+
 }

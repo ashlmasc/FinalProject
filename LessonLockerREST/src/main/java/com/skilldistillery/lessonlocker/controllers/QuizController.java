@@ -70,6 +70,8 @@ public class QuizController {
 	public Quiz createQuiz(@RequestBody Map<String, String> payload, HttpServletRequest req, HttpServletResponse res,
 			Principal principal) {
 		
+		// TODO: Consider receiving the Body as a command object rather than a Map
+		
 		String title = payload.get("title");
 		
 		Integer questionId = Integer.parseInt(payload.get("questionId"));
@@ -83,11 +85,7 @@ public class QuizController {
 			return null;
 		}
 		
-		System.out.println(title);
-
-		// title
-		// enabled
-		// instructor_user_id
+		// TODO: Consider moving this business logic to the service layer
 
 		try {
 

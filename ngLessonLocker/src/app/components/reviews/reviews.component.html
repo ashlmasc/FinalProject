@@ -48,7 +48,7 @@
                     <th>Updated At</th>
                     <th>Created At</th>
                     <th>Enabled</th>
-                    <th>User Id</th>
+                    <th>User</th>
                 </thead>
                 <tr *ngFor="let question of questions" (click)="showQuestionDetail(question)">
                     <td>{{question.id}}</td>
@@ -58,7 +58,7 @@
                     <td>{{question.updatedAt}}</td>
                     <td>{{question.createdAt}}</td>
                     <td>{{question.enabled}}</td>
-                    <td>{{question | json}}</td>
+                    <td>{{question.user.username}}</td>
                 </tr>
             </table>
         </div>

@@ -27,15 +27,17 @@ public class InstructorController {
 	private QuestionService questionService;
 	private AuthService authService;
 
-	public InstructorController(InstructorService InstructorService, AuthService authService, QuestionService questionService) {
+	public InstructorController(InstructorService InstructorService, AuthService authService,
+			QuestionService questionService) {
 		super();
 		this.instructorService = InstructorService;
 		this.authService = authService;
 		this.questionService = questionService;
 	}
-	
+
 	@GetMapping("instructors/questions")
-	public List<Question> findAllApprovedQuestions(HttpServletRequest req, HttpServletResponse res, Principal principal) {
+	public List<Question> findAllApprovedQuestions(HttpServletRequest req, HttpServletResponse res,
+			Principal principal) {
 		List<Question> allApprovedQuestions = null;
 		try {
 			allApprovedQuestions = questionService.getAllQuestionsByIsEnabled(true);
@@ -58,6 +60,19 @@ public class InstructorController {
 		return allQuestions;
 	}
 
+	@GetMapping("students/questions/reviews/{id}")
+	public Question findAll(@PathVariable("id") int id, HttpServletRequest req, HttpServletResponse res,
+			Principal principal) {
+		Question question = null;
+		try {
+			question = questionService.findById(id);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return question;
+	}
+
 	@GetMapping("students/questions/username/{username}")
 	public List<Question> findAllByUserUsername(@PathVariable("username") String username, HttpServletRequest req,
 			HttpServletResponse res, Principal principal) {
@@ -72,7 +87,8 @@ public class InstructorController {
 	}
 
 	@GetMapping("students/questions/cohort/{cohort}")
-	public List<Question> findAllByUserCohort(@PathVariable("cohort") String cohort, HttpServletRequest req, HttpServletResponse res, Principal principal) {
+	public List<Question> findAllByUserCohort(@PathVariable("cohort") String cohort, HttpServletRequest req,
+			HttpServletResponse res, Principal principal) {
 		List<Question> allQuestionsByCohort = null;
 		try {
 			allQuestionsByCohort = instructorService.findAllByUserCohort(cohort);
