@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Question view component</h1>
+                <h1 class="text-center">Question view component</h1>
             </div>
         </div>
     </div>
@@ -11,6 +11,8 @@
     <div *ngIf="this.selectedQuestion!==null" class="container">
         <div class="row">
             <div class="col">
+                <p><span>Id:</span> {{selectedQuestion.id}}</p>
+
                 <p><span>Question:</span> {{selectedQuestion.question}}</p>
 
                 <p><span>Hint:</span> {{selectedQuestion.hint}}</p>
@@ -24,7 +26,8 @@
             <div class="col">
                 <p>Choices:</p>
                 <ul>
-                    <li *ngFor="let choice of selectedQuestion.choices">{{choice.content}}</li>
+                    <li *ngFor="let choice of selectedQuestion.choices" title="{{choice.explanation}}">
+                        {{choice.content}}</li>
                 </ul>
             </div>
         </div>
