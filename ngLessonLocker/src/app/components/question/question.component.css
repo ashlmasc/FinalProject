@@ -5,3 +5,10 @@ span {
     text-decoration: underline;
 }
 
+.border-success {
+    border: 2px solid green;
+}
+
+.border-danger {
+    border: 2px solid red;
+}
