@@ -157,6 +157,19 @@ public class QuizController {
 		}
 		return filteredAnswers;
 	}
+	
+	@GetMapping("quizzes/{id}") // get quiz by id
+	public Quiz getQuizById(@PathVariable("id") int id, HttpServletRequest req, HttpServletResponse res,
+			Principal principal) {
+		Quiz quiz = null;
+		try {
+			quiz = quizService.getQuizById(principal.getName(), id);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return quiz;
+	}
 
 	@GetMapping("quizzes/{id}/questions")
 	public List<QuizQuestion> getAllQuestionsByQuizId(@PathVariable("id") int id, HttpServletRequest req,

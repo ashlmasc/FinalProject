@@ -9,6 +9,7 @@ import { Question } from '../../models/question';
 import { Choice } from '../../models/choice';
 import { InstructorService } from '../../services/instructor.service';
 import { QuestionComponent } from '../question/question.component';
+import { Quiz } from '../../models/quiz';
 
 @Component({
   selector: 'app-review',
@@ -33,8 +34,8 @@ export class ReviewComponent implements OnInit {
   ) {}
 
   createHostedQuizQuestion() {
-    let title = this.quizTitle;
-    let questionId = this.selectedQuestionId;
+    let title = this?.quizTitle || '';
+    let questionId = this?.selectedQuestionId || 0;
 
     if (!title) {
       alert('Please enter a title for the quiz.');
@@ -46,12 +47,56 @@ export class ReviewComponent implements OnInit {
       return;
     }
 
-    alert(
-      'TODO - Create hosted quiz with title: ' +
-        title +
-        ' and questionId: ' +
-        questionId
-    );
+    if (this.selected?.enabled === false) {
+      alert('Please enable the question first.');
+      return;
+    }
+
+    // createHostedQuestionQuiz(title: string, questionId: number): Observable<Quiz>
+
+    this.instructorService
+      .createHostedQuestionQuiz(title, questionId)
+      .subscribe({
+        next: (quiz: Quiz) => {
+          console.log(quiz);
+          if (quiz) {
+            console.log(quiz);
+            alert(JSON.stringify(quiz));
+            this.loadNewQuiz(quiz.id);
+          } else {
+            alert('created quiz not found');
+            //return this.router.navigateByUrl('/not-found');
+            return;
+          }
+        },
+        error: (err) => {
+          alert(err?.error?.message || err?.message || err);
+          //return this.router.navigateByUrl('/not-found');
+          return;
+        },
+      });
+  }
+
+  loadNewQuiz(quizId: number) {
+    this.instructorService.loadQuiz(quizId).subscribe({
+      next: (quiz: Quiz) => {
+        console.log(quiz);
+        if (quiz) {
+          alert(JSON.stringify(quiz));
+          console.log(quiz);
+          this.router.navigateByUrl('/quizzes/' + quiz.id);
+        } else {
+          alert('Quiz not found');
+          //return this.router.navigateByUrl('/not-found');
+          return;
+        }
+      },
+      error: (err) => {
+        alert(err?.error?.message || err?.message || err);
+        //return this.router.navigateByUrl('/not-found');
+        return;
+      },
+    });
   }
 
   ngOnInit(): void {

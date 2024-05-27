@@ -19,7 +19,8 @@
                         placeholder="Choose a quiz Title" required>
                 </div>
                 <hr>
-                <button type="submit" class="btn btn-success" (click)="createHostedQuizQuestion()">Create Breakout Room
+                <button *ngIf="this?.selected?.enabled === true" type="submit" class="btn btn-success"
+                    (click)="createHostedQuizQuestion()">Create Breakout Room
                     Quiz Question</button>
             </form>
         </div>

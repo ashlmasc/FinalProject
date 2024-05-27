@@ -12,5 +12,7 @@ public interface QuizService {
 	
 	Quiz create(Quiz quiz);
 	
-
+	Quiz getQuizById(String username, int id);
+	
+	public Question getQuestionById(int questionId);
 }

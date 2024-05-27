@@ -43,12 +43,22 @@
         <div class="row">
             <div class="col text-center">
                 <button class="btn btn-success m-2" (click)="enableQuestion()">Enable</button>
-                <button class="btn btn-warning m-2" (click)="disableQuestion()">Disable</button>
+                <button class="btn btn-danger m-2" (click)="disableQuestion()">Disable</button>
             </div>
-            <div class="col text-center">
+            <!-- <div class="col text-center">
                 <button disabled class="btn btn-primary m-2" (click)="editQuestion()">Edit</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
 </section>
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary m-2 w-100" (click)="getQuestions()">Back to review questions</button>
+        </div>
+    </div>
+</div>
