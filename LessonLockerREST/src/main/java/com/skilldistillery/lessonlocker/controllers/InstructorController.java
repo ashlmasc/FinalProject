@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.lessonlocker.entities.Question;
 import com.skilldistillery.lessonlocker.services.AuthService;
 import com.skilldistillery.lessonlocker.services.InstructorService;
+import com.skilldistillery.lessonlocker.services.QuestionService;
 import com.skilldistillery.lessonlocker.services.StudentService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,12 +24,26 @@ import jakarta.servlet.http.HttpServletResponse;
 public class InstructorController {
 
 	private InstructorService instructorService;
+	private QuestionService questionService;
 	private AuthService authService;
 
-	public InstructorController(InstructorService InstructorService, AuthService authService) {
+	public InstructorController(InstructorService InstructorService, AuthService authService, QuestionService questionService) {
 		super();
 		this.instructorService = InstructorService;
 		this.authService = authService;
+		this.questionService = questionService;
+	}
+	
+	@GetMapping("instructors/questions")
+	public List<Question> findAllApprovedQuestions(HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		List<Question> allApprovedQuestions = null;
+		try {
+			allApprovedQuestions = questionService.getAllQuestionsByIsEnabled(true);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return allApprovedQuestions;
 	}
 
 	@GetMapping("students/questions")

@@ -6,18 +6,18 @@
     </div>
     <div class="row">
         <div class="col">
-            <label for="tag">Tag</label>
+            <label for="tag">Tag (can partial match)</label>
             <input class="form-control" type="text" [(ngModel)]="tag" name="tag" placeholder="">
             <button class="btn btn-primary" (click)="getAllQuestions()">Get All Questions</button>
         </div>
         <div class="col">
-            <label for="username">Username</label>
+            <label for="username">Username (must fully match)</label>
             <input class="form-control" type="text" [(ngModel)]="username" name="username" placeholder="">
             <button class="btn btn-primary" (click)="getAllQuestionsByUserUsername(username)">Get All Questions By User
                 Username</button>
         </div>
         <div class="col">
-            <label for="cohort">Cohort</label>
+            <label for="cohort">Cohort (must fully match)</label>
             <input class="form-control" type="text" [(ngModel)]="cohort" name="cohort" placeholder="">
             <button class="btn btn-primary" (click)="getAllQuestionsByUserCohort(cohort)">Get All Questions By User
                 Cohort</button>
