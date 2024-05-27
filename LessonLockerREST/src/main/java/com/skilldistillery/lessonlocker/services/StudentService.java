@@ -8,7 +8,6 @@ import com.skilldistillery.lessonlocker.entities.Question;
 public interface StudentService {
 	
 	List<Question> getAllQuestions(String username);
-	
 	Question show(String username, int id);
-
+	
 }

@@ -16,8 +16,8 @@ export class QuestionsComponent implements OnInit {
 
   questions: Question[] = [];
   selected: Question | null = null;
-
-  constructor(
+  
+    constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private questionService: QuestionService
@@ -33,12 +33,72 @@ export class QuestionsComponent implements OnInit {
         this.questions = questions;
         console.log(this.questions);
       },
-      error: (err: Error) => console.error('Observer got an error: ' + err),
+      error: (err: Error) => {
+        console.error('Observer got an error: ' + err);
+        this.questions = []; // Handle empty state
+      }
     });
   }
 
-  showQuestionDetail(question: Question){
-    this.router.navigateByUrl(`question/${question.id}`);
+  addNewQuestion(): void {
+    this.router.navigateByUrl('/questions/new');
   }
+
+  showQuestionDetail(question: Question): void {
+    this.router.navigateByUrl(`/questions/${question.id}/edit`);
+  }
+
+  deleteQuestion(id: number): void {
+    this.questionService.delete(id).subscribe({
+      next: () => this.getAllQuestions(),
+      error: (err) => console.error('Error deleting question:', err)
+    });
+  }
+
+  selectQuestion(question: Question) {
+    this.selected = question;
+  }
+  
+  deselectQuestion() {
+    this.selected = null;
+  }
+  
+  editQuestion(question: Question) {
+    this.router.navigateByUrl(`/questions/${question.id}/edit`);
+  }
+
+  //old code
+  // ngOnInit(): void {
+  //   this.getAllQuestions();
+  // }
+
+  // getAllQuestions() {
+  //   this.questionService.index().subscribe({
+  //     next: (questions: Question[]) => {
+  //       this.questions = questions;
+  //       console.log(this.questions);
+  //     },
+  //     error: (err: Error) => console.error('Observer got an error: ' + err),
+  //   });
+  // }
+
+  // showQuestionDetail(question: Question){
+  //   this.router.navigateByUrl(`question/${question.id}`);
+  // }
+
+  // addNewQuestion(): void {
+  //   this.router.navigateByUrl('/question/new');
+  // }
+
+  // editQuestion(question: Question): void {
+  //   this.router.navigateByUrl(`/question/${question.id}`);
+  // }
+
+  // deleteQuestion(id: number): void {
+  //   this.questionService.delete(id).subscribe({
+  //     next: () => this.getAllQuestions(),
+  //     error: (err) => console.error('Error deleting question:', err)
+  //   });
+  // }
 
 }

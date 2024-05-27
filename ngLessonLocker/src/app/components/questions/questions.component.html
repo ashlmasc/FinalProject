@@ -1,27 +1,50 @@
 <div *ngIf="!selected">
+    <div class="d-flex justify-content-between align-items-center my-3">
+      <h2>Questions</h2>
+      <button class="btn btn-primary" (click)="addNewQuestion()">Add New Question</button>
+    </div>
     <table class="table table-striped table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Question</th>
-        <th scope="col">Hint</th>
-        <th scope="col">Explanation</th>
-        <th scope="col">Enabled</th>
-        <th scope="col">Updated At</th>
-        <th scope="col">Created At</th>
-
-      </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let question of questions">
-        <td (click)="showQuestionDetail(question)">{{ question.id }}</td>
-        <td (click)="showQuestionDetail(question)">{{ question.question }}</td>
-        <td (click)="showQuestionDetail(question)">{{ question.hint }}</td>
-        <td (click)="showQuestionDetail(question)">{{ question.explanation }}</td>
-        <td (click)="showQuestionDetail(question)">{{ question.enabled ? "has been approved" : "not yet approved"}} </td>
-        <td (click)="showQuestionDetail(question)">{{ question.updatedAt }}</td>
-        <td (click)="showQuestionDetail(question)">{{ question.createdAt }}</td>
-      </tr>
-    </tbody>
-  </table>
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Question</th>
+          <th scope="col">Hint</th>
+          <th scope="col">Explanation</th>
+          <th scope="col">Enabled</th>
+          <th scope="col">Updated At</th>
+          <th scope="col">Created At</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let question of questions" (click)="selectQuestion(question)">
+          <td>{{ question.id }}</td>
+          <td>{{ question.question }}</td>
+          <td>{{ question.hint }}</td>
+          <td>{{ question.explanation }}</td>
+          <td>{{ question.enabled ? "Has been approved" : "Not yet approved" }}</td>
+          <td>{{ question.updatedAt }}</td>
+          <td>{{ question.createdAt }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteQuestion(question.id); $event.stopPropagation()">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="selected">
+    <div class="d-flex justify-content-between align-items-center my-3">
+      <h2>Question Detail</h2>
+      <button class="btn btn-secondary" (click)="deselectQuestion()">Back</button>
+    </div>
+    <div>
+      <p><strong>Question:</strong> {{ selected.question }}</p>
+      <p><strong>Hint:</strong> {{ selected.hint }}</p>
+      <p><strong>Explanation:</strong> {{ selected.explanation }}</p>
+      <p><strong>Enabled:</strong> {{ selected.enabled ? "Yes" : "No" }}</p>
+      <p><strong>Updated At:</strong> {{ selected.updatedAt }}</p>
+      <p><strong>Created At:</strong> {{ selected.createdAt }}</p>
+      <button class="btn btn-primary" (click)="editQuestion(selected)">Edit</button>
+    </div>
   </div>
