@@ -7,5 +7,7 @@ import com.skilldistillery.lessonlocker.entities.Question;
 public interface QuestionService {
 	
 	List<Question> getAllQuestionsByIsEnabled(Boolean isEnabled);
+	
+	Question findById(int id);
 
 }

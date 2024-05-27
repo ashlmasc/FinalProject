@@ -9,6 +9,7 @@ export class Question {
   userId: number;
   tags: any;
   user: any;
+  choices: any;
 
   constructor(
     id: number = 0,
@@ -20,7 +21,8 @@ export class Question {
     explanation: string | null = null,
     userId: number = 0,
     tags: any = [],
-    user: any = null
+    user: any = null,
+    choices: any = []
   ) {
     this.id = id;
     this.question = question;
@@ -32,5 +34,6 @@ export class Question {
     this.userId = userId;
     this.tags = tags;
     this.user = user;
+    this.choices = choices;
   }
 }

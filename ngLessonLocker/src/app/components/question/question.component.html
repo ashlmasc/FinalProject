@@ -1,1 +1,47 @@
-<p>question works!</p>
+<section class="bg-light rounded">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Question view component</h1>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="this.selectedQuestion!==null" class="container">
+        <div class="row">
+            <div class="col">
+                <p><span>Question:</span> {{selectedQuestion.question}}</p>
+
+                <p><span>Hint:</span> {{selectedQuestion.hint}}</p>
+
+                <p><span>Explanation:</span> {{selectedQuestion.explanation}}</p>
+
+                <p><span>Enabled:</span> {{selectedQuestion.enabled}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Choices:</p>
+                <ul>
+                    <li *ngFor="let choice of selectedQuestion.choices">{{choice.content}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Tags:</p>
+                <ul>
+                    <li *ngFor="let choice of selectedQuestion.tags">{{choice.title}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary m-2" (click)="editQuestion()">Edit</button>
+                <button class="btn btn-danger m-2" (click)="deleteQuestion()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+</section>

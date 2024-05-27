@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col">
             <h1>Instructor Question Review</h1>
-            <p>Selected Question Id: {{this.selectedQuestionId}}</p>
         </div>
     </div>
 </div>
@@ -10,7 +9,10 @@
 <div class="container">
     <div class="row">
         <div class="col">
-
+            <p>Selected Question Id: {{this.selectedQuestionId}}</p>
+            <app-question [selectedQuestion]="this.selected"></app-question>
+        </div>
+        <div class="col">
             <form name="createHostQuestionForm" class="bg-light p-5 rounded">
                 <div class="form-group m-2">
                     <label for="quizTitle">Quiz Title: &nbsp;</label>

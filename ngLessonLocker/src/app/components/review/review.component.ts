@@ -8,11 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../models/question';
 import { Choice } from '../../models/choice';
 import { InstructorService } from '../../services/instructor.service';
+import { QuestionComponent } from '../question/question.component';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QuestionComponent],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css',
 })
