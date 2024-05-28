@@ -13,6 +13,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ReviewComponent } from './components/review/review.component';
 import { RootComponent } from './components/root/root.component';
 import { InstructorBreakComponent } from './components/instructor-break/instructor-break.component';
+import { QuestionModifyComponent } from './components/question-modify/question-modify.component';
 
 export const routes: Routes = [
   { path: '', component: RootComponent },
@@ -24,8 +25,8 @@ export const routes: Routes = [
   { path: 'quizzes/:id', component: InstructorBreakComponent },
   { path: 'question', component: QuestionComponent },
   { path: 'questions', component: QuestionsComponent },
+  { path: 'modify/:id', component: QuestionModifyComponent },
   { path: 'questions/new', component: QuestionEditComponent },
-  { path: 'questions/:id/edit', component: QuestionEditComponent },
   { path: 'questions/:id', component: QuestionEditComponent },
   { path: 'question', component: QuestionComponent },
   { path: 'register', component: RegisterComponent },

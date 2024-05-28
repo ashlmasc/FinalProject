@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Question } from '../../models/question';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
+import { QuestionComponent } from '../question/question.component';
 
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QuestionComponent],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css'
 })
@@ -64,7 +65,8 @@ export class QuestionsComponent implements OnInit {
   }
   
   editQuestion(question: Question) {
-    this.router.navigateByUrl(`/questions/${question.id}/edit`);
+    alert("clicked edit");
+    this.router.navigateByUrl(`/modify/${question.id}`);
   }
 
   //old code
