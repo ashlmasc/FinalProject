@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { Question } from '../models/question';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Quiz } from '../models/quiz';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,25 @@ export class InstructorService {
           console.error('Error retrieving :', err);
           return throwError(
             () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  // api/students/cohorts/c43
+  // find all uses in cohort
+
+  findAllUsersByCohort(cohort: string): Observable<User[]> {
+    return this.http
+      .get<User[]>(
+        this.url + 'api/students/cohorts/' + cohort,
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving .', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving . ' + err)
           );
         })
       );

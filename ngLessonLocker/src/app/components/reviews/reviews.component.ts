@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InstructorService } from '../../services/instructor.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-reviews',
@@ -16,6 +17,7 @@ export class ReviewsComponent implements OnInit {
   questions: Question[] = [];
   selected: Question | null = null;
   isLoaded: boolean = false;
+  users: User[] = [];
 
   tag: string = '';
   username: string = '';
@@ -81,12 +83,32 @@ export class ReviewsComponent implements OnInit {
     });
   }
 
+  queryByCohort(cohort: string) {
+    this.getAllQuestionsByUserCohort(cohort);
+    this.getAllUsersByUserCohort(cohort);
+  }
+
   getAllQuestionsByUserCohort(cohort: string) {
     this.isLoaded = false;
     this.instructorService.findAllByUserCohort(cohort).subscribe({
       next: (questions: Question[]) => {
         this.questions = questions;
         console.log(this.questions);
+        this.isLoaded = true;
+      },
+      error: () => {
+        this.isLoaded = true;
+        return (err: Error) => console.error('Observer got an error: ' + err);
+      },
+    });
+  }
+
+  getAllUsersByUserCohort(cohort: string) {
+    this.isLoaded = false;
+    this.instructorService.findAllUsersByCohort(cohort).subscribe({
+      next: (users: User[]) => {
+        this.users = users;
+        console.log(this.users);
         this.isLoaded = true;
       },
       error: () => {

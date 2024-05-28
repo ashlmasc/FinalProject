@@ -19,7 +19,7 @@
         <div class="col">
             <label for="cohort">Cohort (must fully match)</label>
             <input class="form-control" type="text" [(ngModel)]="cohort" name="cohort" placeholder="">
-            <button class="btn btn-primary" (click)="getAllQuestionsByUserCohort(cohort)">Get All Questions By User
+            <button class="btn btn-primary" (click)="queryByCohort(cohort)">Get All Questions By User
                 Cohort</button>
         </div>
     </div>
@@ -59,11 +59,51 @@
                     <td>{{question.updatedAt | date: 'dd/MM/yyyy HH:MM:ss'}}</td>
                     <td>{{question.createdAt | date: 'dd/MM/yyyy HH:MM:ss'}}</td>
                     <td>{{question.enabled}}</td>
-                    <td>{{question.user.username}}</td>
+                    <td>{{question.user.username}} Cohort:({{question.user.cohort}})</td>
                 </tr>
             </table>
         </div>
 
     </div>
 
+</div>
+
+<div class="container">
+
+    <div class="alert alert-danger" *ngIf="this.users === null || this.users.length < 1" type="info" dismissible="true">
+        <div class="alert-heading">No Users Found For that Cohort</div>
+        <p>There are no users to display.</p>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <label for="cohort">Cohort (must fully match)</label>
+            <input class="form-control" type="text" [(ngModel)]="cohort" name="cohort" placeholder="">
+            <button class="btn btn-primary" (click)="queryByCohort(cohort)">Get All Users By User
+                Cohort</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div>
+                <table class="table table-hover" *ngIf="this.users !== null && this.users.length > 0">
+                    <thead>
+                        <th>Id</th>
+                        <th>username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Questions Submitted</th>
+                    </thead>
+                    <tr *ngFor="let user of this.users" [ngClass]="user.enabled ? 'text-success' : 'text-danger'">
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.questions.length}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

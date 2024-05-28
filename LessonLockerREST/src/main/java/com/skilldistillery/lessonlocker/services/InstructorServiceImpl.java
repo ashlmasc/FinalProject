@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.lessonlocker.entities.Question;
+import com.skilldistillery.lessonlocker.entities.User;
 import com.skilldistillery.lessonlocker.repositories.InstructorRepository;
 
 @Service
@@ -33,6 +34,12 @@ public class InstructorServiceImpl implements InstructorService {
 	public List<Question> findAllByUserCohort(String questionCreatorCohort) {
 		List<Question> allQuestionsByCohort = instructorRepo.findAllByUserCohort(questionCreatorCohort);
 		return allQuestionsByCohort;
+	}
+
+	@Override
+	public List<User> findAllUsersByUserCohort(String cohort) {
+		List<User> allUsersByCohort = instructorRepo.findAllUsersByCohort(cohort);
+		return allUsersByCohort;
 	}
 
 }

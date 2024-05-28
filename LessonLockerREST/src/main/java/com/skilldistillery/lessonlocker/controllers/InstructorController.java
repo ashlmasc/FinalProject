@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.lessonlocker.entities.Question;
+import com.skilldistillery.lessonlocker.entities.User;
 import com.skilldistillery.lessonlocker.services.AuthService;
 import com.skilldistillery.lessonlocker.services.InstructorService;
 import com.skilldistillery.lessonlocker.services.QuestionService;
@@ -112,6 +113,19 @@ public class InstructorController {
 			e.printStackTrace();
 		}
 		return allQuestionsByCohort;
+	}
+	
+	@GetMapping("students/cohorts/{cohort}")
+	public List<User> findAllUsersByUserCohort(@PathVariable("cohort") String cohort, HttpServletRequest req,
+			HttpServletResponse res, Principal principal) {
+		List<User> allUserByCohort = null;
+		try {
+			allUserByCohort = instructorService.findAllUsersByUserCohort(cohort);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return allUserByCohort;
 	}
 
 }

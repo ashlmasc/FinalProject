@@ -1,3 +1,5 @@
+import { Question } from './question';
+
 export class User {
   id: number;
   username: string;
@@ -9,6 +11,7 @@ export class User {
   firstName: string | null;
   lastName: string | null;
   updatedAt: Date | null;
+  questions: Question[] = [];
 
   constructor(
     id: number = 0,
@@ -20,7 +23,8 @@ export class User {
     role: string | null = null,
     firstName: string | null = null,
     lastName: string | null = null,
-    updatedAt: Date | null = null
+    updatedAt: Date | null = null,
+    questions: Question[] = []
   ) {
     this.id = id;
     this.username = username;
@@ -32,5 +36,6 @@ export class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.updatedAt = updatedAt;
+    this.questions = questions;
   }
 }
