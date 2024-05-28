@@ -83,4 +83,16 @@ export class QuestionEditComponent implements OnInit {
       });
     }
   }
+
+  cancel(): void {
+    if (this.selected && this.selected.id) {
+      this.router.navigateByUrl(`/questions/${this.selected.id}`);
+    } else {
+      this.router.navigateByUrl('/questions');
+    }
+  }
+
+  backToQuestions(): void {
+    this.router.navigateByUrl('/questions');
+  }
 }
