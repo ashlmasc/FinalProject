@@ -61,7 +61,7 @@ export class ReviewComponent implements OnInit {
           console.log(quiz);
           if (quiz) {
             console.log(quiz);
-            alert(JSON.stringify(quiz));
+            //alert(JSON.stringify(quiz));
             this.loadNewQuiz(quiz.id);
           } else {
             alert('created quiz not found');
@@ -82,7 +82,7 @@ export class ReviewComponent implements OnInit {
       next: (quiz: Quiz) => {
         console.log(quiz);
         if (quiz) {
-          alert(JSON.stringify(quiz));
+          //alert(JSON.stringify(quiz));
           console.log(quiz);
           this.router.navigateByUrl('/quizzes/' + quiz.id);
         } else {

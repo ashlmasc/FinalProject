@@ -43,34 +43,34 @@ export class UsersComponent implements OnInit {
     this.selected = user;
   }
 
-  updateUser(id: number): void {
-    if (!this.selected) {
+  updateUser(user: User): void {
+    if (!user) {
       alert('You must have a user selected to update the user.');
       return;
     }
 
-    if (this?.selected?.cohort !== null) {
-      this.selected.cohort = this.selected.cohort.toUpperCase();
+    if (user.cohort !== null) {
+      user.cohort = user.cohort.toUpperCase();
     }
 
-    if (this?.selected?.role !== null) {
-      this.selected.role = this.selected.role.toLowerCase();
+    if (user.role !== null) {
+      user.role = user.role.toLowerCase();
     }
 
-    let user: User = new User();
-    let foundUser: boolean = false;
+    // let user: User = new User();
+    // let foundUser: boolean = false;
 
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].id === id) {
-        user = this.users[i];
-        foundUser = true;
-        break;
-      }
-    }
-    if (!foundUser) {
-      alert('DANGER!!');
-      return;
-    }
+    // for (let i = 0; i < this.users.length; i++) {
+    //   if (this.users[i].id === id) {
+    //     user = this.users[i];
+    //     foundUser = true;
+    //     break;
+    //   }
+    // }
+    // if (!foundUser) {
+    //   alert('DANGER!!');
+    //   return;
+    // }
     this.userService.update(user).subscribe({
       next: (updatedUser) => {
         const index = this.users.findIndex((t) => t.id === updatedUser.id);
@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
 
   deleteUser(user: User): void {
     user.enabled = false;
-    this.updateUser(user.id);
+    this.updateUser(user);
   }
 
   displayTable(): void {
