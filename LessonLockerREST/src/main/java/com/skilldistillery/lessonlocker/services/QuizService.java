@@ -14,5 +14,7 @@ public interface QuizService {
 	
 	Quiz getQuizById(String username, int id);
 	
+	Quiz getById(int id);
+	
 	public Question getQuestionById(int questionId);
 }

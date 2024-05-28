@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../models/quiz';
 import { QuizQuestion } from '../../models/quiz-question';
 import { User } from '../../models/user';
+import { QuizAnswer } from '../../models/quiz-answer';
+import { Question } from '../../models/question';
 
 @Component({
   selector: 'app-instructor-break',
@@ -53,15 +55,55 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
   }
 
-  submitAnswer(): void {
-    console.log(this.quizQuestion);
-    console.log(this.selectedAnswer);
-    console.log(this.loggedInUser);
+  postSubmittedAnswer(
+    quizId: number,
+    questionId: number,
+    choiceId: number
+  ): void {
+    this.instructorService
+      .submitQuestionAnswer(quizId, questionId, choiceId)
+      .subscribe({
+        next: (quizAnswer: QuizAnswer) => {
+          alert('Completed submit:\n\n' + JSON.stringify(quizAnswer));
+          console.log(quizAnswer);
+          if (quizAnswer) {
+            console.log(quizAnswer);
+            alert(JSON.stringify(quizAnswer));
+            return;
+          } else {
+            alert('submitQuestionAnswer quizAnswer result not found');
+            return; // this.router.navigateByUrl('/');
+          }
+        },
+        error: (err) => {
+          alert(
+            'submitQuestionAnswer Error: ' + err?.error?.message ||
+              err?.message ||
+              err
+          );
+          console.log(err?.error?.message || err?.message || err);
+          return; // this.router.navigateByUrl('/login');
+        },
+      });
+  }
 
+  submitAnswer(quizQuestion: QuizQuestion): void {
     if (this.selectedAnswer === '0') {
       alert(' Please select an answer before submitting.');
       return;
     }
+
+    console.log(
+      this.selectedQuizId,
+      quizQuestion.id,
+      parseInt(this.selectedAnswer)
+    );
+
+    this.postSubmittedAnswer(
+      this.selectedQuizId,
+      quizQuestion.id,
+      parseInt(this.selectedAnswer)
+    );
 
     for (let i = 0; i < this.quizQuestions.length; i++) {
       let quizQuestion = this.quizQuestions[i].question;
@@ -80,8 +122,6 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    alert('Answer submitted: ' + this.selectedAnswer);
   }
 
   startClock(): void {

@@ -13,5 +13,7 @@ public interface QuizQuestionService {
 	
 	QuizQuestion create(QuizQuestion question);
 	
+	QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId);
+	
 
 }

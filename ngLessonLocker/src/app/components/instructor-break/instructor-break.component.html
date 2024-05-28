@@ -47,7 +47,8 @@
                     </div>
                     <br>
                     <hr>
-                    <form (ngSubmit)="submitAnswer()">
+                    <form *ngIf="this.question.question!==null" (ngSubmit)="submitAnswer(question)">
+                        {{question | json}}
                         <div class="row">
                             <div class="col">
                                 <label for="answer">Choose one answer from below:</label>
