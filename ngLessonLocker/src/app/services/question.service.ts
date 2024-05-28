@@ -42,7 +42,7 @@ export class QuestionService {
   }
 
   update(id: number, question: Question): Observable<Question> {
-    return this.http.put<Question>(this.url + "api/questions/" + id, question, this.getHttpOptions()).pipe(
+    return this.http.put<Question>(this.url + "api/modify/" + id, question, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.error('Error updating question:', err);
         return throwError(() => new Error('QuestionService.update(): error updating question: ' + err));
