@@ -49,6 +49,7 @@ export class QuestionEditComponent implements OnInit {
 
   saveQuestion(): void {
     if (this.selected && this.selected.id) {
+      this.selected.enabled = false;
       this.questionService.update(this.selected.id, this.selected).subscribe({
         next: (updatedQuestion) => this.router.navigateByUrl(`/questions/${updatedQuestion.id}`),
         error: (err) => console.error('Error updating question:', err)

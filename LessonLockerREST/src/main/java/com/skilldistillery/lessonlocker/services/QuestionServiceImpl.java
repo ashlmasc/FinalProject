@@ -34,6 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Question createQuestion(Question question) {
+		question.setEnabled(false);
 		Question newQuestion = questionRepo.saveAndFlush(question);
 
 		if (newQuestion.getChoices() != null) {
@@ -53,13 +54,16 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Question updateQuestion(int id, Question question) {
+		question.setEnabled(false);
 		Question existingQuestion = getQuestionById(id);
 		if (existingQuestion != null) {
 			existingQuestion.setQuestion(question.getQuestion());
 			existingQuestion.setHint(question.getHint());
 			existingQuestion.setExplanation(question.getExplanation());
 			existingQuestion.setEnabled(question.getEnabled());
-
+			
+			//delete all choices with question.getId
+			
 			// Update choices
 			if (question.getChoices() != null) {
 				existingQuestion.getChoices().clear();
@@ -86,29 +90,26 @@ public class QuestionServiceImpl implements QuestionService {
 		return null;
 	}
 
-//	@Override
-//	public boolean deleteQuestion(int id) {
-//		if (questionRepo.existsById(id)) {
-//            questionRepo.deleteById(id);
-//            return true;
-//        }
-//        return false;
-//    }
-
 	@Override
 	public boolean deleteQuestion(int id) {
 		if (questionRepo.existsById(id)) {
 			Question question = questionRepo.findById(id).orElse(null);
-			if (question != null) {
-				// Delete choices associated with the question
-				List<Choice> choices = question.getChoices();
-				for (Choice choice : choices) {
-					choiceRepo.delete(choice);
-				}
-				// Now delete the question
-				questionRepo.deleteById(id);
+			
+			if(question != null) {
+				question.setEnabled(false);
+				questionRepo.saveAndFlush(question);
 				return true;
 			}
+//			if (question != null) {
+//				// Delete choices associated with the question
+//				List<Choice> choices = question.getChoices();
+//				for (Choice choice : choices) {
+//					choiceRepo.delete(choice);
+//				}
+//				// Now delete the question
+//				questionRepo.deleteById(id);
+//				return true;
+//			}
 		}
 		return false;
 	}

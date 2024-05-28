@@ -53,7 +53,8 @@ export class QuestionModifyComponent implements OnInit {
     if (this.selected && this.correctChoice) {
       this.selected.choices.forEach(choice => choice.correct = false);
       this.correctChoice.correct = true;
-
+      this.selected.enabled = false;
+      
       if (this.selected.id) {
         this.questionService.update(this.selected.id, this.selected).subscribe({
           next: (updatedQuestion) => {
