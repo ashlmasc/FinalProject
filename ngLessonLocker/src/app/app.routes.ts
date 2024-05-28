@@ -14,6 +14,7 @@ import { ReviewComponent } from './components/review/review.component';
 import { RootComponent } from './components/root/root.component';
 import { InstructorBreakComponent } from './components/instructor-break/instructor-break.component';
 import { QuestionModifyComponent } from './components/question-modify/question-modify.component';
+import { QuizzesComponent } from './components/quizzes/quizzes.component';
 
 export const routes: Routes = [
   { path: '', component: RootComponent },
@@ -33,5 +34,6 @@ export const routes: Routes = [
   { path: 'reviews', component: ReviewsComponent },
   { path: 'review/:id', component: ReviewComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'quizzes', component: QuizzesComponent },
   { path: '**', component: NotFoundComponent },
 ];
