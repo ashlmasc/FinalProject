@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <div class="col">Quizzes</div>
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th>Quiz ID</th>
+        <th>Quiz Title</th>
+    </tr>
+    <tr *ngFor="let quiz of quizzes">
+        <td>{{quiz.id}}</td>
+        <td><a href='#/quizzes/{{quiz.id}}'>{{quiz.title}}</a></td>
+    </tr>
+</table>

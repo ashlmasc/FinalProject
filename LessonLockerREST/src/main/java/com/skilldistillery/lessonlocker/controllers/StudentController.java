@@ -1,6 +1,7 @@
 package com.skilldistillery.lessonlocker.controllers;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -100,6 +101,8 @@ public class StudentController {
 			newQuizAnswer.setChoice(choice);
 			newQuizAnswer.setId(quizAnswerId);
 			newQuizAnswer.setUser(user);
+			LocalDateTime now = LocalDateTime.now();
+			newQuizAnswer.setCreatedAt(now);
 
 			newQuizAnswer=quizAnswerService.create(newQuizAnswer);
 			
