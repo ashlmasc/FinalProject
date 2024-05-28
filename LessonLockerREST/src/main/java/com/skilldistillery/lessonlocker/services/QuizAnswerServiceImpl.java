@@ -22,6 +22,11 @@ public class QuizAnswerServiceImpl implements QuizAnswerService {
 		return quizAnswerRepo.getAllQuizAnswersByUserUsername(username);
 	}
 
+	@Override
+	public QuizAnswer create(QuizAnswer quizAnswer) {
+		return quizAnswerRepo.saveAndFlush(quizAnswer);
+	}
+
 
 	
 }

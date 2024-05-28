@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.lessonlocker.entities.Choice;
 import com.skilldistillery.lessonlocker.entities.Question;
+import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 import com.skilldistillery.lessonlocker.repositories.ChoiceRepository;
 import com.skilldistillery.lessonlocker.repositories.QuestionRepository;
+import com.skilldistillery.lessonlocker.repositories.QuizQuestionRepository;
 
 
 @Service
@@ -17,11 +19,13 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	private QuestionRepository questionRepo;
 	private ChoiceRepository choiceRepo;
+	private QuizQuestionRepository quizQuestionRepo;
 
-	public QuestionServiceImpl(QuestionRepository questionRepo, ChoiceRepository choiceRepo) {
+	public QuestionServiceImpl(QuestionRepository questionRepo, ChoiceRepository choiceRepo, QuizQuestionRepository quizQuestionRepo) {
 		super();
 		this.questionRepo = questionRepo;
 		this.choiceRepo = choiceRepo;
+		this.quizQuestionRepo = quizQuestionRepo;
 	}
 
 	@Override
@@ -117,5 +121,11 @@ public class QuestionServiceImpl implements QuestionService {
 		return foundQuestion;
 	}
 
+	@Override
+	public QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId) {
+		QuizQuestion foundQuizQuestion = null;
+		foundQuizQuestion = quizQuestionRepo.getByQuizIdAndQuestionId(quizId, questionId);
+		return foundQuizQuestion;
+	}
 
 }

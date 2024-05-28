@@ -10,6 +10,8 @@ import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 public interface QuizQuestionRepository  extends JpaRepository<QuizQuestion, Integer>{
 	
 		List<QuizQuestion> getAllQuestionsByQuizUserUsernameAndQuizId(String username, int id);
+		
+		QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId);
 
 
 }
