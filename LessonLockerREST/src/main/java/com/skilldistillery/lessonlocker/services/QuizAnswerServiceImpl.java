@@ -24,7 +24,8 @@ public class QuizAnswerServiceImpl implements QuizAnswerService {
 
 	@Override
 	public QuizAnswer create(QuizAnswer quizAnswer) {
-		return quizAnswerRepo.saveAndFlush(quizAnswer);
+		QuizAnswer newQuizAnswer = quizAnswerRepo.saveAndFlush(quizAnswer);
+		return newQuizAnswer;
 	}
 
 

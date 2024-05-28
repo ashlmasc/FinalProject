@@ -28,5 +28,10 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 		return quizQuestionRepo.saveAndFlush(question);
 	}
 
+	@Override
+	public QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId) {
+		return quizQuestionRepo.getByQuizIdAndQuestionId(quizId, questionId);
+	}
+
 
 }

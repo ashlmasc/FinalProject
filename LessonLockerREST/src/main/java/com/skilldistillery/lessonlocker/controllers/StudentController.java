@@ -60,10 +60,6 @@ public class StudentController {
 
 		QuizAnswer newQuizAnswer = null;
 
-		System.out.println("quizId: " + quizId);
-		System.out.println("questionId: " + questionId);
-		System.out.println("choiceId: " + choiceId);
-
 		try {
 
 			User user = authService.getUserByUsername(principal.getName());
@@ -71,15 +67,44 @@ public class StudentController {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return null;
 			}
+			
+			// TODO: Move this business logic into service
+			
+			System.out.println("quizId: " + quizId);
+			System.out.println("questionId: " + questionId);
+			System.out.println("choiceId: " + choiceId);
+			System.out.println("userId: " + user.getId());
+			
 
-			Quiz quiz = quizService.getQuizById(principal.getName(), quizId);
+			Quiz quiz = quizService.getById( quizId);
 
-			Question question = questionService.findById(questionId);
-
+			//Question question = questionService.findById(questionId);
+			
+			QuizQuestion quizQuestion = quizQuestionService.getByQuizIdAndQuestionId(quizId, questionId);
+			
+			System.out.println(quizQuestion);
+			
+			if (quizQuestion == null) {
+				res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				return null;
+			}
+			
+			QuizAnswerId quizAnswerId = new QuizAnswerId(user.getId(),quizQuestion.getId());
+	
 			newQuizAnswer = new QuizAnswer();
+			newQuizAnswer.setId(quizAnswerId);
+			newQuizAnswer.setQuizQuestion(quizQuestion);
+			
+			Choice choice = new Choice();
+			choice.setId(choiceId);
+			newQuizAnswer.setChoice(choice);
+			newQuizAnswer.setId(quizAnswerId);
+			newQuizAnswer.setUser(user);
 
-			QuizAnswerId quizAnswerId = new QuizAnswerId();
-
+			newQuizAnswer=quizAnswerService.create(newQuizAnswer);
+			
+			System.out.println(newQuizAnswer);
+			
 			return newQuizAnswer;
 
 		} catch (Exception e) {

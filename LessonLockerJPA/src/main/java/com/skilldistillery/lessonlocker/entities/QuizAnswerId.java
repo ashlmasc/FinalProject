@@ -21,6 +21,12 @@ public class QuizAnswerId implements Serializable {
 		public QuizAnswerId() {
 			super();
 		}
+		
+		public QuizAnswerId(int userId, int quizQuestionId) {
+			super();
+			this.userId = userId;
+			this.quizQuestionId = quizQuestionId;
+		}
 
 		public int getUserId() {
 			return userId;

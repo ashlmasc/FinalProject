@@ -121,7 +121,17 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Question findById(int id) {
-		return questionRepo.findById(id).get();
+		Optional<Question> optQuestion = null;
+		
+		optQuestion = questionRepo.findById(id);
+		
+		if (optQuestion.isPresent()) {
+			return optQuestion.get();
+		} else {
+			return null;
+		}
+
+		// return questionRepo.findById(id).get();
 	}
 
 	@Override

@@ -58,6 +58,12 @@ public class QuizServiceImpl implements QuizService {
 		return question;
 	}
 
+	@Override
+	public Quiz getById(int id) {
+		Quiz quiz = quizRepo.findById(id).orElse(null);
+		return quiz;
+	}
+
 //	@Override
 //	public QuizQuestion createQuizQuestion(QuizQuestion quizQuestion, String username) {
 //		QuizQuestion newQuizQuestion = null;

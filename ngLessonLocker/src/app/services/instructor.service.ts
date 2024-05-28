@@ -6,6 +6,7 @@ import { Question } from '../models/question';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Quiz } from '../models/quiz';
 import { User } from '../models/user';
+import { QuizAnswer } from '../models/quiz-answer';
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +68,32 @@ export class InstructorService {
   // http://localhost:8088/api/quizzes
   //        "title": "Instructor Quiz",
   //        "questionId": 1
+
+  submitQuestionAnswer(
+    quizId: number,
+    questionId: number,
+    choiceId: number
+  ): Observable<QuizAnswer> {
+    alert('inside submitQuestionAnswer in instructor service.');
+    return this.http
+      .post<QuizAnswer>(
+        this.url + `api/quiz-answers/${quizId}/${questionId}/${choiceId}`,
+        {
+          quizId,
+          questionId,
+          choiceId,
+        },
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
 
   createHostedQuestionQuiz(
     title: string,
