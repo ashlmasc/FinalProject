@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.lessonlocker.entities.Choice;
 import com.skilldistillery.lessonlocker.entities.Question;
+import com.skilldistillery.lessonlocker.repositories.ChoiceRepository;
 import com.skilldistillery.lessonlocker.repositories.QuestionRepository;
 
 
@@ -14,10 +16,12 @@ import com.skilldistillery.lessonlocker.repositories.QuestionRepository;
 public class QuestionServiceImpl implements QuestionService {
 	
 	private QuestionRepository questionRepo;
+	private ChoiceRepository choiceRepo;
 
-	public QuestionServiceImpl(QuestionRepository questionRepo) {
-
+	public QuestionServiceImpl(QuestionRepository questionRepo, ChoiceRepository choiceRepo) {
+		super();
 		this.questionRepo = questionRepo;
+		this.choiceRepo = choiceRepo;
 	}
 
 	@Override
@@ -27,13 +31,21 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question createQuestion(Question question) {
-        if (question.getChoices() != null) {
-            question.getChoices().forEach(choice -> choice.setQuestion(question));
+    	Question newQuestion = questionRepo.saveAndFlush(question);
+    	
+        if (newQuestion.getChoices() != null) {
+            //question.getChoices().forEach(choice -> choice.setQuestion(question));
+        	for (int i = 0; i < newQuestion.getChoices().size(); i++ ) {
+        		Choice choice = newQuestion.getChoices().get(i);
+        		choice.setQuestion(newQuestion);
+        		choiceRepo.saveAndFlush(choice);
+        	}
+            
         }
-        if (question.getTags() != null) {
-            question.getTags().forEach(tag -> tag.getQuestions().add(question));
-        }
-        return questionRepo.save(question);
+//        if (question.getTags() != null) {
+//            question.getTags().forEach(tag -> tag.Questions().add(question));
+//        }
+        return newQuestion;
     }
 
     @Override
@@ -55,13 +67,13 @@ public class QuestionServiceImpl implements QuestionService {
             }
 
             // Update tags
-            if (question.getTags() != null) {
-                existingQuestion.getTags().clear();
-                question.getTags().forEach(tag -> {
-                    tag.getQuestions().add(existingQuestion);
-                    existingQuestion.getTags().add(tag);
-                });
-            }
+//            if (question.getTags() != null) {
+//                existingQuestion.getTags().clear();
+//                question.getTags().forEach(tag -> {
+//                    tag.getQuestions().add(existingQuestion);
+//                    existingQuestion.getTags().add(tag);
+//                });
+//            }
 
             return questionRepo.save(existingQuestion);
         }

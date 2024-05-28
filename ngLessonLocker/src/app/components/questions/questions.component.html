@@ -1,4 +1,5 @@
 <div *ngIf="!selected">
+
     <div class="d-flex justify-content-between align-items-center my-3">
       <h2>Questions</h2>
       <button class="btn btn-primary" (click)="addNewQuestion()">Add New Question</button>
@@ -13,12 +14,12 @@
           <th scope="col">Enabled</th>
           <th scope="col">Updated At</th>
           <th scope="col">Created At</th>
-          <th scope="col">Actions</th>
+          <th scope="col" colspan="2">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let question of questions" (click)="selectQuestion(question)">
-          <td>{{ question.id }}</td>
+          <td >{{ question.id }}</td>
           <td>{{ question.question }}</td>
           <td>{{ question.hint }}</td>
           <td>{{ question.explanation }}</td>
@@ -28,23 +29,57 @@
           <td>
             <button class="btn btn-danger btn-sm" (click)="deleteQuestion(question.id); $event.stopPropagation()">Delete</button>
           </td>
+          <td>
+             <button class="btn btn-primary m-2" (click)="editQuestion(question); $event.stopPropagation()">Edit</button>
+          </td>
+       
         </tr>
       </tbody>
     </table>
   </div>
+  <section class="bg-light rounded">
+
+    <div *ngIf="this.selected!==null" class="container"
+        [ngClass]="selected.enabled ? 'border-success' : 'border-danger'">
+        <div class="container">
+          <div class="row">
+              <div class="col">
+                  <h1 class="text-center">Question view component</h1>
+              </div>
+          </div>
+      </div>
   
-  <div *ngIf="selected">
-    <div class="d-flex justify-content-between align-items-center my-3">
-      <h2>Question Detail</h2>
-      <button class="btn btn-secondary" (click)="deselectQuestion()">Back</button>
+      <button type="button" class="btn btn-success mt-4" (click)="deselectQuestion()">Back</button>
+        <div class="row">
+            <div class="col">
+                <p><span>Id:</span> {{selected.id}}</p>
+
+                <pre><span>Question:</span> {{selected.question}} </pre> 
+
+                <pre><span>Hint:</span> {{selected.hint}}</pre>
+
+                <p><span>Explanation:</span> {{selected.explanation}}</p>
+
+                <pre><span>Enabled:</span> {{selected.enabled}}</pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Choices:</p>
+                <ul>
+                    <li *ngFor="let choice of selected.choices" title="{{choice.explanation}}">
+                        {{choice.content}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Tags:</p>
+                <ul>
+                    <li *ngFor="let choice of selected.tags">{{choice.title}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div>
-      <p><strong>Question:</strong> {{ selected.question }}</p>
-      <p><strong>Hint:</strong> {{ selected.hint }}</p>
-      <p><strong>Explanation:</strong> {{ selected.explanation }}</p>
-      <p><strong>Enabled:</strong> {{ selected.enabled ? "Yes" : "No" }}</p>
-      <p><strong>Updated At:</strong> {{ selected.updatedAt }}</p>
-      <p><strong>Created At:</strong> {{ selected.createdAt }}</p>
-      <button class="btn btn-primary" (click)="editQuestion(selected)">Edit</button>
-    </div>
-  </div>
+
+</section>
