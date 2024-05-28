@@ -1,6 +1,5 @@
 package com.skilldistillery.lessonlocker.services;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +12,15 @@ import com.skilldistillery.lessonlocker.repositories.ChoiceRepository;
 import com.skilldistillery.lessonlocker.repositories.QuestionRepository;
 import com.skilldistillery.lessonlocker.repositories.QuizQuestionRepository;
 
-
 @Service
 public class QuestionServiceImpl implements QuestionService {
-	
+
 	private QuestionRepository questionRepo;
 	private ChoiceRepository choiceRepo;
 	private QuizQuestionRepository quizQuestionRepo;
 
-	public QuestionServiceImpl(QuestionRepository questionRepo, ChoiceRepository choiceRepo, QuizQuestionRepository quizQuestionRepo) {
+	public QuestionServiceImpl(QuestionRepository questionRepo, ChoiceRepository choiceRepo,
+			QuizQuestionRepository quizQuestionRepo) {
 		super();
 		this.questionRepo = questionRepo;
 		this.choiceRepo = choiceRepo;
@@ -33,66 +32,86 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionRepo.findById(id).orElse(null);
 	}
 
-    @Override
-    public Question createQuestion(Question question) {
-    	Question newQuestion = questionRepo.saveAndFlush(question);
-    	
-        if (newQuestion.getChoices() != null) {
-            //question.getChoices().forEach(choice -> choice.setQuestion(question));
-        	for (int i = 0; i < newQuestion.getChoices().size(); i++ ) {
-        		Choice choice = newQuestion.getChoices().get(i);
-        		choice.setQuestion(newQuestion);
-        		choiceRepo.saveAndFlush(choice);
-        	}
-            
-        }
+	@Override
+	public Question createQuestion(Question question) {
+		Question newQuestion = questionRepo.saveAndFlush(question);
+
+		if (newQuestion.getChoices() != null) {
+			// question.getChoices().forEach(choice -> choice.setQuestion(question));
+			for (int i = 0; i < newQuestion.getChoices().size(); i++) {
+				Choice choice = newQuestion.getChoices().get(i);
+				choice.setQuestion(newQuestion);
+				choiceRepo.saveAndFlush(choice);
+			}
+
+		}
 //        if (question.getTags() != null) {
 //            question.getTags().forEach(tag -> tag.Questions().add(question));
 //        }
-        return newQuestion;
-    }
+		return newQuestion;
+	}
 
-    @Override
-    public Question updateQuestion(int id, Question question) {
-        Question existingQuestion = getQuestionById(id);
-        if (existingQuestion != null) {
-            existingQuestion.setQuestion(question.getQuestion());
-            existingQuestion.setHint(question.getHint());
-            existingQuestion.setExplanation(question.getExplanation());
-            existingQuestion.setEnabled(question.getEnabled());
+	@Override
+	public Question updateQuestion(int id, Question question) {
+		Question existingQuestion = getQuestionById(id);
+		if (existingQuestion != null) {
+			existingQuestion.setQuestion(question.getQuestion());
+			existingQuestion.setHint(question.getHint());
+			existingQuestion.setExplanation(question.getExplanation());
+			existingQuestion.setEnabled(question.getEnabled());
 
-            // Update choices
-            if (question.getChoices() != null) {
-                existingQuestion.getChoices().clear();
-                question.getChoices().forEach(choice -> {
-                    choice.setQuestion(existingQuestion);
-                    existingQuestion.getChoices().add(choice);
-                });
-            }
+			// Update choices
+			if (question.getChoices() != null) {
+				existingQuestion.getChoices().clear();
+				for (int i = 0; i < question.getChoices().size(); i++) {
+					Choice choice = question.getChoices().get(i);
+					choice.setQuestion(existingQuestion);
+					choiceRepo.saveAndFlush(choice);
+					existingQuestion.getChoices().add(choice);
+				}
+			}
 
-            // Update tags
+			// Update tags
 //            if (question.getTags() != null) {
 //                existingQuestion.getTags().clear();
-//                question.getTags().forEach(tag -> {
+//                for (int i = 0; i < question.getTags().size(); i++) {
+//                    Tag tag = question.getTags().get(i);
 //                    tag.getQuestions().add(existingQuestion);
 //                    existingQuestion.getTags().add(tag);
-//                });
+//                }
 //            }
 
-            return questionRepo.save(existingQuestion);
-        }
-        return null;
-    }
+			return questionRepo.saveAndFlush(existingQuestion);
+		}
+		return null;
+	}
+
+//	@Override
+//	public boolean deleteQuestion(int id) {
+//		if (questionRepo.existsById(id)) {
+//            questionRepo.deleteById(id);
+//            return true;
+//        }
+//        return false;
+//    }
 
 	@Override
 	public boolean deleteQuestion(int id) {
 		if (questionRepo.existsById(id)) {
-            questionRepo.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-
+			Question question = questionRepo.findById(id).orElse(null);
+			if (question != null) {
+				// Delete choices associated with the question
+				List<Choice> choices = question.getChoices();
+				for (Choice choice : choices) {
+					choiceRepo.delete(choice);
+				}
+				// Now delete the question
+				questionRepo.deleteById(id);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public List<Question> getAllQuestionsByIsEnabled(Boolean isEnabled) {
 		List<Question> allQuestions = questionRepo.getAllQuestionsByEnabled(isEnabled);
