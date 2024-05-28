@@ -31,11 +31,11 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <p>Id:{{choice?.id}}</p>
+                                    <p>Id:{{choice?.id}} : {{choice?.content}}</p>
                                 </div>
-                                <div class="col">
-                                    <p>Content:{{choice?.content}}</p>
-                                </div>
+                                <!-- <div class="col">
+                                    <p>{{choice?.content}}</p>
+                                </div> -->
                                 <!-- <div class="col">
                                     <p>Explanation:{{choice?.explanation}}</p>
                                 </div> -->
@@ -48,7 +48,7 @@
                     <br>
                     <hr>
                     <form *ngIf="this.question.question!==null" (ngSubmit)="submitAnswer(question)">
-                        {{question | json}}
+                        <!-- {{question | json}} -->
                         <div class="row">
                             <div class="col">
                                 <label for="answer">Choose one answer from below:</label>

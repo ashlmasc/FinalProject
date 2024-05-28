@@ -52,6 +52,19 @@ export class InstructorService {
       );
   }
 
+  loadQuizzes(): Observable<Quiz[]> {
+    return this.http
+      .get<Quiz[]>(this.url + 'api/quizzes', this.getHttpOptions())
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
   loadQuiz(id: number): Observable<Quiz> {
     return this.http
       .get<Quiz>(this.url + 'api/quizzes/' + id, this.getHttpOptions())
@@ -74,7 +87,7 @@ export class InstructorService {
     questionId: number,
     choiceId: number
   ): Observable<QuizAnswer> {
-    alert('inside submitQuestionAnswer in instructor service.');
+    // alert('inside submitQuestionAnswer in instructor service.');
     return this.http
       .post<QuizAnswer>(
         this.url + `api/quiz-answers/${quizId}/${questionId}/${choiceId}`,

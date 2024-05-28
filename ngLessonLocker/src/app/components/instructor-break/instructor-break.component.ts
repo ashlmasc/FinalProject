@@ -64,19 +64,19 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
       .submitQuestionAnswer(quizId, questionId, choiceId)
       .subscribe({
         next: (quizAnswer: QuizAnswer) => {
-          alert('Completed submit:\n\n' + JSON.stringify(quizAnswer));
+          console.log('Completed submit:\n\n' + JSON.stringify(quizAnswer));
           console.log(quizAnswer);
           if (quizAnswer) {
             console.log(quizAnswer);
-            alert(JSON.stringify(quizAnswer));
+            console.log(JSON.stringify(quizAnswer));
             return;
           } else {
-            alert('submitQuestionAnswer quizAnswer result not found');
+            console.log('submitQuestionAnswer quizAnswer result not found');
             return; // this.router.navigateByUrl('/');
           }
         },
         error: (err) => {
-          alert(
+          console.log(
             'submitQuestionAnswer Error: ' + err?.error?.message ||
               err?.message ||
               err
@@ -89,19 +89,19 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
 
   submitAnswer(quizQuestion: QuizQuestion): void {
     if (this.selectedAnswer === '0') {
-      alert(' Please select an answer before submitting.');
+      alert('Please select an answer before submitting.');
       return;
     }
 
     console.log(
       this.selectedQuizId,
-      quizQuestion.id,
+      quizQuestion.question?.id,
       parseInt(this.selectedAnswer)
     );
 
     this.postSubmittedAnswer(
       this.selectedQuizId,
-      quizQuestion.id,
+      quizQuestion.question?.id || 0,
       parseInt(this.selectedAnswer)
     );
 
