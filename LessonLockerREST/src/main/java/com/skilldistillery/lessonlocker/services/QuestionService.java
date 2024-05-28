@@ -3,6 +3,7 @@ package com.skilldistillery.lessonlocker.services;
 import java.util.List;
 
 import com.skilldistillery.lessonlocker.entities.Question;
+import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 
 public interface QuestionService {
 
@@ -17,5 +18,7 @@ public interface QuestionService {
 	Question findById(int id);
 	
 	Question enableOrDisableQuestion(int id, boolean isEnabled);
+	
+	QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId);
 
 }

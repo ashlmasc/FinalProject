@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { InstructorService } from '../../services/instructor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../models/quiz';
 import { QuizQuestion } from '../../models/quiz-question';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-instructor-break',
@@ -15,7 +16,7 @@ import { QuizQuestion } from '../../models/quiz-question';
   templateUrl: './instructor-break.component.html',
   styleUrl: './instructor-break.component.css',
 })
-export class InstructorBreakComponent implements OnInit {
+export class InstructorBreakComponent implements OnInit, OnDestroy {
   selectedQuizId: number = 0;
 
   selectedQuiz: Quiz | null = null;
@@ -26,6 +27,20 @@ export class InstructorBreakComponent implements OnInit {
 
   isFound: boolean = false;
 
+  loggedInUserRole: string = '';
+
+  loggedInUser: User | null = null;
+
+  interval: any | null = null;
+
+  clockElement: any;
+
+  showAnswers: boolean = false;
+
+  selectedAnswer: string = '0';
+
+  showHints: boolean = false;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -34,7 +49,84 @@ export class InstructorBreakComponent implements OnInit {
     private router: Router
   ) {}
 
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
+  submitAnswer(): void {
+    console.log(this.quizQuestion);
+    console.log(this.selectedAnswer);
+    console.log(this.loggedInUser);
+
+    if (this.selectedAnswer === '0') {
+      alert(' Please select an answer before submitting.');
+      return;
+    }
+
+    for (let i = 0; i < this.quizQuestions.length; i++) {
+      let quizQuestion = this.quizQuestions[i].question;
+      for (let j = 0; j < (quizQuestion?.choices?.length || 0); j++) {
+        let choice = quizQuestion?.choices[j];
+        if (choice?.id === parseInt(this.selectedAnswer)) {
+          console.log(choice);
+          console.log(quizQuestion);
+          console.log(this.loggedInUser);
+          if (choice?.correct === true) {
+            alert('Correct answer');
+          } else {
+            alert('Incorrect answer');
+          }
+          return;
+        }
+      }
+    }
+
+    alert('Answer submitted: ' + this.selectedAnswer);
+  }
+
+  startClock(): void {
+    if (this.clockElement) {
+      this.clockElement.innerHTML = new Date().toLocaleTimeString();
+    }
+    this.interval = setInterval(() => {
+      if (this.clockElement) {
+        this.clockElement.innerHTML = new Date().toLocaleTimeString();
+      }
+    }, 1000);
+  }
+
+  stopClock(): void {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  showTheAnswers(trueOrFalse: boolean): void {
+    this.showAnswers = trueOrFalse;
+  }
+
+  showTheHints(): void {
+    this.showHints = true;
+  }
+
+  hideTheHints(): void {
+    this.showHints = false;
+  }
+
+  checkLoggedInUserRole(): string {
+    let storedUser = this.authService.getLoggedInUserFromLocalStorage();
+    if (storedUser) {
+      this.loggedInUser = storedUser;
+      return this?.loggedInUser?.role || '';
+    } else {
+      this.loggedInUser = null;
+      return '';
+    }
+  }
+
   ngOnInit(): void {
+    this.clockElement = document.getElementById('clock');
+
     this.activatedRoute.paramMap.subscribe({
       next: (params) => {
         let quizIdStr = params.get('id');
@@ -54,15 +146,16 @@ export class InstructorBreakComponent implements OnInit {
                   this.quizQuestions = quiz.quizQuestions;
                   console.log(this.selectedQuiz);
                   this.isFound = true;
+                  return;
                 } else {
                   alert('Quiz not found');
-                  //return this.router.navigateByUrl('/not-found');
-                  return;
+                  return this.router.navigateByUrl('/');
                 }
               },
               error: (err) => {
-                alert(err?.error?.message || err?.message || err);
-                //return this.router.navigateByUrl('/not-found');
+                alert('You must be logged in to user this page.');
+                console.log(err?.error?.message || err?.message || err);
+                return this.router.navigateByUrl('/login');
                 return;
               },
             });

@@ -19,7 +19,7 @@
         <td (click)="displayUser(user)">{{ user.role }}</td>
         <td (click)="displayUser(user)">{{ user.cohort }}</td>
         <td>
-          <input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser(user.id)" />
+          <input type="checkbox" class="form-check-input" [(ngModel)]="user.enabled" (change)="updateUser(user)" />
         </td>
         <td>
           <button title="Delete this user" class="btn btn-danger" (click)="deleteUser(user)">
@@ -82,7 +82,7 @@
         </div>
 
 
-        <button class="btn btn-primary m-2" (click)="updateUser(selected.id)">
+        <button class="btn btn-primary m-2" (click)="updateUser(selected)">
           Update
         </button>
       </div>
