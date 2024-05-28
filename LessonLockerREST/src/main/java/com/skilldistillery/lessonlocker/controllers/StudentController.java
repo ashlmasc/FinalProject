@@ -132,7 +132,7 @@ public class StudentController {
 		}
 	}
 
-	@PutMapping("questions/{id}")
+	@PutMapping("modify/{id}")
 	public Question updateQuestion(@PathVariable("id") int id, @RequestBody Question question, HttpServletRequest req,
 			HttpServletResponse res, Principal principal) {
 		try {
