@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../models/quiz';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-quizzes',
@@ -19,6 +20,14 @@ export class QuizzesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadQuizzes();
+  }
+
+  convertTagsToString(tags: Tag[] = []): string {
+    let stringTags = '';
+    tags.forEach((tag) => {
+      stringTags += '[ ' + tag?.title + ' ] ';
+    });
+    return stringTags;
   }
 
   constructor(

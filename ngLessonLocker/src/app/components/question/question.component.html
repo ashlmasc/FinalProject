@@ -1,26 +1,22 @@
 <section class="bg-light rounded">
 
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col">
                 <h1 class="text-center">Question view component</h1>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div *ngIf="this.selectedQuestion!==null" class="container"
         [ngClass]="selectedQuestion.enabled ? 'border-success' : 'border-danger'">
         <div class="row">
             <div class="col">
                 <p><span>Id:</span> {{selectedQuestion.id}}</p>
-
-                <pre><span>Question:</span> {{selectedQuestion.question}}</pre>
-
-                <pre><span>Hint:</span> {{selectedQuestion.hint}}</pre>
-
-                <pre><span>Explanation:</span> {{selectedQuestion.explanation}}</pre>
-
-                <p><span>Enabled:</span> {{selectedQuestion.enabled}}</p>
+                <pre><span>Question:</span><br>{{selectedQuestion.question}}</pre>
+                <pre><span>Hint:</span><br>{{selectedQuestion.hint}}</pre>
+                <pre><span>Explanation:</span><br>{{selectedQuestion.explanation}}</pre>
+                <p><span>Enabled:</span>{{selectedQuestion.enabled}}</p>
             </div>
         </div>
         <div class="row">

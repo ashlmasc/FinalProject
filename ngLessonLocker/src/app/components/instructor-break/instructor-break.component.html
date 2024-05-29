@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <h1 class="text-danger text-center border-primary" id="clock"></h1>
-            <h1 class="text-danger text-center border-primary" id="elapsed"></h1>
+            <p class="text-center"><span class="text-danger text-center border-primary" id="elapsed"></span></p>
             <div *ngIf="checkLoggedInUserRole()==='instructor'" class="container">
                 <button *ngIf="this.interval===null" class="btn btn-warning m-2 w-100" (click)="startClock()">Start
                     Clock</button>
@@ -16,41 +16,43 @@
     <!-- <h3 class="text-center text-success">Break Time Question : Quiz Id: ( {{this?.selectedQuizId}} )</h3> -->
 
     <div class="container" *ngIf="isFound===true">
-        <h3>Quiz Id: ( {{this?.selectedQuizId}} ), Quiz Title: {{this.selectedQuiz?.title}}</h3>
+        <!-- <h3>Quiz Id: ( {{this?.selectedQuizId}} ), Quiz Title: {{this.selectedQuiz?.title}}</h3> -->
+        <p>Quiz Id : <span>{{this?.selectedQuizId}}</span> : {{this.selectedQuiz?.title}}</p>
         <hr>
-        <div *ngIf="this.quizQuestions.length===1" class="container">
+        <div *ngIf="this.quizQuestions.length > 0" class="container">
             <div *ngFor="let question of quizQuestions" class="row">
                 <div class="col">
-                    <h1>Question:</h1>
+                    <!-- <p>Question:</p> -->
                     <pre>{{question.question?.question}}</pre>
-                    <pre class="d-none bg-light"><span>Hint:</span>{{question.question?.hint}}</pre>
-                    <pre class="d-none bg-light"><span>Explanation:</span>{{question.question?.explanation}}</pre>
+                    <hr>
+                    <pre *ngIf="this.hasAnswered" class="bg-light"><span>Hint:</span>{{question.question?.hint}}</pre>
+                    <hr>
+                    <pre *ngIf="this.hasAnswered"
+                        class="bg-light"><span>Explanation:</span>{{question.question?.explanation}}</pre>
                     <!-- <p>Tags:{{question.question?.tags | json}}</p> -->
-                    <h3>Choices</h3>
+                    <span>Choices</span>
                     <!-- <p>Choices:{{question.question?.choices| json}}</p> -->
                     <div *ngFor="let choice of question.question?.choices || []" class="row">
                         <div class="col">
                             <div class="row">
-                                <div class="col">
+                                <div *ngIf="this.hasAnswered" class="col">
+                                    <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">Id:{{choice?.id}} :
+                                        {{choice?.content}}</p>
+                                </div>
+                                <div *ngIf="!this.hasAnswered" class="col">
                                     <p>Id:{{choice?.id}} : {{choice?.content}}</p>
                                 </div>
-                                <!-- <div class="col">
-                                    <p>{{choice?.content}}</p>
-                                </div> -->
-                                <!-- <div class="col">
+                                <!-- <div *ngIf="this.hasAnswered" class="col">
                                     <p>Explanation:{{choice?.explanation}}</p>
-                                </div> -->
-                                <!-- <div class="col">
-                                    <p>Is correct choice?:{{choice?.correct}}</p>
                                 </div> -->
                             </div>
                         </div>
                     </div>
-                    <br>
                     <hr>
-                    <form *ngIf="this.question.question!==null" (ngSubmit)="submitAnswer(question)">
+                    <form *ngIf="(this.question.question!==null && !this.hasAnswered)"
+                        (ngSubmit)="submitAnswer(question)">
                         <!-- {{question | json}} -->
-                        <div class="row">
+                        <div class="row" *ngIf="this.quizQuestions.length === 1">
                             <div class="col">
                                 <label for="answer">Choose one answer from below:</label>
                                 <select name="answer" id="answer" class="form-control" [(ngModel)]="this.selectedAnswer"
@@ -64,7 +66,8 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success mt-4">Submit Answer</button>
+                        <button *ngIf="this.quizQuestions.length === 1" type="submit"
+                            class="btn btn-success mt-4">Submit Answer</button>
                     </form>
                 </div>
                 <!-- <div class="row">
@@ -87,22 +90,23 @@
 
 <div *ngIf="checkLoggedInUserRole()==='instructor'" class="container">
 
-    <h1 class="text-center text-primary">Break Time Question : Quiz Id: ( {{this?.selectedQuizId}} )</h1>
+    <!-- <h4 class="text-center text-primary">Break Time Question : Quiz Id: ( {{this?.selectedQuizId}} )</h4> -->
 
+    <p>Quiz Id : <span>{{this?.selectedQuizId}}</span> : {{this.selectedQuiz?.title}}</p>
+    <hr>
     <div class="container" *ngIf="isFound===true">
-        <h3>Quiz Title: {{this.selectedQuiz?.title}}</h3>
-        <div *ngIf="this.quizQuestions.length===1" class="container">
+        <!-- <h3>Quiz Title: {{this.selectedQuiz?.title}}</h3> -->
+        <div *ngIf="this.quizQuestions.length>0" class="container">
             <div *ngFor="let question of quizQuestions" class="row">
                 <div class="col">
-                    <h1>Question:</h1>
+                    <!-- <h1>Question:</h1> -->
                     <pre>{{question.question?.question}}</pre>
+                    <hr>
                     <pre *ngIf="this.showHints===true"
                         class="bg-light"><span>Hint: &nbsp; </span>{{question.question?.hint}}</pre>
-
                     <!-- <p>Tags:{{question.question?.tags | json}}</p> -->
-                    <br>
                     <hr>
-                    <h3>Choices</h3>
+                    <span>Choices</span>
                     <!-- <p>Choices:{{question.question?.choices| json}}</p> -->
                     <div *ngFor="let choice of question.question?.choices || []" class="row">
                         <div class="col">
@@ -110,8 +114,11 @@
                                 <div class="col">
                                     <p>Id:{{choice?.id}}: {{choice?.content}}</p>
                                 </div>
+                                <div class="col">
+                                    <p>{{ getAnswerCount(choice?.id || 0) }}</p>
+                                </div>
                                 <div *ngIf="this.showAnswers===true" id="explanation" class="col">
-                                    <p>Explanation:{{choice?.explanation}}</p>
+                                    <pre>Explanation:{{choice?.explanation}}</pre>
                                 </div>
                                 <div *ngIf="this.showAnswers===true" id="correct" class="col">
                                     <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">Is correct choice?:
@@ -185,15 +192,8 @@
 
     <div *ngIf="checkLoggedInUserRole()==='admin'" class="container">
 
-        <hr>
-        <hr>
-        <hr>
-
-
     </div>
 
     <div class="container">
-
-        <hr>
 
     </div>

@@ -65,7 +65,7 @@ export class QuestionComponent implements OnInit {
     });
   }
 
-  editQuestion() {
-    alert('TODO - Edit question');
-  }
+  // editQuestion() {
+  //   // not implemented in this component
+  // }
 }

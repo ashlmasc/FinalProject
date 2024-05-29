@@ -17,14 +17,11 @@
         <td><a href='#/quizzes/{{quiz.id}}'>{{quiz.title}}</a></td>
         <td>{{quiz.enabled}}</td>
         <td>
-            <ul>
-                <li *ngFor="let question of quiz?.quizQuestions">{{question?.question?.question}}</li>
-            </ul>
+            <p *ngFor="let question of quiz?.quizQuestions">{{question?.question?.question}}</p>
         </td>
         <td>
-            <ul>
-                <li *ngFor="let question of quiz?.quizQuestions">{{question?.question?.tags | json}}</li>
-            </ul>
+            <span *ngFor="let question of quiz?.quizQuestions">{{this.convertTagsToString(question?.question?.tags)}}
+            </span>
         </td>
     </tr>
 </table>
