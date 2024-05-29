@@ -36,11 +36,11 @@
                         <div class="col">
                             <div class="row">
                                 <div *ngIf="this.hasAnswered" class="col">
-                                    <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">Id:{{choice?.id}} :
-                                        {{choice?.content}}</p>
+                                    <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">{{choice?.content}}
+                                    </p>
                                 </div>
                                 <div *ngIf="!this.hasAnswered" class="col">
-                                    <p>Id:{{choice?.id}} : {{choice?.content}}</p>
+                                    <p>{{choice?.content}}</p>
                                 </div>
                                 <!-- <div *ngIf="this.hasAnswered" class="col">
                                     <p>Explanation:{{choice?.explanation}}</p>
@@ -112,7 +112,7 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <p>Id:{{choice?.id}}: {{choice?.content}}</p>
+                                    <p>{{choice?.content}}</p>
                                 </div>
                                 <div class="col">
                                     <p>{{ getAnswerCount(choice?.id || 0) }}</p>
@@ -181,7 +181,7 @@
                             *ngIf="answer?.id?.quizQuestionId === this?.selectedQuizId">
                             <p title="{{answer?.choice?.content}}" class="strike"
                                 [ngClass]="answer?.choice?.correct ? 'text-success' : ''">
-                                {{answer?.createdAt}}</p>
+                                {{answer?.createdAt | date: 'MM/dd/yyyy HH:MM:ss'}}</p>
                         </div>
                     </div>
                 </div>

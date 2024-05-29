@@ -213,6 +213,14 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
     // Don't forget the early return above!
   }
 
+  // convertDateTime(dateTime: string): string {
+  //   if (!dateTime) {
+  //     return '';
+  //   }
+  //   let date = new Date(dateTime);
+  //   return date.toLocaleString();
+  // }
+
   startClock(): void {
     if (this.clockElement) {
       this.clockElement.innerHTML = new Date().toLocaleTimeString();
