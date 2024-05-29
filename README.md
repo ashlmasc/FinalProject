@@ -43,50 +43,9 @@
 
 ![DB Schema](lldb-diagram.png)
 
-## Roles
+## API Endpoints
 
-| HTTP Verb | URI           | Request Body | Response Body                            | Purpose                             |
-| --------- | ------------- | ------------ | ---------------------------------------- | ----------------------------------- |
-| GET       | `/api`        |              | Description of the API and its endpoints | API **Index**                       |
-| GET       | `/api/users ` |              | List < User >                            | **Retrieve** **List** User endpoint |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-|           |               |              |                                          |                                     |
-| --------- | ------------- | ------------ | ---------------------------------------- | ----------------------------------- |
-
-POST
-http://localhost:8088/authenticate
-
-POST
-http://localhost:8088/register
-
-GET
-http://localhost:8088/api/users
-
-GET
-http://localhost:8088/api/users/1
-
-GET
-http://localhost:8088/api/questions
-
-GET
-http://localhost:8088/api/questions/1
-
-GET
-http://localhost:8088/api/quizzes
-
-GET
-http://localhost:8088/api/quizzes/1/questions
-
-GET
-http://localhost:8088/api/quiz-answers
+![API Endpoints](endpoints.png)
 
 <hr>
 
