@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col">
             <h1 class="text-danger text-center border-primary" id="clock"></h1>
+            <h1 class="text-danger text-center border-primary" id="elapsed"></h1>
             <div *ngIf="checkLoggedInUserRole()==='instructor'" class="container">
                 <button *ngIf="this.interval===null" class="btn btn-warning m-2 w-100" (click)="startClock()">Start
                     Clock</button>
@@ -116,7 +117,6 @@
                                     <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">Is correct choice?:
                                         {{choice?.correct}}</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -131,12 +131,12 @@
                                 Answers</button>
                         </div>
                     </div>
-                    <h3>Tags</h3>
+                    <!-- <h3>Tags</h3>
                     <div *ngFor="let tag of question.question?.tags || []" class="row">
                         <div class="col">
                             {{tag?.title}}
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row d-none">
                         <div class="col">
                             <p>Enabled:{{question.question?.enabled}}</p>
@@ -156,19 +156,44 @@
         </div>
     </div>
 
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary m-2 w-100" (click)="getQuizAnswers()">Show The Quiz Answers</button>
+                <!-- {{ this.quizAnswers | json}} -->
+                <div *ngIf="this.quizAnswers.length>0" class="container">
+                    <div *ngFor="let answer of quizAnswers" class="row">
+                        <!-- <div class="d-none col" *ngIf="answer?.id?.quizQuestionId === this?.selectedQuizId">
+                            {{answer | json}}
+                        </div> -->
+                        <div class="col" *ngIf="answer?.id?.quizQuestionId === this?.selectedQuizId">
+                            <p [ngClass]="answer?.choice?.correct ? 'text-success' : ''">Student: {{answer?.id?.userId}}
+                            </p>
+                        </div>
+                        <div title="{{answer?.choice?.content}}" class="col"
+                            *ngIf="answer?.id?.quizQuestionId === this?.selectedQuizId">
+                            <p title="{{answer?.choice?.content}}" class="strike"
+                                [ngClass]="answer?.choice?.correct ? 'text-success' : ''">
+                                {{answer?.createdAt}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div *ngIf="checkLoggedInUserRole()==='admin'" class="container">
+    </div>
 
-    <hr>
-    <hr>
-    <hr>
+    <div *ngIf="checkLoggedInUserRole()==='admin'" class="container">
+
+        <hr>
+        <hr>
+        <hr>
 
 
-</div>
+    </div>
 
-<div class="container">
+    <div class="container">
 
-    <hr>
+        <hr>
 
-</div>
+    </div>

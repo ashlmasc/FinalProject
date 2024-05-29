@@ -3,3 +3,10 @@ span {
     font-size: 22px;
     font-weight: bold;
 }
+
+.strike {
+    box-shadow: 2px 2px 2px 2px grey;
+    padding: 1px;
+    cursor: help;
+}
+

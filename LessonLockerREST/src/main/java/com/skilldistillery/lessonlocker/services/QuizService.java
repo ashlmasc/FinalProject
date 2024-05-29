@@ -8,6 +8,8 @@ import com.skilldistillery.lessonlocker.entities.QuizQuestion;
 
 public interface QuizService {
 	
+	List<Quiz> getAllQuiz();
+	
 	List<Quiz> getAllQuizByUserUsername(String username);
 	
 	Quiz create(Quiz quiz);

@@ -30,7 +30,7 @@
         <li class="nav-item" *ngIf="isLoggedIn() && (hasRole('student'))">
           <a class="nav-link" routerLink="/questions">Questions</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn() && (hasRole('instructor'))">
+        <li class="nav-item" *ngIf="isLoggedIn() && (hasRole('instructor') || hasRole('student'))">
           <a class="nav-link" routerLink="/quizzes">Quizzes</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn() && hasRole('instructor')">

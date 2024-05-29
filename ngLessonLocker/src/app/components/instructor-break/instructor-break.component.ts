@@ -37,11 +37,17 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
 
   clockElement: any;
 
+  elapsedElement: any;
+
+  startDateTime: Date | null = null;
+
   showAnswers: boolean = false;
 
   selectedAnswer: string = '0';
 
   showHints: boolean = false;
+
+  quizAnswers: QuizAnswer[] = [];
 
   constructor(
     private http: HttpClient,
@@ -50,6 +56,29 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
+
+  getQuizAnswers(): void {
+    this.instructorService.loadAllQuizAnswers().subscribe({
+      next: (quizAnswers: QuizAnswer[]) => {
+        console.log(quizAnswers);
+        if (quizAnswers) {
+          console.log(quizAnswers);
+          this.quizAnswers = quizAnswers;
+          return;
+        } else {
+          console.log('Quiz Answers not found');
+          // return this.router.navigateByUrl('/');
+          return;
+        }
+      },
+      error: (err) => {
+        alert('You must be logged in to use this page.');
+        console.log(err?.error?.message || err?.message || err);
+        //return this.router.navigateByUrl('/login');
+        return;
+      },
+    });
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
@@ -69,6 +98,7 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
           if (quizAnswer) {
             console.log(quizAnswer);
             console.log(JSON.stringify(quizAnswer));
+            this.getQuizAnswers();
             return;
           } else {
             console.log('submitQuestionAnswer quizAnswer result not found');
@@ -127,10 +157,31 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
   startClock(): void {
     if (this.clockElement) {
       this.clockElement.innerHTML = new Date().toLocaleTimeString();
+      this.startDateTime = new Date();
     }
     this.interval = setInterval(() => {
       if (this.clockElement) {
         this.clockElement.innerHTML = new Date().toLocaleTimeString();
+        // time difference in seconds between now and this.startDatetime
+        if (this.startDateTime) {
+          let timeDiff = Math.floor(
+            (new Date().getTime() - this.startDateTime?.getTime()) / 1000
+          );
+          if (this.elapsedElement) {
+            if (timeDiff % 15 === 0) {
+              console.log('***   Getting Quiz Answers   ***');
+              this.getQuizAnswers();
+            }
+            this.elapsedElement.innerHTML =
+              timeDiff +
+              ' seconds' +
+              ' = ' +
+              Math.floor(timeDiff / 60) +
+              ' minutes ' +
+              (timeDiff % 60) +
+              ' seconds';
+          }
+        }
       }
     }, 1000);
   }
@@ -166,6 +217,7 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.clockElement = document.getElementById('clock');
+    this.elapsedElement = document.getElementById('elapsed');
 
     this.activatedRoute.paramMap.subscribe({
       next: (params) => {
@@ -193,7 +245,7 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
                 }
               },
               error: (err) => {
-                alert('You must be logged in to user this page.');
+                alert('You must be logged in to use this page.');
                 console.log(err?.error?.message || err?.message || err);
                 return this.router.navigateByUrl('/login');
                 return;

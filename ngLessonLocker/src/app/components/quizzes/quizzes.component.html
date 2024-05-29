@@ -4,13 +4,27 @@
     </div>
 </div>
 
-<table>
+<table class="table table-border">
     <tr>
         <th>Quiz ID</th>
         <th>Quiz Title</th>
+        <th>Is Enabled</th>
+        <th>Question</th>
+        <th>Question Tags</th>
     </tr>
     <tr *ngFor="let quiz of quizzes">
         <td>{{quiz.id}}</td>
         <td><a href='#/quizzes/{{quiz.id}}'>{{quiz.title}}</a></td>
+        <td>{{quiz.enabled}}</td>
+        <td>
+            <ul>
+                <li *ngFor="let question of quiz?.quizQuestions">{{question?.question?.question}}</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li *ngFor="let question of quiz?.quizQuestions">{{question?.question?.tags | json}}</li>
+            </ul>
+        </td>
     </tr>
 </table>
