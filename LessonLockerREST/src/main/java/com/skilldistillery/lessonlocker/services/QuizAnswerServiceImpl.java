@@ -28,6 +28,11 @@ public class QuizAnswerServiceImpl implements QuizAnswerService {
 		return newQuizAnswer;
 	}
 
+	@Override
+	public List<QuizAnswer> getAllQuizAnswers() {
+		return quizAnswerRepo.getAllQuizAnswers();
+	}
+
 
 	
 }

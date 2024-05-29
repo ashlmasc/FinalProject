@@ -49,6 +49,18 @@ public class QuizController {
 		this.quizAnswerService = quizAnswerService;
 		this.authService = authService;
 	}
+	
+	@GetMapping("all-quizzes")
+	public List<Quiz> getAllQuiz(HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		List<Quiz> quizzes = null;
+		try {
+			quizzes = quizService.getAllQuiz();
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return quizzes;
+	}
 
 	@GetMapping("quizzes")
 	public List<Quiz> getAllQuizByUserUsername(HttpServletRequest req, HttpServletResponse res, Principal principal) {
@@ -62,9 +74,6 @@ public class QuizController {
 		return quizzes;
 	}
 
-	// @RequestParam(value = "city", required = false) String searchByCityName,
-	// @PathVariable("cityId") int cityId,
-	// @RequestBody City city,
 
 	@PostMapping("quizzes")
 	public Quiz createQuiz(@RequestBody Map<String, String> payload, HttpServletRequest req, HttpServletResponse res,
@@ -124,6 +133,19 @@ public class QuizController {
 		}
 
 		return newQuiz;
+	}
+	
+	@GetMapping("all-quiz-answers")
+	public List<QuizAnswer> getAllQuizAnswers(HttpServletRequest req, HttpServletResponse res,
+			Principal principal) {
+		List<QuizAnswer> answers = null;
+		try {
+			answers = quizAnswerService.getAllQuizAnswers();
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return answers;
 	}
 
 	@GetMapping("quiz-answers")

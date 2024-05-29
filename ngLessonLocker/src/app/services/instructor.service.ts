@@ -54,7 +54,23 @@ export class InstructorService {
 
   loadQuizzes(): Observable<Quiz[]> {
     return this.http
-      .get<Quiz[]>(this.url + 'api/quizzes', this.getHttpOptions())
+      .get<Quiz[]>(this.url + 'api/all-quizzes', this.getHttpOptions())
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  loadAllQuizAnswers(): Observable<QuizAnswer[]> {
+    return this.http
+      .get<QuizAnswer[]>(
+        this.url + 'api/all-quiz-answers',
+        this.getHttpOptions()
+      )
       .pipe(
         catchError((err: any) => {
           console.error('Error retrieving :', err);

@@ -64,6 +64,12 @@ public class QuizServiceImpl implements QuizService {
 		return quiz;
 	}
 
+	@Override
+	public List<Quiz> getAllQuiz() {
+		List<Quiz> quizzes = quizRepo.findAll();
+		return quizzes;
+	}
+
 //	@Override
 //	public QuizQuestion createQuizQuestion(QuizQuestion quizQuestion, String username) {
 //		QuizQuestion newQuizQuestion = null;

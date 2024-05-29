@@ -27,7 +27,8 @@
             <div class="col">
                 <p>Choices:</p>
                 <ul>
-                    <li *ngFor="let choice of selectedQuestion.choices" title="{{choice.explanation}}">
+                    <li [ngClass]="choice.correct ? 'text-success' :'text-danger'"
+                        *ngFor="let choice of selectedQuestion.choices" title="{{choice.explanation}}">
                         {{choice.content}}</li>
                 </ul>
             </div>

@@ -43,7 +43,7 @@ export class QuizzesComponent implements OnInit {
         }
       },
       error: (err) => {
-        alert('You must be logged in to user this page.');
+        alert('You must be logged in to use this page.');
         console.log(err?.error?.message || err?.message || err);
         return this.router.navigateByUrl('/login');
         return;
