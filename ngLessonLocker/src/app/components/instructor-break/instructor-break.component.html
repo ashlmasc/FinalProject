@@ -22,7 +22,7 @@
         <div *ngIf="this.quizQuestions.length > 0" class="container">
             <div *ngFor="let question of quizQuestions" class="row">
                 <div class="col">
-                    <!-- <p>Question:</p> -->
+                    <p>Question:</p>
                     <pre>{{question.question?.question}}</pre>
                     <hr>
                     <pre *ngIf="this.hasAnswered" class="bg-light"><span>Hint:</span>{{question.question?.hint}}</pre>
@@ -32,7 +32,7 @@
                     <!-- <p>Tags:{{question.question?.tags | json}}</p> -->
                     <span>Choices</span>
                     <!-- <p>Choices:{{question.question?.choices| json}}</p> -->
-                    <div *ngFor="let choice of question.question?.choices || []" class="row">
+                    <div *ngFor="let choice of question.question?.choices || []" class="row border-primary">
                         <div class="col">
                             <div class="row">
                                 <div *ngIf="this.hasAnswered" class="col">
@@ -97,9 +97,9 @@
     <div class="container" *ngIf="isFound===true">
         <!-- <h3>Quiz Title: {{this.selectedQuiz?.title}}</h3> -->
         <div *ngIf="this.quizQuestions.length>0" class="container">
-            <div *ngFor="let question of quizQuestions" class="row">
+            <div *ngFor="let question of quizQuestions" class="row border">
                 <div class="col">
-                    <!-- <h1>Question:</h1> -->
+                    <h1>Question:</h1>
                     <pre>{{question.question?.question}}</pre>
                     <hr>
                     <pre *ngIf="this.showHints===true"
