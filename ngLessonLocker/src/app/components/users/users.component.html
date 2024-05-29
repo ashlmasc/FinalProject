@@ -74,14 +74,21 @@
           <input type="text" class="" id="role" [(ngModel)]="selected.role" name="role" placeholder="Ex. student"
             required />
         </div>
+        <div class="form-group">
+          <label for="selectRole">Role: &nbsp;</label>
+          <select type="text" class="" id="selectRole" [(ngModel)]="selected.role" name="selectRole" required>
+            <option value="standard">Standard</option>
+            <option value="admin">Admin</option>
+            <option value="instructor">Instructor</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
         <br>
         <div class="form-group">
           <label for="cohort">Cohort: &nbsp;</label>
           <input type="text" class="" id="cohort" [(ngModel)]="selected.cohort" name="cohort" placeholder="Ex. SD43"
             required />
         </div>
-
-
         <button class="btn btn-primary m-2" (click)="updateUser(selected)">
           Update
         </button>

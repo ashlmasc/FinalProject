@@ -10,6 +10,7 @@ import { QuizQuestion } from '../../models/quiz-question';
 import { User } from '../../models/user';
 import { QuizAnswer } from '../../models/quiz-answer';
 import { Question } from '../../models/question';
+import { reduce } from 'rxjs';
 
 @Component({
   selector: 'app-instructor-break',
@@ -49,6 +50,10 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
 
   quizAnswers: QuizAnswer[] = [];
 
+  hasAnswered: boolean = false;
+
+  reducedQuizAnswers: any = {};
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -57,6 +62,55 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
+  // reduce quizAnswers to collection of sums of choices
+  /*
+
+  [
+    {
+        "id": {
+            "userId": 1,
+            "quizQuestionId": 1
+        },
+        "createdAt": null,
+        "choice": {
+            "id": 1,
+            "content": "Choice",
+            "position": 1,
+            "correct": false,
+            "explanation": "Explanation"
+        }
+    }
+  ] 
+  */
+
+  getAnswerCount(choiceId: number): string {
+    console.log(choiceId);
+    console.log(this.reducedQuizAnswers);
+    console.log(this.reducedQuizAnswers[choiceId]);
+    let numericValue: number = this.reducedQuizAnswers[choiceId || 0];
+    let stringValue: string = numericValue ? numericValue.toString() : '';
+    if (stringValue === '') {
+      return '';
+    } else {
+      return stringValue + ' votes ';
+    }
+  }
+
+  reduceQuizAnswers(quizAnswers: QuizAnswer[]): any {
+    let reducedAnswers: any = {};
+    for (let i = 0; i < quizAnswers.length; i++) {
+      let quizAnswer = quizAnswers[i];
+      let choiceId = quizAnswer.choice?.id || 0;
+      if (reducedAnswers[choiceId]) {
+        reducedAnswers[choiceId] += 1;
+      } else {
+        reducedAnswers[choiceId] = 1;
+      }
+    }
+    this.reducedQuizAnswers = reducedAnswers;
+    return reducedAnswers;
+  }
+
   getQuizAnswers(): void {
     this.instructorService.loadAllQuizAnswers().subscribe({
       next: (quizAnswers: QuizAnswer[]) => {
@@ -64,6 +118,7 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
         if (quizAnswers) {
           console.log(quizAnswers);
           this.quizAnswers = quizAnswers;
+          this.reduceQuizAnswers(this.quizAnswers);
           return;
         } else {
           console.log('Quiz Answers not found');
@@ -135,6 +190,8 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
       parseInt(this.selectedAnswer)
     );
 
+    this.hasAnswered = true;
+
     for (let i = 0; i < this.quizQuestions.length; i++) {
       let quizQuestion = this.quizQuestions[i].question;
       for (let j = 0; j < (quizQuestion?.choices?.length || 0); j++) {
@@ -144,14 +201,16 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
           console.log(quizQuestion);
           console.log(this.loggedInUser);
           if (choice?.correct === true) {
-            alert('Correct answer');
+            console.log('Correct answer');
           } else {
-            alert('Incorrect answer');
+            console.log('Incorrect answer');
           }
-          return;
+          return; // Don't forget this is an early return!
         }
       }
     }
+
+    // Don't forget the early return above!
   }
 
   startClock(): void {

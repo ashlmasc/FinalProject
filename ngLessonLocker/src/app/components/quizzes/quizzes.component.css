@@ -6,3 +6,23 @@ td,th {
     border: 1px solid #ddd;
     padding: 8px;
 }
+
+a {
+    cursor:pointer;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid green;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+a:hover {
+    color: blue;
+    border: 1px solid blue;
+}
+
+a:active {
+    color: red;
+    border: 1px solid red;
+    box-shadow: 1px 1px 1px #666666;
+}
