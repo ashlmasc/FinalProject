@@ -19,32 +19,44 @@
         placeholder="Explanation"></textarea>
     </div>
 
-    <div class="form-group">
-      <label for="content">New Choice</label>
-      <input type="text" class="form-control" id="content" [(ngModel)]="newChoice.content" name="content"
-        placeholder="Choice content">
-    </div>
+    <br>
 
-    <div class="form-group">
-      <input type="checkbox" class="form-check-input" id="correct" [(ngModel)]="newChoice.correct" name="correct">
-      <label class="form-check-label" for="correct">Correct</label>
+    <div class="row border bg-light">
+      <div class="col">
+        <label for="content">New Choice
+          <input type="text" class="form-input" id="content" [(ngModel)]="newChoice.content" name="content"
+            placeholder="Choice content"></label>
+      </div>
+      <div class="col">
+        <label class="form-check-label" for="correct">Correct
+          <input type="checkbox" class="form-check-input" id="correct" [(ngModel)]="newChoice.correct"
+            name="correct"></label>
+      </div>
     </div>
 
     <button type="button" class="btn btn-primary mt-4" (click)="addChoice()">Add Choice</button>
+
+    <br>
+    <hr>
 
     <div *ngIf="selected.choices.length > 0">
       <h5 class="mt-4">Choices</h5>
       <ul class="list-group">
         <li *ngFor="let choice of selected.choices; let i = index"
           class="list-group-item d-flex justify-content-between align-items-center">
-          <span>{{ choice.content }}</span>
+
+
+          <span [ngClass]="choice.correct ? 'text-success' : 'text-danger'">{{ choice.content }}</span>
+          <span *ngIf="choice.correct" [ngClass]="choice.correct ? 'text-success' : 'text-danger'">(Correct)</span>
+
+
           <button type="button" class="btn btn-danger btn-sm" (click)="removeChoice(i)">Remove</button>
         </li>
       </ul>
     </div>
 
-    <button type="submit" class="btn btn-success mt-4">Save</button>
-    <button type="button" class="btn btn-secondary mt-4" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-success mt-4 mx-2">Save</button>
+    <button type="button" class="btn btn-secondary mt-4 mx-2" (click)="cancel()">Cancel</button>
   </form>
 </div>
 
@@ -61,7 +73,8 @@
           <p><strong>Enabled:</strong> {{ selected.enabled }}</p>
           <h5>Choices</h5>
           <ul>
-            <li *ngFor="let choice of selected.choices">{{ choice.content }} <span *ngIf="choice.correct">(Correct)</span></li>
+            <li *ngFor="let choice of selected.choices">{{ choice.content }} <span *ngIf="choice.correct"
+                [ngClass]="choice.correct ? 'text-success' : 'text-danger'">(Correct)</span></li>
           </ul>
           <button class="btn btn-secondary mt-4" (click)="backToQuestions()">Back to Questions</button>
         </div>

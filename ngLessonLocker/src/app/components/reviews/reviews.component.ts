@@ -19,6 +19,10 @@ export class ReviewsComponent implements OnInit {
   isLoaded: boolean = false;
   users: User[] = [];
 
+  questionSearch: string = '';
+
+  questionEnabledSearch: boolean = false;
+
   tag: string = '';
   username: string = '';
   cohort: string = '';

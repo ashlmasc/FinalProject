@@ -11,6 +11,7 @@ import com.skilldistillery.lessonlocker.entities.User;
 
 public interface InstructorRepository extends JpaRepository<Question, Integer> {
 	
+	@Query("SELECT q FROM Question q ORDER BY q.updatedAt DESC")
 	List<Question> findAll();
 	
 	List<Question> findAllByUserUsername(String username);
