@@ -11,19 +11,18 @@ import { QuestionComponent } from '../question/question.component';
   standalone: true,
   imports: [CommonModule, FormsModule, QuestionComponent],
   templateUrl: './questions.component.html',
-  styleUrl: './questions.component.css'
+  styleUrl: './questions.component.css',
 })
 export class QuestionsComponent implements OnInit {
-
   questions: Question[] = [];
   selected: Question | null = null;
-  
-    constructor(
+
+  constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private questionService: QuestionService
   ) {}
-  
+
   ngOnInit(): void {
     this.getAllQuestions();
   }
@@ -37,7 +36,7 @@ export class QuestionsComponent implements OnInit {
       error: (err: Error) => {
         console.error('Observer got an error: ' + err);
         this.questions = []; // Handle empty state
-      }
+      },
     });
   }
 
@@ -52,20 +51,20 @@ export class QuestionsComponent implements OnInit {
   deleteQuestion(id: number): void {
     this.questionService.delete(id).subscribe({
       next: () => this.getAllQuestions(),
-      error: (err) => console.error('Error deleting question:', err)
+      error: (err) => console.error('Error deleting question:', err),
     });
   }
 
   selectQuestion(question: Question) {
     this.selected = question;
   }
-  
+
   deselectQuestion() {
     this.selected = null;
   }
-  
+
   editQuestion(question: Question) {
-    alert("clicked edit");
+    // alert("clicked edit");
     this.router.navigateByUrl(`/modify/${question.id}`);
   }
 
@@ -102,5 +101,4 @@ export class QuestionsComponent implements OnInit {
   //     error: (err) => console.error('Error deleting question:', err)
   //   });
   // }
-
 }
