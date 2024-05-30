@@ -38,6 +38,25 @@
             <p>There are no questions to display.</p>
         </div>
 
+        <div class="row bg-light border p-3">
+            <div class="col">
+                <label for="">Search
+                    <input type="text" class="bg-light shadow w-100 form-control" placeholder="Search"
+                        [(ngModel)]="this.questionSearch" /></label>
+            </div>
+            <div class="col">
+                <label class="bg-info shadow form-check-label" for="questionEnabledSearch">Filter for Enabled/Disabled :
+                    &nbsp;
+                    <input type="checkbox" class="shadow form-check-input" id="questionEnabledSearch"
+                        [(ngModel)]="this.questionEnabledSearch" name="questionEnabledSearch">
+                    <span class="" *ngIf="this.questionEnabledSearch === true"> &nbsp; ENABLED
+                        questions if any</span><span *ngIf="this.questionEnabledSearch !== true">
+                        &nbsp; DISABLED questions if any</span></label>
+            </div>
+        </div>
+
+        <br>
+
         <div>
             <table class="table table-hover" *ngIf="this.questions !== null && this.questions.length > 0">
                 <thead>
@@ -50,17 +69,20 @@
                     <th>Enabled</th>
                     <th>User</th>
                 </thead>
-                <tr *ngFor="let question of questions" (click)="showQuestionDetail(question)"
-                    [ngClass]="question.enabled ? 'text-success' : 'text-danger'">
-                    <td>{{question.id}}</td>
-                    <td>{{question.question}}</td>
-                    <td>{{question.hint}}</td>
-                    <td>{{question.explanation}}</td>
-                    <td>{{question.updatedAt | date: 'MM/dd/yyyy HH:MM:ss'}}</td>
-                    <td>{{question.createdAt | date: 'MM/dd/yyyy HH:MM:ss'}}</td>
-                    <td>{{question.enabled}}</td>
-                    <td>{{question.user.username}} Cohort:({{question.user.cohort}})</td>
-                </tr>
+                <ng-container *ngFor="let question of questions">
+                    <tr (click)="showQuestionDetail(question)"
+                        *ngIf="question.enabled === this.questionEnabledSearch && (this.questionSearch==='' || (question && question.question && question.question.toLowerCase().includes(this.questionSearch.toLowerCase())) )"
+                        [ngClass]="question.enabled ? 'text-success' : 'text-danger'">
+                        <td>{{question.id}}</td>
+                        <td>{{question.question}}</td>
+                        <td>{{question.hint}}</td>
+                        <td>{{question.explanation}}</td>
+                        <td>{{question.updatedAt | date: 'MM/dd/yyyy HH:MM:ss'}}</td>
+                        <td>{{question.createdAt | date: 'MM/dd/yyyy HH:MM:ss'}}</td>
+                        <td>{{question.enabled}}</td>
+                        <td>{{question.user.username}} Cohort:({{question.user.cohort}})</td>
+                    </tr>
+                </ng-container>
             </table>
         </div>
 
