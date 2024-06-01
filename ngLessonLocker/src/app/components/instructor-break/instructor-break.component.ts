@@ -221,6 +221,22 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
   //   return date.toLocaleString();
   // }
 
+  checkSelectedQuiz(): string | null {
+    return localStorage.getItem('selectedQuizId');
+  }
+
+  storeSelectedQuizIdInLocalStorage(quizId: number): void {
+    console.log('selected quiz id: ' + quizId);
+    localStorage.setItem('selectedQuizId', quizId.toString());
+    localStorage.setItem('selectedQuiz', JSON.stringify(this.selectedQuiz));
+  }
+
+  removeSelectedQuizIdFromLocalStorage(): void {
+    console.log('removeSelectedQuizIdFromLocalStorage');
+    localStorage.removeItem('selectedQuizId');
+    localStorage.removeItem('selectedQuiz');
+  }
+
   startClock(): void {
     if (this.clockElement) {
       this.clockElement.innerHTML = new Date().toLocaleTimeString();

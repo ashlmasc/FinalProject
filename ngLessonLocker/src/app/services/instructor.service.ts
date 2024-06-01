@@ -7,6 +7,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Quiz } from '../models/quiz';
 import { User } from '../models/user';
 import { QuizAnswer } from '../models/quiz-answer';
+import { QuizQuestion } from '../models/quiz-question';
 
 @Injectable({
   providedIn: 'root',
@@ -135,6 +136,48 @@ export class InstructorService {
           title: title,
           questionId: questionId,
         },
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  //	@PostMapping("questions/{questionId}/quizzes/{quizId}")
+  //	@DeleteMapping("questions/{questionId}/quizzes/{quizId}")
+
+  addQuestionToQuiz(
+    quizId: number,
+    questionId: number
+  ): Observable<QuizQuestion> {
+    return this.http
+      .post<QuizQuestion>(
+        this.url + `api/questions/${questionId}/quizzes/${quizId}`,
+        {},
+        this.getHttpOptions()
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.error('Error retrieving :', err);
+          return throwError(
+            () => new Error('Service.index(): error retrieving : ' + err)
+          );
+        })
+      );
+  }
+
+  removeQuestionFromQuiz(
+    quizId: number,
+    questionId: number
+  ): Observable<QuizQuestion> {
+    return this.http
+      .delete<QuizQuestion>(
+        this.url + `api/questions/${questionId}/quizzes/${quizId}`,
         this.getHttpOptions()
       )
       .pipe(

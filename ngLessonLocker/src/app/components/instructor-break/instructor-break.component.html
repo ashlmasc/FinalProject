@@ -39,7 +39,8 @@
                                     <p [ngClass]="choice?.correct ? 'text-success' : 'text-danger'">{{choice?.content}}
                                     </p>
                                 </div>
-                                <div *ngIf="!this.hasAnswered" class="col">
+                                <div *ngIf="!this.hasAnswered" class="col"
+                                    title="{{this.quizQuestions.length > 1 ? choice?.correct : ''}}">
                                     <p>{{choice?.content}}</p>
                                 </div>
                                 <!-- <div *ngIf="this.hasAnswered" class="col">
@@ -99,7 +100,7 @@
         <div *ngIf="this.quizQuestions.length>0" class="container">
             <div *ngFor="let question of quizQuestions" class="row border">
                 <div class="col">
-                    <h1>Question:</h1>
+                    <h1>Question: Id:{{question.question?.id}}</h1>
                     <pre>{{question.question?.question}}</pre>
                     <hr>
                     <pre *ngIf="this.showHints===true"
@@ -165,8 +166,20 @@
 
     <div class="container">
         <div class="row">
+
             <div class="col">
-                <button class="btn btn-primary m-2 w-100" (click)="getQuizAnswers()">Show The Quiz Answers</button>
+                <button class="btn btn-outline-warning m-2"
+                    (click)="this.storeSelectedQuizIdInLocalStorage(this?.selectedQuizId||0)">Select
+                    This Quiz</button>
+                <button class="btn btn-outline-warning m-2" (click)="this.removeSelectedQuizIdFromLocalStorage()">Clear
+                    Selected
+                    Quiz</button>
+            </div>
+
+
+            <div class="col">
+                <button class="btn btn-outline-primary m-2 w-100" (click)="getQuizAnswers()">Show The Quiz
+                    Answers</button>
                 <!-- {{ this.quizAnswers | json}} -->
                 <div *ngIf="this.quizAnswers.length>0" class="container">
                     <div *ngFor="let answer of quizAnswers" class="row">

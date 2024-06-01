@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +50,7 @@ public class QuizController {
 		this.quizAnswerService = quizAnswerService;
 		this.authService = authService;
 	}
-	
+
 	@GetMapping("all-quizzes")
 	public List<Quiz> getAllQuiz(HttpServletRequest req, HttpServletResponse res, Principal principal) {
 		List<Quiz> quizzes = null;
@@ -74,15 +75,41 @@ public class QuizController {
 		return quizzes;
 	}
 
+	@PostMapping("questions/{questionId}/quizzes/{quizId}")
+	public QuizQuestion addQuestionToQuiz(@PathVariable("questionId") int questionId,
+			@PathVariable("quizId") int quizId, HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		QuizQuestion quizQuestion = null;
+		try {
+			quizQuestion = quizQuestionService.addQuestionToQuiz(principal.getName(), quizId, questionId);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return quizQuestion;
+	}
+	
+	@DeleteMapping("questions/{questionId}/quizzes/{quizId}")
+	public QuizQuestion removeQuestionFromQuiz(@PathVariable("questionId") int questionId,
+			@PathVariable("quizId") int quizId, HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		QuizQuestion quizQuestion = null;
+		try {
+			 // TODO: could be better to return the quiz with the question removed
+			quizQuestion = quizQuestionService.removeQuestionFromQuiz(principal.getName(), quizId, questionId);
+		} catch (Exception e) {
+			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			e.printStackTrace();
+		}
+		return quizQuestion;
+	}
 
 	@PostMapping("quizzes")
 	public Quiz createQuiz(@RequestBody Map<String, String> payload, HttpServletRequest req, HttpServletResponse res,
 			Principal principal) {
-		
+
 		// TODO: Consider receiving the Body as a command object rather than a Map
-		
+
 		String title = payload.get("title");
-		
+
 		Integer questionId = Integer.parseInt(payload.get("questionId"));
 
 		Quiz newQuiz = null;
@@ -93,7 +120,7 @@ public class QuizController {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return null;
 		}
-		
+
 		// TODO: Consider moving this business logic to the service layer
 
 		try {
@@ -103,27 +130,24 @@ public class QuizController {
 			newQuiz.setEnabled(true);
 			newQuiz.setUser(loggedInUser);
 			newQuiz = quizService.create(newQuiz);
-			
+
 			if (newQuiz == null) {
 				res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return null;
 			}
-			
-			
-			QuizQuestion quizQuestion = new QuizQuestion();
-			
-			quizQuestion.setQuiz(newQuiz);
-			
-			Optional<Question> optSelectedQuestion = questionRepo.findById(questionId);
-			
-			if (optSelectedQuestion.isPresent()) {
-                Question question = optSelectedQuestion.get();
-                quizQuestion.setQuestion(question);
-                
-                quizQuestionService.create(quizQuestion);
-            }
 
-	
+			QuizQuestion quizQuestion = new QuizQuestion();
+
+			quizQuestion.setQuiz(newQuiz);
+
+			Optional<Question> optSelectedQuestion = questionRepo.findById(questionId);
+
+			if (optSelectedQuestion.isPresent()) {
+				Question question = optSelectedQuestion.get();
+				quizQuestion.setQuestion(question);
+
+				quizQuestionService.create(quizQuestion);
+			}
 
 			res.setStatus(HttpServletResponse.SC_CREATED);
 		} catch (Exception e) {
@@ -134,10 +158,9 @@ public class QuizController {
 
 		return newQuiz;
 	}
-	
+
 	@GetMapping("all-quiz-answers")
-	public List<QuizAnswer> getAllQuizAnswers(HttpServletRequest req, HttpServletResponse res,
-			Principal principal) {
+	public List<QuizAnswer> getAllQuizAnswers(HttpServletRequest req, HttpServletResponse res, Principal principal) {
 		List<QuizAnswer> answers = null;
 		try {
 			answers = quizAnswerService.getAllQuizAnswers();
@@ -179,7 +202,7 @@ public class QuizController {
 		}
 		return filteredAnswers;
 	}
-	
+
 	@GetMapping("quizzes/{id}") // get quiz by id
 	public Quiz getQuizById(@PathVariable("id") int id, HttpServletRequest req, HttpServletResponse res,
 			Principal principal) {
