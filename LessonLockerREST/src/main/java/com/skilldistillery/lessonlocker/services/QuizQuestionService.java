@@ -15,5 +15,12 @@ public interface QuizQuestionService {
 	
 	QuizQuestion getByQuizIdAndQuestionId(int quizId, int questionId);
 	
+	// QuizQuestion update(int id, QuizQuestion question);
+
+	QuizQuestion addQuestionToQuiz(String Username, int quizId, int  questionId);
+	
+	 // TODO: could be better to return the quiz with the question removed
+	QuizQuestion removeQuestionFromQuiz(String Username, int quizId, int  questionId); 
+	
 
 }

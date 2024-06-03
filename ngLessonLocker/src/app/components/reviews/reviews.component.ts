@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InstructorService } from '../../services/instructor.service';
 import { User } from '../../models/user';
+import { QuizQuestion } from '../../models/quiz-question';
 
 @Component({
   selector: 'app-reviews',
@@ -23,6 +24,8 @@ export class ReviewsComponent implements OnInit {
 
   questionEnabledSearch: boolean = false;
 
+  selectedQuiz: string | null = null;
+
   tag: string = '';
   username: string = '';
   cohort: string = '';
@@ -39,6 +42,7 @@ export class ReviewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllQuestions();
+    this.checkSelectedQuiz;
   }
 
   filterQuestionsKeepWithTag(tag: string): Question[] {
@@ -70,6 +74,73 @@ export class ReviewsComponent implements OnInit {
         return (err: Error) => console.error('Observer got an error: ' + err);
       },
     });
+  }
+
+  addQuestionToQuiz(question: Question) {
+    let quizIdString = localStorage.getItem('selectedQuizId');
+    if (quizIdString == null) {
+      return;
+    }
+    let quizId: number = parseInt(quizIdString);
+    if (!quizId) {
+      return;
+    }
+    this.instructorService.addQuestionToQuiz(quizId, question.id).subscribe({
+      next: (quizQuestion: QuizQuestion) => {
+        console.log(quizQuestion);
+        alert('Question added to quiz');
+      },
+      error: () => {
+        return (err: Error) => {
+          console.error('Observer got an error: ' + err);
+          alert(JSON.stringify(err));
+          return;
+        };
+      },
+    });
+  }
+
+  checkSelectedQuizForQuestion(qId: number): boolean {
+    // TODO : Implement this function
+    let found = false;
+    return found;
+  }
+
+  checkSelectedQuiz(): string | null {
+    let selectedQuiz = localStorage.getItem('selectedQuiz');
+    if (selectedQuiz !== null) {
+      this.selectedQuiz = JSON.parse(selectedQuiz);
+    } else {
+      this.selectedQuiz = null;
+    }
+    return localStorage.getItem('selectedQuizId');
+  }
+
+  // remove question from quiz
+  removeQuestionFromQuiz(question: Question) {
+    let quizIdString = localStorage.getItem('selectedQuizId');
+    if (quizIdString == null) {
+      return;
+    }
+    let quizId: number = parseInt(quizIdString);
+    if (!quizId) {
+      return;
+    }
+    this.instructorService
+      .removeQuestionFromQuiz(quizId, question.id)
+      .subscribe({
+        next: (quizQuestion: QuizQuestion) => {
+          console.log(quizQuestion);
+          alert('Question removed from quiz');
+        },
+        error: () => {
+          return (err: Error) => {
+            console.error('Observer got an error: ' + err);
+            alert(JSON.stringify(err));
+            return;
+          };
+        },
+      });
   }
 
   getAllQuestionsByUserUsername(username: string) {

@@ -73,7 +73,18 @@
                     <tr (click)="showQuestionDetail(question)"
                         *ngIf="question.enabled === this.questionEnabledSearch && (this.questionSearch==='' || (question && question.question && question.question.toLowerCase().includes(this.questionSearch.toLowerCase())) )"
                         [ngClass]="question.enabled ? 'text-success' : 'text-danger'">
-                        <td>{{question.id}}</td>
+                        <td>
+                            {{question.id}}
+                            <br>
+                            <div *ngIf="this.checkSelectedQuiz()">
+                                <button class="btn btn-primary m-2"
+                                    (click)="addQuestionToQuiz(question);$event.stopPropagation()">Add</button>
+                                <br>
+                                <button class="btn btn-primary m-2"
+                                    (click)="removeQuestionFromQuiz(question);$event.stopPropagation()">Remove</button>
+                                <br>
+                            </div>
+                        </td>
                         <td>{{question.question}}</td>
                         <td>{{question.hint}}</td>
                         <td>{{question.explanation}}</td>
