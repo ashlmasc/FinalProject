@@ -1,8 +1,18 @@
 <div class="container">
     <div class="row">
-        <div class="col">Quizzes</div>
+        <div class="col text-center">
+            <h3>Quizzes</h3>
+        </div>
     </div>
 </div>
+
+<label class="bg-info shadow form-check-label" for="questionEnabledSearch">Filter for Enabled/Disabled :
+    &nbsp;
+    <input type="checkbox" class="shadow form-check-input" id="questionEnabledSearch" [(ngModel)]="this.isEnabled"
+        name="questionEnabledSearch">
+    <span class="" *ngIf="this.isEnabled === true"> &nbsp; ENABLED
+        quizzes if any</span><span *ngIf="this.isEnabled !== true">
+        &nbsp; DISABLED quizzes if any</span></label>
 
 <table class="table table-border">
     <tr>
@@ -13,15 +23,22 @@
         <th>Question Tags</th>
     </tr>
     <tr *ngFor="let quiz of quizzes">
-        <td>{{quiz.id}}</td>
-        <td><a href='#/quizzes/{{quiz.id}}'>{{quiz.title}}</a></td>
-        <td>{{quiz.enabled}}</td>
-        <td>
-            <p *ngFor="let question of quiz?.quizQuestions">{{question?.question?.question}}</p>
-        </td>
-        <td>
-            <span *ngFor="let question of quiz?.quizQuestions">{{this.convertTagsToString(question?.question?.tags)}}
-            </span>
-        </td>
+        <ng-container *ngIf="quiz.enabled === isEnabled">
+
+            <td>{{quiz.id}}</td>
+            <td>
+                <p><a href='#/quizzes/{{quiz.id}}'>{{quiz.title}}</a></p>
+            </td>
+            <td>{{quiz.enabled}}</td>
+            <td>
+                <p *ngFor="let question of quiz?.quizQuestions">{{question?.question?.question}}</p>
+            </td>
+            <td>
+                <span
+                    *ngFor="let question of quiz?.quizQuestions">{{this.convertTagsToString(question?.question?.tags)}}
+                </span>
+            </td>
+
+        </ng-container>
     </tr>
 </table>

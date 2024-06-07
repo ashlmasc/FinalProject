@@ -18,6 +18,8 @@ import { Tag } from '../../models/tag';
 export class QuizzesComponent implements OnInit {
   quizzes: Quiz[] = [];
 
+  isEnabled: boolean = true;
+
   ngOnInit(): void {
     this.loadQuizzes();
   }

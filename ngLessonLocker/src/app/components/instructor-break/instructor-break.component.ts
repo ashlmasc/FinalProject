@@ -229,6 +229,7 @@ export class InstructorBreakComponent implements OnInit, OnDestroy {
     console.log('selected quiz id: ' + quizId);
     localStorage.setItem('selectedQuizId', quizId.toString());
     localStorage.setItem('selectedQuiz', JSON.stringify(this.selectedQuiz));
+    this.router.navigateByUrl('/reviews');
   }
 
   removeSelectedQuizIdFromLocalStorage(): void {
