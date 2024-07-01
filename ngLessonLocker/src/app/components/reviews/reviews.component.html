@@ -2,8 +2,20 @@
     <div class="row">
         <div class="col">
             <h1>Instructor Question Reviews</h1>
+            <div class="" *ngIf="this.theSelectedQuiz!==null">
+
+                <p><span>Selected Quiz: </span>{{this.theSelectedQuiz.id}}: {{this.theSelectedQuiz.title}}</p>
+                <!-- <p>{{this.theSelectedQuiz.title}}</p> -->
+                <!-- <p>{{this.theSelectedQuiz.quizQuestions.length}} questions in the selected Quiz</p> -->
+
+                <!-- <ng-container *ngFor="let quizQuestions of this.theSelectedQuiz.quizQuestions">
+                    {{quizQuestions.question?.id}} {{quizQuestions.question?.question}}
+                </ng-container> -->
+                <!-- <p>{{this.theSelectedQuiz | json}}</p> -->
+            </div>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col">
             <label for="tag">Tag (can partial match)</label>
@@ -76,7 +88,8 @@
                         <td>
                             {{question.id}}
                             <br>
-                            <div *ngIf="this.checkSelectedQuiz()">
+                            <!-- NOTE the display none class below -->
+                            <div class="" *ngIf="this.checkSelectedQuiz()">
                                 <button class="btn btn-primary m-2"
                                     (click)="addQuestionToQuiz(question);$event.stopPropagation()">Add</button>
                                 <br>

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InstructorService } from '../../services/instructor.service';
 import { User } from '../../models/user';
 import { QuizQuestion } from '../../models/quiz-question';
+import { SelectedQuiz } from '../../models/selected-quiz';
 
 @Component({
   selector: 'app-reviews',
@@ -24,7 +25,9 @@ export class ReviewsComponent implements OnInit {
 
   questionEnabledSearch: boolean = false;
 
-  selectedQuiz: string | null = null;
+  theSelectedQuiz: SelectedQuiz | null = null;
+
+  selectedQuiz: string | Object | null = null;
 
   tag: string = '';
   username: string = '';
@@ -42,7 +45,7 @@ export class ReviewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllQuestions();
-    this.checkSelectedQuiz;
+    this.checkSelectedQuiz();
   }
 
   filterQuestionsKeepWithTag(tag: string): Question[] {
@@ -88,12 +91,14 @@ export class ReviewsComponent implements OnInit {
     this.instructorService.addQuestionToQuiz(quizId, question.id).subscribe({
       next: (quizQuestion: QuizQuestion) => {
         console.log(quizQuestion);
-        alert('Question added to quiz');
+        alert(
+          'Question added to quiz. You must re-view and re-select the quiz to see the changes.'
+        );
       },
       error: () => {
         return (err: Error) => {
           console.error('Observer got an error: ' + err);
-          alert(JSON.stringify(err));
+          console.error(JSON.stringify(err));
           return;
         };
       },
@@ -110,6 +115,7 @@ export class ReviewsComponent implements OnInit {
     let selectedQuiz = localStorage.getItem('selectedQuiz');
     if (selectedQuiz !== null) {
       this.selectedQuiz = JSON.parse(selectedQuiz);
+      this.theSelectedQuiz = JSON.parse(selectedQuiz);
     } else {
       this.selectedQuiz = null;
     }
@@ -131,12 +137,14 @@ export class ReviewsComponent implements OnInit {
       .subscribe({
         next: (quizQuestion: QuizQuestion) => {
           console.log(quizQuestion);
-          alert('Question removed from quiz');
+          alert(
+            'Question removed from quiz. You must re-view and re-select the quiz to see the changes.'
+          );
         },
         error: () => {
           return (err: Error) => {
             console.error('Observer got an error: ' + err);
-            alert(JSON.stringify(err));
+            console.error(JSON.stringify(err));
             return;
           };
         },
